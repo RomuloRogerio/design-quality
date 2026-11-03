@@ -2,6 +2,8 @@
 
 ---
 
+![design-quality](./cover.png)
+
 # design-quality
 
 A Claude Code skill for evaluating and fixing AI-generated interfaces.
