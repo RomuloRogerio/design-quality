@@ -1,3 +1,7 @@
+**English** · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [简体中文](README.zh-CN.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
+
+---
+
 # design-quality
 
 A Claude Code skill for evaluating and fixing AI-generated interfaces.
