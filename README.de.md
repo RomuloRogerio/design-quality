@@ -453,6 +453,7 @@ design-quality/
 │   └── design-quality/
 │       ├── SKILL.md
 │       └── references/
+│           └── agents/   ← spezialisierte Agenten (Review·Fix·Direction)
 └── docs/
 ```
 

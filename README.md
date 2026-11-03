@@ -519,8 +519,7 @@ Transitions are interruptible. If a user opens a drawer and closes it mid-animat
 
 ```
 design-quality/
-├── README.md              ← this file
-├── README.pt-BR.md        ← Portuguese
+├── README.md              ← this file (+ 7 translations)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
@@ -533,7 +532,14 @@ design-quality/
 │           ├── quality-dimensions.md
 │           ├── passes-visuals.md
 │           ├── passes-motion.md
-│           └── designer-skills-index.md
+│           ├── designer-skills-index.md
+│           └── agents/            ← subagent prompt templates
+│               ├── review-slop.md          ← slop audit agent
+│               ├── review-scorecard.md     ← 8-dimension scorer agent
+│               ├── review-emotion.md       ← felt state + peak-end agent
+│               ├── deepdive-dispatch.md    ← auto deep-dive routing table
+│               ├── fix-passes.md           ← 10 fix pass agents
+│               └── direction-research.md   ← product research agent
 └── docs/
     ├── review-guide.md
     ├── fix-mode-walkthrough.md

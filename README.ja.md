@@ -472,6 +472,7 @@ design-quality/
 │   └── design-quality/
 │       ├── SKILL.md
 │       └── references/
+│           └── agents/   ← 専門エージェントプロンプト (Review・Fix・Direction)
 └── docs/
 ```
 

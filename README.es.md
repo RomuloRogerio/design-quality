@@ -537,7 +537,14 @@ design-quality/
 │           ├── quality-dimensions.md
 │           ├── passes-visuals.md
 │           ├── passes-motion.md
-│           └── designer-skills-index.md
+│           ├── designer-skills-index.md
+│           └── agents/            ← plantillas de agentes
+│               ├── review-slop.md
+│               ├── review-scorecard.md
+│               ├── review-emotion.md
+│               ├── deepdive-dispatch.md
+│               ├── fix-passes.md
+│               └── direction-research.md
 └── docs/
     ├── review-guide.md
     ├── fix-mode-walkthrough.md

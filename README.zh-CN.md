@@ -472,6 +472,7 @@ design-quality/
 │   └── design-quality/
 │       ├── SKILL.md
 │       └── references/
+│           └── agents/   ← 专用智能体提示词（Review·Fix·Direction）
 └── docs/
 ```
 
