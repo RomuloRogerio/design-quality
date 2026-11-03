@@ -2,17 +2,18 @@
 name: design-quality-v2
 description: >-
   Full-cycle design quality skill for AI-generated interfaces — evaluate, critique, and fix.
-  Detects AI slop (purple gradients, gradient text, glow effects, emoji icons, card-grid filler,
-  Inter-everything typography, generic layouts) and guides creation with a product direction
-  framework and investment gates. Use WHENEVER: reviewing or auditing a UI, asking if something
-  looks AI-generated, looks like a template, feels generic, or has no character; creating a new
-  page, dashboard, app screen, or landing page; redesigning, unslopping, or polishing an existing
-  screen; improving any frontend interface. Even if the user does not say "design quality" —
-  if they're building or evaluating any UI, use this skill. Produces: slop audit, scored critique
-  (8 dimensions), P0–P3 fix list, creative direction, and code corrections. Works on React,
-  Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing pages, components. Triggers on:
-  "review this design", "does this look AI?", "critique this UI", "unslop", "make it less generic",
-  "build this page well", "design this screen", "polish this", "improve the UI", "redesign".
+  Uses parallel subagents for Review and Fix modes. Detects AI slop (purple gradients, gradient
+  text, glow effects, emoji icons, card-grid filler, Inter-everything typography, generic layouts)
+  and guides creation with a product direction framework and investment gates. Use WHENEVER:
+  reviewing or auditing a UI, asking if something looks AI-generated, looks like a template,
+  feels generic, or has no character; creating a new page, dashboard, app screen, or landing page;
+  redesigning, unslopping, or polishing an existing screen; improving any frontend interface.
+  Even if the user does not say "design quality" — if they're building or evaluating any UI,
+  use this skill. Produces: slop audit, scored critique (8 dimensions), P0–P3 fix list, creative
+  direction, and code corrections. Works on React, Tailwind, HTML/CSS, Vue, Svelte, dashboards,
+  apps, landing pages, components. Triggers on: "review this design", "does this look AI?",
+  "critique this UI", "unslop", "make it less generic", "build this page well", "design this
+  screen", "polish this", "improve the UI", "redesign".
 ---
 
 # Design Quality v2
@@ -20,6 +21,9 @@ description: >-
 A full-cycle skill for creating and evaluating interface design. For existing interfaces, it audits
 and scores. For new ones, it sets a direction and ensures the craft is there. For broken ones, it
 applies fixes pass by pass.
+
+This version uses specialized subagents for Review Mode and Fix Mode — parallel where possible,
+deep-diving automatically when a dimension scores ≤ 5.
 
 ---
 
@@ -61,114 +65,68 @@ direction, palette, and Signature — don't override it without asking.
 
 ---
 
+## Agent Architecture
+
+For Review Mode and Fix Mode, dispatch specialized subagents rather than doing all work serially.
+This produces deeper analysis in less time.
+
+### When to use agents
+
+- **Review Mode** on any real UI input → always dispatch 3 parallel review agents
+- **Any dimension scoring ≤ 5** → auto-dispatch the matching deep-dive agent after the scorecard
+- **Fix Mode** → dispatch a dedicated fix agent per pass (passes 3 and 4 in parallel)
+- **Create Mode Gate 1** → optionally dispatch a direction research agent when product URL or category is known
+
+### Fork vs fresh
+
+- **`subagent_type: "fork"`** — for review and fix agents that need the full conversation context (the UI input, screenshots, code)
+- **Default (fresh)** — for direction research agents that don't need the conversation history
+
+### Agent prompt files
+
+Full prompt templates are in `references/agents/`. Reference them when dispatching — each file
+is self-contained with the instructions and output format for that agent.
+
+---
+
 ## Review Mode
 
 Audit, score, and prioritize. No code changes without asking first.
 
-### Step 1: Audit for AI Slop Signs
+### Step 0: Dispatch 3 Parallel Review Agents
 
-Go through the full catalog in [references/slop-signs.md](references/slop-signs.md). Log each finding:
+Before doing any analysis yourself, dispatch all three agents in one message using the Agent tool.
+All three are forks — they inherit full conversation context including the UI input.
 
-```
-[location] [what you found] — P0 / P1 / P2 / P3
-```
+**Agent 1 — Slop Auditor**
+Prompt template: `references/agents/review-slop.md`
+Task: slop audit, template check, accessibility, mobile/touch, performance quick checks.
 
-P0 = breaks usability or readability  
-P1 = makes it clearly look AI-generated  
-P2 = polish issue that weakens the craft  
-P3 = nice-to-have improvement  
+**Agent 2 — Scorecard Scorer**
+Prompt template: `references/agents/review-scorecard.md`
+Task: score all 8 dimensions 1–10 with reasoning per score.
 
-**Quick hits — check these first:**
-- Purple-to-blue gradients on any surface
-- Gradient text (`background-clip: text`)
-- Glowing borders or shadows with color
-- Emoji used as icons or decoration in labels
-- Mixed icon libraries on one surface
-- Radial color blobs behind content
-- Evenly-spaced card grids used as filler
-- ALL CAPS tracked labels on every section header
-- Copy that "shouts" ("Revolutionize Your Workflow Today")
-- Dark theme applied by default without product reason
-- Oversized hero headline on an operational tool
+**Agent 3 — Emotion Analyst**
+Prompt template: `references/agents/review-emotion.md`
+Task: Felt State Check across all key states + Peak-End Rule mapping.
 
-**Template check** — ask this explicitly:
-> "If you swapped this product's name for any other product in its category, would the UI still fit?"
+Wait for all 3 to complete, then proceed to Step 1.
 
-If yes → P1 automatic. The interface has no specific identity. The World, Signature, and Moments are all missing.
+### Step 1: Synthesize
 
-**Accessibility quick check** — flag these:
-- `outline: none` on focus without a visible replacement → P0
-- Icon buttons with no `aria-label` → P1
-- Form inputs with no associated `<label>` → P1
-- `user-scalable=no` or `maximum-scale=1` in viewport → P1
-- Color is the only differentiator between states (no icon or label backup) → P1
-
-**Mobile / touch quick check:**
-- Touch targets smaller than 44×44px → P1
-- Hover effects with no `@media (hover: hover)` guard (fires on tap, looks broken) → P2
-- `overscroll-behavior` missing on modals/drawers (scroll bleeds to body) → P2
-
-**Performance quick check:**
-- `transition: all` anywhere → P2
-- Lists with >50 items, no virtualization hint → P2
-- Images without explicit `width` and `height` (causes layout shift) → P2
-
-**Felt State Check** — ask for at least the primary state:
-
-> "What is the person actually feeling when they arrive at each key state?
-> Loading: anxious? Waiting? Empty state: lost? First time: overwhelmed?
-> Error: embarrassed? Is the interface acknowledging those feelings — or ignoring them?"
-
-Flag when:
-- Loading copy is just "Loading..." → P2 (should be "Getting your data")
-- Error message blames the user for a system failure → P1
-- Empty state offers nothing — no instruction, no CTA → P1
-- Success is absorbed silently (no micro-win acknowledgment) → P2
-- Error recovery is rushed (next prompt appears before user can process) → P2
-
-**Emotional Arc Check** (Peak-End Rule) — for flows with more than 2 steps:
-
-Map the two moments that dominate how the flow is remembered:
-- **Peak**: the most emotionally intense moment (order placed, form submitted, first result). Is it well-designed?
-- **End**: the final screen/state. Does it confirm clearly and land warm?
-
-Flag: ending on an administrative screen, a confusing status page, or unresolved error → P1.
-
-### Step 2: Score on 8 Dimensions
-
-Rate 1–10. See [references/quality-dimensions.md](references/quality-dimensions.md) for what each
-score level means.
-
-| Dimension | What it asks |
-|---|---|
-| **Product fit** | Does the visual direction match the product's actual job and audience? |
-| **Hierarchy** | Can the user see what matters first, second, third? |
-| **Clarity** | Are labels, actions, data, and states easy to understand? |
-| **Taste** | Does it feel intentional without looking templated? |
-| **Restraint** | No unnecessary decoration, filler, or style cosplay? |
-| **Density** | Is the amount of information right for the task? |
-| **Craft** | Spacing, type, alignment, contrast, component states — polished? |
-| **Responsiveness** | Does the design survive mobile and narrow layouts? |
-
-**Failure flags** — flag as failure even if code works and scores look ok:
-- Chart labels overlap or overflow controls
-- Dark mode hurts readability without adding functional value
-- Reference style overwhelms the product's own identity
-- The UI looks more designed but is less useful
-- The result looks like a generic SaaS template
-- Mobile layout is cramped or broken
-
-### Step 3: Output
+Merge the three agents' outputs into the standard output format.
+Deduplicate findings that appear in multiple agents. If agents disagree on a score, use the lower
+value and note the disagreement.
 
 ```
 ## Slop Audit
-[each finding with location and severity]
+[from Agent 1 — each finding with location and severity]
 
 ## Template Check
-[answer to "would this fit any product in the category?"]
+[from Agent 1]
 
 ## Scorecard
-Product fit:    X/10   [one-line note]
+Product fit:    X/10   [from Agent 2 — one-line note]
 Hierarchy:      X/10
 Clarity:        X/10
 Taste:          X/10
@@ -177,6 +135,9 @@ Density:        X/10
 Craft:          X/10
 Responsiveness: X/10
 Overall:        X/10
+
+## Emotional Design
+[from Agent 3 — Felt State + Peak-End findings]
 
 ## Verdict
 Best part:
@@ -187,8 +148,28 @@ Quick wins (P1): [top 3 at most]
 
 After the output, ask whether to apply any of the fixes.
 
-**Deep-dive map** — if a dimension scores ≤ 5, there is a matching designer-skill that goes deeper.
-See [references/designer-skills-index.md](references/designer-skills-index.md) for the full map.
+### Step 2: Auto Deep-Dive
+
+After the scorecard is shown, check every dimension. For any that scored ≤ 5, auto-dispatch the
+matching deep-dive agent without waiting to be asked.
+
+See `references/agents/deepdive-dispatch.md` for the dispatch table and prompt templates.
+
+Announce before dispatching: "Hierarchy scored 4 — dispatching a focused visual-hierarchy critique."
+
+**Deep-dive map:**
+
+| Dimension / finding | Skill to dispatch |
+|---|---|
+| Hierarchy ≤ 5 | `critique-visual-hierarchy` skill |
+| Clarity ≤ 5 (affordances) | `critique-affordance` skill |
+| Clarity ≤ 5 (density) | `critique-information-density` skill |
+| Craft ≤ 5 (typography) | `critique-typography` skill |
+| Craft ≤ 5 (color) | `critique-color` skill |
+| Craft ≤ 5 (layout) | `critique-composition` skill |
+| Taste ≤ 5 (feels flat) | `interfaces-that-feel` skill |
+| Density ≤ 5 | `critique-information-density` skill |
+| Emotional arc issues | `peak-end-rule` skill |
 
 ---
 
@@ -202,10 +183,15 @@ State which applies before proceeding:
 - **App screen** — tool, dashboard, data product. Density, actions, and states govern.
 - **Page** — landing, editorial, marketing. Composition, rhythm, and sections govern.
 
-Different heuristics apply in each. When building an app screen, a hero with large type is slop.
-When building a landing page, dense compact rows are wrong.
+### Gate 1: Product Research Agent (optional but recommended)
 
-### Gate 1: Product Understanding
+If the product has a URL, name, or belongs to a known category, dispatch a research agent before
+asking the user for product understanding. This saves a round-trip and surfaces domain-specific
+conventions the user might not think to mention.
+
+Prompt template: `references/agents/direction-research.md`
+
+If no URL or category is known, skip this step and ask the user directly.
 
 Check for an existing `PROJECT_DESIGN.md` in the project root. If it exists, read it — direction is
 already set; skip to Gate 3 (Build) and apply the recorded direction.
@@ -225,14 +211,11 @@ Derive five lines from the product — never from trends, portfolios, or what lo
 - **World**: The material or place the product belongs to naturally. A note app: paper and ink.
   A monitoring tool: instruments and night shifts. A travel app: maps and window light.
   This tints the neutrals, the accent, and the visual moments.
-- **Moments**: 1–2 places on the screen where the design gets rich and specific — a chart where
-  each color means a series, an object from the World in the hero, a rendered card with real data.
+- **Moments**: 1–2 places on the screen where the design gets rich and specific.
   Everything else stays quiet so these read instantly.
 - **Signature**: One small detail only this product would have, repeated consistently.
-  A live status dot for a monitoring tool. Keycaps on a developer tool. A route line for a delivery
-  app. One detail, not five.
 
-Present 1–3 directions. For each, also show three **Design Dials** as a quick signal:
+Present 1–3 directions. For each, show three **Design Dials**:
 
 ```
 Variance  ░░░░░░░░░░  1–10   (1 = minimal/centered, 10 = bold/asymmetric)
@@ -273,8 +256,6 @@ Mono: [font name] (if applicable)
 ## Border radius: [value]px
 ```
 
-This file makes the direction persistent — the skill reads it at the start of the next session.
-
 ### Design Principles
 
 With direction confirmed, apply in this order (earlier passes affect later ones):
@@ -287,18 +268,16 @@ With direction confirmed, apply in this order (earlier passes affect later ones)
 
 #### Color
 - One neutral ramp, tinted toward the World. Backgrounds, surfaces, borders, text all from that ramp.
-- Apps and dashboards: backgrounds stay near-neutral. The content carries color, not the chrome.
 - One accent, used rarely: primary action, selection, or the one number that matters.
 - Three text roles: primary, secondary, muted. Never ten slightly different grays.
-- **Banned**: hue gradients on surfaces, gradient text, colored glows, colored shadows, radial blobs,
-  neon borders.
+- **Banned**: hue gradients on surfaces, gradient text, colored glows, colored shadows, radial blobs, neon borders.
 - Accent with text on it: ≥ 4.5:1 contrast.
-- Prefer OKLCH for new color tokens: `oklch(L% C H)` — perceptually uniform, easier to adjust.
+- Prefer OKLCH for new color tokens: `oklch(L% C H)`.
 
 #### Typography
 - Pair a distinctive display font with a clean body font. Maximize weight contrast.
 - `text-wrap: balance` on all headings (h1–h3). `text-wrap: pretty` on body and list text.
-- `-webkit-font-smoothing: antialiased` on `:root` or `html` (macOS renders crisper).
+- `-webkit-font-smoothing: antialiased` on `:root` or `html`.
 - Minimum 14px body text (prefer 16px). One h1 per page.
 
 #### Components
@@ -313,34 +292,43 @@ With direction confirmed, apply in this order (earlier passes affect later ones)
 
 #### One Bright Element Rule
 Each screen gets one polished, rich element. Everything around it stays quiet.
-The chrome (navigation, buttons, backgrounds) never competes with the content.
 
 #### Anti-Generic Guardrail
-If the design would look impressive in a portfolio screenshot but make the product less clear,
-reject it.
+If the design would look impressive in a portfolio screenshot but make the product less clear, reject it.
 
 ### After Building
 
-Run Review Mode. Done when: no P0 findings, overall ≥ 7/10, product fit ≥ 7/10.
+Run Review Mode (with agents). Done when: no P0 findings, overall ≥ 7/10, product fit ≥ 7/10.
 
 ---
 
 ## Fix Mode
 
-Run Review Mode first. Apply fixes in pass order — complete each pass before starting the next:
+Run Review Mode first to get the scorecard. Then dispatch fix agents in pass order.
 
-1. **Spacing** — grid alignment, rhythm, grouping
+**Execution order:**
+- Passes 1, 2 → sequential (spacing first, then color)
+- Pass 3 + Pass 4 → **parallel** (icons and copy are independent)
+- Passes 5–10 → sequential
+
+See `references/agents/fix-passes.md` for each pass's agent prompt template.
+
+For each pass, announce what the agent is doing and report per pass: what changed and what still
+needs attention.
+
+**Pass order:**
+1. **Spacing** — 8px grid alignment, rhythm, grouping
 2. **Color** — remove slop, build from neutral ramp
-3. **Icons** — one set, one size, one stroke, currentColor. If `better-icons` MCP is available, use `better-icons search <query>` to find the right icon instead of inventing SVG inline.
-4. **Copy** — remove emoji labels, calm the shouting, make it specific to this product
-5. **Typography** — hierarchy, weights, `text-wrap: balance` on headings, `text-wrap: pretty` on body, `-webkit-font-smoothing: antialiased` at root, `tabular-nums` on dynamic numbers
+3. **Icons** — one set, one size, one stroke, currentColor *(parallel with Copy)*
+4. **Copy** — remove emoji labels, calm the shouting, make it product-specific *(parallel with Icons)*
+5. **Typography** — hierarchy, weights, `text-wrap: balance`, `text-wrap: pretty`, antialiasing, `tabular-nums`
 6. **Layout** — alignment, density
 7. **Details** — concentric radii, shadows, borders
-8. **Accessibility & Touch** — focus states (`focus-visible`, not `focus`), `aria-label` on icon buttons, labels on inputs, `touch-action: manipulation` on buttons, hover wrapped in `@media (hover: hover) and (pointer: fine)`, touch targets ≥ 44px, `overscroll-behavior: contain` on modals
-9. **Visuals** — See [references/passes-visuals.md](references/passes-visuals.md). Empty state illustrations exist and match the product World; icon library is consistent (one set, one stroke weight); images have aspect ratios defined; no stock photo that could belong to any product.
-10. **Motion** — Last pass, only where it adds meaning. See [references/passes-motion.md](references/passes-motion.md). CSS transitions preferred over keyframes for interactive elements (interruptible); `scale(0.96)` on button press; no custom animation on interactions used >10×/day; `prefers-reduced-motion` respected everywhere.
+8. **Accessibility & Touch** — focus states, `aria-label`, `touch-action: manipulation`, 44px targets, `overscroll-behavior`
+9. **Visuals** — empty state illustrations, icon consistency, image aspect ratios. See `references/passes-visuals.md`
+10. **Motion** — last pass, only where it adds meaning. See `references/passes-motion.md`
 
-Report per pass: what changed and what still needs attention.
+After all passes: run Review Mode agents again to verify. Report delta from original scorecard.
 
 ---
 
@@ -351,7 +339,7 @@ For interfaces that are mostly well-designed but feel slightly off.
 Technique: slow the interface to 10% speed in browser DevTools (Animations panel) and walk every
 state: hover, focus, active, loading, empty. What feels off at 10% is what's subtly wrong at full speed.
 
-See [references/micro-polish.md](references/micro-polish.md) for specific values.
+See `references/micro-polish.md` for specific values.
 
 **Quick checklist:**
 - [ ] Concentric border radius: outer = inner + padding
@@ -361,9 +349,9 @@ See [references/micro-polish.md](references/micro-polish.md) for specific values
 - [ ] `font-variant-numeric: tabular-nums` on any dynamically updating numbers
 - [ ] `text-wrap: balance` on all headings (h1–h3)
 - [ ] `text-wrap: pretty` on paragraphs, list items, card descriptions
-- [ ] `-webkit-font-smoothing: antialiased` on `:root` (missing → macOS text looks heavier)
-- [ ] `touch-action: manipulation` on all buttons (removes 300ms tap delay on mobile)
-- [ ] Hover effects wrapped in `@media (hover: hover) and (pointer: fine)` (otherwise fires on mobile tap)
+- [ ] `-webkit-font-smoothing: antialiased` on `:root`
+- [ ] `touch-action: manipulation` on all buttons
+- [ ] Hover effects wrapped in `@media (hover: hover) and (pointer: fine)`
 - [ ] Images: 1px outline `oklch(0 0 0 / 0.1)` light, `oklch(1 0 0 / 0.1)` dark
 - [ ] Never `transition: all` — specify exact properties
 - [ ] 44px minimum hit area on mobile (40px on dense desktop)
