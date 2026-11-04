@@ -1,0 +1,5 @@
+{
+  "name": "design-quality",
+  "version": "0.1.0",
+  "description": "Slash commands /review /direction /fix /polish and UI-file status hints for the design-quality skill"
+}
