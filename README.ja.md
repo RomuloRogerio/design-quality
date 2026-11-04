@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 AI生成のインターフェースを評価・修正する Claude Code スキルです。
@@ -30,13 +32,52 @@ React、Tailwind、HTML/CSS、Vue、Svelte、ダッシュボード、アプリ�
 
 ```bash
 # グローバルインストール
-claude skills install https://github.com/[あなたのハンドル]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # またはそのまま直接コピー
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 これ以降、Claude Codeのセッションで UIのレビュー、批評、または構築を依頼すると、スキルが自動的にロードされます。
+
+<details>
+<summary>🔍 ターミナル出力例 — Review モード</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### Cursor / Windsurf / Claudeを使ったエディタで使用
 
@@ -187,76 +228,76 @@ UIを書く前に、スキルが要求するもの：
 
 | パターン | 深刻度 |
 |---|---|
-| 背景、カード、ボタンへの紫から青へのグラデーション | P1 |
-| サーフェスへのあらゆる色相グラデーション | P1 |
-| グラデーションテキスト（`background-clip: text`） | P1 |
-| 光るボーダー（彩色した`box-shadow`） | P1 |
-| コンテンツの後ろの放射状カラーブロブ / アトモスフィアウォッシュ | P1 |
-| アプリ画面で色相として読まれる背景 | P1 |
-| カードやボタンへの彩色シャドウ | P2 |
-| 意味のあるレイヤリング理由のない「グラスモーフィズム」ブラー | P2 |
+| 背景、カード、ボタンへの紫から青へのグラデーション | `P1` |
+| サーフェスへのあらゆる色相グラデーション | `P1` |
+| グラデーションテキスト（`background-clip: text`） | `P1` |
+| 光るボーダー（彩色した`box-shadow`） | `P1` |
+| コンテンツの後ろの放射状カラーブロブ / アトモスフィアウォッシュ | `P1` |
+| アプリ画面で色相として読まれる背景 | `P1` |
+| カードやボタンへの彩色シャドウ | `P2` |
+| 意味のあるレイヤリング理由のない「グラスモーフィズム」ブラー | `P2` |
 
 ### タイポグラフィ
 
 | パターン | 深刻度 |
 |---|---|
-| ラベルや見出しの絵文字（"新機能 ✨"、"🚀 起動"） | P1 |
-| 全セクションヘッダーのトラッキングつきALLCAPSラベル | P1 |
-| 機能業務ツールへの過大なヒーロー見出し | P1 |
-| 叫び声コピー（"今すぐワークフローを革命しよう"） | P1 |
-| 他のタイポグラフィ判断なしにInterのみ | P2 |
-| 見出しとボディのビジュアルウェイト差なし | P1 |
+| ラベルや見出しの絵文字（"新機能 ✨"、"🚀 起動"） | `P1` |
+| 全セクションヘッダーのトラッキングつきALLCAPSラベル | `P1` |
+| 機能業務ツールへの過大なヒーロー見出し | `P1` |
+| 叫び声コピー（"今すぐワークフローを革命しよう"） | `P1` |
+| 他のタイポグラフィ判断なしにInterのみ | `P2` |
+| 見出しとボディのビジュアルウェイト差なし | `P1` |
 
 ### レイアウトと構造
 
 | パターン | 深刻度 |
 |---|---|
-| コンテンツ穴埋めに使われる均等スペースの3カラムカードグリッド | P1 |
-| 重複したフィーチャーカード（アイコン+見出し+2文ずつ） | P1 |
-| 製品上の理由なしにデフォルト適用されたダークダッシュボード | P1 |
-| スペースを埋めるためだけに存在するセクション（偽の統計、作り話のお客様の声） | P1 |
-| ビジュアルヒエラルキーなし — 全要素が同じウェイト | P1 |
-| 全て中央揃え、左揃えの読み取りパターンなし | P2 |
+| コンテンツ穴埋めに使われる均等スペースの3カラムカードグリッド | `P1` |
+| 重複したフィーチャーカード（アイコン+見出し+2文ずつ） | `P1` |
+| 製品上の理由なしにデフォルト適用されたダークダッシュボード | `P1` |
+| スペースを埋めるためだけに存在するセクション（偽の統計、作り話のお客様の声） | `P1` |
+| ビジュアルヒエラルキーなし — 全要素が同じウェイト | `P1` |
+| 全て中央揃え、左揃えの読み取りパターンなし | `P2` |
 
 ### アイコン
 
 | パターン | 深刻度 |
 |---|---|
-| ナビゲーションやカードでアイコンとして使われる絵文字 | P1 |
-| 1つの画面に2つ以上のアイコンライブラリを混在 | P2 |
-| 独自の色を持つアイコン（`currentColor`でない） | P2 |
-| 全ての見出しやラベルの前の装飾アイコン | P2 |
+| ナビゲーションやカードでアイコンとして使われる絵文字 | `P1` |
+| 1つの画面に2つ以上のアイコンライブラリを混在 | `P2` |
+| 独自の色を持つアイコン（`currentColor`でない） | `P2` |
+| 全ての見出しやラベルの前の装飾アイコン | `P2` |
 
 ### テンプレートアイデンティティ
 
 | パターン | 深刻度 |
 |---|---|
-| 製品名を競合他社に変えてもUIが合い続ける | P1 |
-| シグネチャー詳細なし — この製品だけが持つものが何もない | P1 |
-| ワールド参照なし — 中立色が製品ドメインに向いたティントなし | P2 |
-| どの製品にも当てはまる汎用ストックイラスト | P2 |
+| 製品名を競合他社に変えてもUIが合い続ける | `P1` |
+| シグネチャー詳細なし — この製品だけが持つものが何もない | `P1` |
+| ワールド参照なし — 中立色が製品ドメインに向いたティントなし | `P2` |
+| どの製品にも当てはまる汎用ストックイラスト | `P2` |
 
 ### アクセシビリティと技術
 
 | パターン | 深刻度 |
 |---|---|
-| テキストコントラストが4.5:1未満（WCAG AA） | P0 |
-| インタラクティブ要素に可視フォーカスインジケータなし | P0 |
-| `aria-label`のないアイコンボタン | P1 |
-| 関連付けられた`<label>`のないフォーム入力 | P1 |
-| ビューポートメタの`user-scalable=no` | P1 |
-| `prefers-reduced-motion`が尊重されていない | P1 |
-| 特定プロパティではなく`transition: all` | P2 |
-| 重なるチャートラベル | P0 |
+| テキストコントラストが4.5:1未満（WCAG AA） | `P0` |
+| インタラクティブ要素に可視フォーカスインジケータなし | `P0` |
+| `aria-label`のないアイコンボタン | `P1` |
+| 関連付けられた`<label>`のないフォーム入力 | `P1` |
+| ビューポートメタの`user-scalable=no` | `P1` |
+| `prefers-reduced-motion`が尊重されていない | `P1` |
+| 特定プロパティではなく`transition: all` | `P2` |
+| 重なるチャートラベル | `P0` |
 
 ### モバイルとタッチ
 
 | パターン | 深刻度 |
 |---|---|
-| 44×44px未満のタッチターゲット | P1 |
-| `@media (hover: hover)`ガードなしのホバーエフェクト | P2 |
-| ボタンに`touch-action: manipulation`がない | P2 |
-| モーダルに`overscroll-behavior: contain`がない | P2 |
+| 44×44px未満のタッチターゲット | `P1` |
+| `@media (hover: hover)`ガードなしのホバーエフェクト | `P2` |
+| ボタンに`touch-action: manipulation`がない | `P2` |
+| モーダルに`overscroll-behavior: contain`がない | `P2` |
 
 ---
 
@@ -300,6 +341,16 @@ UIを書く前に、スキルが要求するもの：
 ---
 
 ## 適用されるデザイン原則
+
+### 🧠 理論的基盤とデザイン心理学
+
+このスキルは、一時的な美学ではなく、確固たる行動心理学と古典的なデザインフレームワークに基づいてインターフェースを評価します：
+
+- **ピーク・エンドの法則（Daniel Kahneman）：** ユーザーは体験を平均ではなく、ピーク時と終了時で判断します。そのためこのスキルは、各フローで最も強烈なインタラクションと最後の画面に特別な注意を払います。
+- **感情的デザインフレームワーク（Don Norman）：** インターフェースは3つのレベルを同時に対処しなければなりません——本能的（第一印象）、行動的（使いやすさ）、内省的（意味とアイデンティティ）。Product Fitが7未満のスコアは、内省的レベルでの失敗を示すことが多いです。
+- **アフォーダンス（James J. Gibson / Don Norman）：** インタラクティブ要素は、探索を必要とせずに機能を明確に伝えなければなりません。フォーカス状態の欠如、ラベルなしのアイコンボタン、見えないタッチターゲットはすべてこの原則に違反します。
+
+---
 
 ### スペーシング
 - 8pxグリッド。全マージン、パディング、ギャップは4または8の倍数。
@@ -457,24 +508,28 @@ transitionは中断可能です。ユーザーがドロワーを開いてアニ�
 
 ```
 design-quality/
-├── README.md              ← English
-├── README.es.md           ← Español
-├── README.pt-BR.md        ← Português (Brasil)
-├── README.zh-CN.md        ← 简体中文
-├── README.fr.md           ← Français
-├── README.de.md           ← Deutsch
-├── README.ja.md           ← 日本語（このファイル）
-├── README.ko.md           ← 한국어
+├── README.md（+ 翻訳）
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md
-│       └── references/
-│           └── agents/   ← 専門エージェントプロンプト (Review・Fix・Direction)
-└── docs/
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**クイックナビゲーション：**
+
+| ファイル | 説明 |
+|---|---|
+| [README.md](README.md) | このファイル（+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)） |
+| [CHANGELOG.md](CHANGELOG.md) | バージョン履歴 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 貢献方法 |
+| [LICENSE](LICENSE) | MITライセンス |
+| [SKILL.md](skills/design-quality/SKILL.md) | インストール可能なスキルファイル |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | 完全なアンチパターンカタログ |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | スコアカード次元の詳細 |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | マイクロポリッシュリファレンス |
 
 ---
 

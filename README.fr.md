@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 Une skill pour Claude Code qui évalue et corrige les interfaces générées par IA.
@@ -30,13 +32,52 @@ Fonctionne avec React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landin
 
 ```bash
 # Installer globalement
-claude skills install https://github.com/[votre-identifiant]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # Ou copier directement
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 Ensuite, dans toute session Claude Code, la skill se charge automatiquement quand vous demandez à Claude de revoir, critiquer ou construire une UI.
+
+<details>
+<summary>🔍 Exemple de sortie terminal — Mode Review</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### Avec Cursor / Windsurf / tout éditeur propulsé par Claude
 
@@ -187,76 +228,76 @@ Technique : ralentir l'interface à 10% de vitesse dans DevTools (panneau Animat
 
 | Pattern | Sévérité |
 |---|---|
-| Dégradé violet-bleu sur fond, carte ou bouton | P1 |
-| Tout dégradé de teinte à teinte sur une surface | P1 |
-| Texte en dégradé (`background-clip: text`) | P1 |
-| Bordure lumineuse (`box-shadow` avec couleur saturée) | P1 |
-| Tache de couleur radiale / lavis atmosphérique derrière le contenu | P1 |
-| Fond qui se lit comme une teinte sur un écran d'app | P1 |
-| Ombre colorée sur cartes ou boutons | P2 |
-| Blur "glassmorphisme" sans raison de superposition significative | P2 |
+| Dégradé violet-bleu sur fond, carte ou bouton | `P1` |
+| Tout dégradé de teinte à teinte sur une surface | `P1` |
+| Texte en dégradé (`background-clip: text`) | `P1` |
+| Bordure lumineuse (`box-shadow` avec couleur saturée) | `P1` |
+| Tache de couleur radiale / lavis atmosphérique derrière le contenu | `P1` |
+| Fond qui se lit comme une teinte sur un écran d'app | `P1` |
+| Ombre colorée sur cartes ou boutons | `P2` |
+| Blur "glassmorphisme" sans raison de superposition significative | `P2` |
 
 ### Typographie
 
 | Pattern | Sévérité |
 |---|---|
-| Emojis dans les étiquettes ou titres ("Nouveau ✨", "🚀 Lancer") | P1 |
-| Étiquettes en MAJUSCULES avec tracking sur chaque en-tête de section | P1 |
-| Grand titre héroïque sur un outil opérationnel fonctionnel | P1 |
-| Copy qui crie ("Révolutionnez Votre Flux de Travail Aujourd'hui") | P1 |
-| Seulement Inter sans autre décision typographique | P2 |
-| Pas de différence de poids visuel entre titre et corps | P1 |
+| Emojis dans les étiquettes ou titres ("Nouveau ✨", "🚀 Lancer") | `P1` |
+| Étiquettes en MAJUSCULES avec tracking sur chaque en-tête de section | `P1` |
+| Grand titre héroïque sur un outil opérationnel fonctionnel | `P1` |
+| Copy qui crie ("Révolutionnez Votre Flux de Travail Aujourd'hui") | `P1` |
+| Seulement Inter sans autre décision typographique | `P2` |
+| Pas de différence de poids visuel entre titre et corps | `P1` |
 
 ### Layout et Structure
 
 | Pattern | Sévérité |
 |---|---|
-| Grille de 3 colonnes équidistantes utilisée comme remplissage de contenu | P1 |
-| Cartes de fonctionnalités dupliquées (icône + titre + deux phrases chacune) | P1 |
-| Dashboard sombre appliqué par défaut sans raison produit | P1 |
-| Section qui existe uniquement pour remplir l'espace (stats fausses, témoignages inventés) | P1 |
-| Pas de hiérarchie visuelle — tous les éléments au même poids | P1 |
-| Tout centré, pas de pattern de lecture aligné à gauche | P2 |
+| Grille de 3 colonnes équidistantes utilisée comme remplissage de contenu | `P1` |
+| Cartes de fonctionnalités dupliquées (icône + titre + deux phrases chacune) | `P1` |
+| Dashboard sombre appliqué par défaut sans raison produit | `P1` |
+| Section qui existe uniquement pour remplir l'espace (stats fausses, témoignages inventés) | `P1` |
+| Pas de hiérarchie visuelle — tous les éléments au même poids | `P1` |
+| Tout centré, pas de pattern de lecture aligné à gauche | `P2` |
 
 ### Icônes
 
 | Pattern | Sévérité |
 |---|---|
-| Emojis utilisés comme icônes dans la navigation ou les cartes | P1 |
-| Deux bibliothèques d'icônes ou plus mélangées sur un écran | P2 |
-| Icônes avec leurs propres couleurs (pas `currentColor`) | P2 |
-| Icônes décoratives avant chaque titre ou étiquette | P2 |
+| Emojis utilisés comme icônes dans la navigation ou les cartes | `P1` |
+| Deux bibliothèques d'icônes ou plus mélangées sur un écran | `P2` |
+| Icônes avec leurs propres couleurs (pas `currentColor`) | `P2` |
+| Icônes décoratives avant chaque titre ou étiquette | `P2` |
 
 ### Identité de Modèle
 
 | Pattern | Sévérité |
 |---|---|
-| Remplacer le nom du produit par un concurrent — l'UI s'adapte toujours | P1 |
-| Pas de détail Signature — rien que seul ce produit aurait | P1 |
-| Pas de référence à l'Univers — les neutres n'ont pas de teinte vers le domaine du produit | P2 |
-| Illustration générique qui pourrait appartenir à n'importe quel produit | P2 |
+| Remplacer le nom du produit par un concurrent — l'UI s'adapte toujours | `P1` |
+| Pas de détail Signature — rien que seul ce produit aurait | `P1` |
+| Pas de référence à l'Univers — les neutres n'ont pas de teinte vers le domaine du produit | `P2` |
+| Illustration générique qui pourrait appartenir à n'importe quel produit | `P2` |
 
 ### Accessibilité et Technique
 
 | Pattern | Sévérité |
 |---|---|
-| Contraste de texte en dessous de 4.5:1 (WCAG AA) | P0 |
-| Pas d'indicateur de focus visible sur les éléments interactifs | P0 |
-| Bouton icône sans `aria-label` | P1 |
-| Input de formulaire sans `<label>` associé | P1 |
-| `user-scalable=no` dans le viewport meta | P1 |
-| `prefers-reduced-motion` non respecté | P1 |
-| `transition: all` au lieu de propriétés spécifiques | P2 |
-| Étiquettes de graphique qui se chevauchent | P0 |
+| Contraste de texte en dessous de 4.5:1 (WCAG AA) | `P0` |
+| Pas d'indicateur de focus visible sur les éléments interactifs | `P0` |
+| Bouton icône sans `aria-label` | `P1` |
+| Input de formulaire sans `<label>` associé | `P1` |
+| `user-scalable=no` dans le viewport meta | `P1` |
+| `prefers-reduced-motion` non respecté | `P1` |
+| `transition: all` au lieu de propriétés spécifiques | `P2` |
+| Étiquettes de graphique qui se chevauchent | `P0` |
 
 ### Mobile et Touch
 
 | Pattern | Sévérité |
 |---|---|
-| Cibles tactiles inférieures à 44×44px | P1 |
-| Effets hover sans garde `@media (hover: hover)` | P2 |
-| `touch-action: manipulation` manquant sur les boutons | P2 |
-| `overscroll-behavior: contain` manquant sur les modals | P2 |
+| Cibles tactiles inférieures à 44×44px | `P1` |
+| Effets hover sans garde `@media (hover: hover)` | `P2` |
+| `touch-action: manipulation` manquant sur les boutons | `P2` |
+| `overscroll-behavior: contain` manquant sur les modals | `P2` |
 
 ---
 
@@ -300,6 +341,16 @@ Densité    ░░░░░░░░░░  1–10   (1 = spacieux/éditorial, 1
 ---
 
 ## Principes de design appliqués
+
+### 🧠 Fondements Théoriques et Psychologie du Design
+
+Cette skill évalue les interfaces en s'appuyant sur une psychologie comportementale solide et des cadres de design classiques, plutôt que sur des esthétiques passagères :
+
+- **La Règle Pic-Fin (Daniel Kahneman) :** Les utilisateurs jugent les expériences par leurs moments de pic et de fin — pas par la moyenne. C'est pourquoi la skill accorde une attention particulière à l'interaction la plus intense et à l'écran final de chaque flux.
+- **Le Cadre du Design Émotionnel (Don Norman) :** Les interfaces doivent adresser simultanément trois niveaux — viscéral (première impression), comportemental (facilité d'utilisation) et réflexif (sens et identité). Un score inférieur à 7 en Product Fit signale souvent un échec au niveau réflexif.
+- **Les Affordances (James J. Gibson / Don Norman) :** Les éléments interactifs doivent communiquer leur fonction clairement sans nécessiter d'exploration. Les états de focus absents, les boutons icônes sans label et les cibles tactiles invisibles violent ce principe.
+
+---
 
 ### Espacement
 - Grille de 8px. Tous les marges, paddings, gaps sont des multiples de 4 ou 8.
@@ -457,24 +508,28 @@ Les transitions sont interruptibles. Si un utilisateur ouvre un drawer et le fer
 
 ```
 design-quality/
-├── README.md              ← English
-├── README.es.md           ← Español
-├── README.pt-BR.md        ← Português (Brasil)
-├── README.zh-CN.md        ← 简体中文
-├── README.fr.md           ← Français (ce fichier)
-├── README.de.md           ← Deutsch
-├── README.ja.md           ← 日本語
-├── README.ko.md           ← 한국어
+├── README.md (+ traductions)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md
-│       └── references/
-│           └── agents/   ← agents spécialisés (Review, Fix, Direction)
-└── docs/
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**Navigation rapide :**
+
+| Fichier | Description |
+|---|---|
+| [README.md](README.md) | Ce fichier (+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)) |
+| [CHANGELOG.md](CHANGELOG.md) | Historique des versions |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Comment contribuer |
+| [LICENSE](LICENSE) | Licence MIT |
+| [SKILL.md](skills/design-quality/SKILL.md) | La skill installable |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | Catalogue complet des anti-patterns |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Détails des dimensions du scorecard |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | Référence de micro-polissage |
 
 ---
 
