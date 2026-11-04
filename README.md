@@ -6,8 +6,6 @@
 
 ![design-quality](./cover.png)
 
-![Before / After demo](./docs/demo.gif)
-
 # design-quality
 
 A Claude Code skill for evaluating and fixing AI-generated interfaces.
@@ -15,6 +13,10 @@ A Claude Code skill for evaluating and fixing AI-generated interfaces.
 AI generates UIs fast, and wrong in the same ways every time. Purple gradients, gradient text, glowing borders, emoji icons, card grids with no content, Inter-everything typography, generic hero headlines on operational tools. These are tells. This skill catches them, scores the interface on 8 dimensions, and fixes them pass by pass.
 
 Works on React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing pages, components.
+
+## Demo
+
+![Before / After — AI slop vs reviewed interface](./docs/demo.gif)
 
 ---
 
