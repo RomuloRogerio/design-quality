@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 Una skill para Claude Code que evalúa y corrige interfaces generadas por IA.
@@ -30,13 +32,52 @@ Funciona con React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing p
 
 ```bash
 # Instalar globalmente
-claude skills install https://github.com/[tu-usuario]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # O copiar directamente
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 Luego, en cualquier sesión de Claude Code, la skill se carga automáticamente cuando le pides a Claude que revise, critique o construya una UI.
+
+<details>
+<summary>🔍 Ejemplo de output del terminal — Modo Review</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### Con Cursor / Windsurf / cualquier editor con Claude
 
@@ -211,76 +252,76 @@ Técnica: desacelerar la interfaz al 10% de velocidad en DevTools (panel de Anim
 
 | Patrón | Severidad |
 |---|---|
-| Gradiente de púrpura a azul en fondo, tarjeta o botón | P1 |
-| Cualquier gradiente de tono a tono en una superficie | P1 |
-| Texto en gradiente (`background-clip: text`) | P1 |
-| Borde luminoso (`box-shadow` con color saturado) | P1 |
-| Mancha de color radial / lavado atmosférico detrás del contenido | P1 |
-| Fondo que se lee como un tono en una pantalla de app | P1 |
-| Sombra con color en tarjetas o botones | P2 |
-| Blur de "glassmorfismo" sin razón de capas significativa | P2 |
+| Gradiente de púrpura a azul en fondo, tarjeta o botón | `P1` |
+| Cualquier gradiente de tono a tono en una superficie | `P1` |
+| Texto en gradiente (`background-clip: text`) | `P1` |
+| Borde luminoso (`box-shadow` con color saturado) | `P1` |
+| Mancha de color radial / lavado atmosférico detrás del contenido | `P1` |
+| Fondo que se lee como un tono en una pantalla de app | `P1` |
+| Sombra con color en tarjetas o botones | `P2` |
+| Blur de "glassmorfismo" sin razón de capas significativa | `P2` |
 
 ### Tipografía
 
 | Patrón | Severidad |
 |---|---|
-| Emojis en etiquetas o títulos ("Nuevo ✨", "🚀 Lanzar") | P1 |
-| Etiquetas en MAYÚSCULAS con tracking en cada encabezado de sección | P1 |
-| Titular de héroe enorme en una herramienta operacional funcional | P1 |
-| Copy que grita ("Revoluciona Tu Flujo de Trabajo Hoy") | P1 |
-| Solo Inter sin ninguna otra decisión tipográfica | P2 |
-| Sin diferencia de peso visual entre título y cuerpo | P1 |
+| Emojis en etiquetas o títulos ("Nuevo ✨", "🚀 Lanzar") | `P1` |
+| Etiquetas en MAYÚSCULAS con tracking en cada encabezado de sección | `P1` |
+| Titular de héroe enorme en una herramienta operacional funcional | `P1` |
+| Copy que grita ("Revoluciona Tu Flujo de Trabajo Hoy") | `P1` |
+| Solo Inter sin ninguna otra decisión tipográfica | `P2` |
+| Sin diferencia de peso visual entre título y cuerpo | `P1` |
 
 ### Layout y Estructura
 
 | Patrón | Severidad |
 |---|---|
-| Grid de 3 columnas igualmente espaciado usado como relleno de contenido | P1 |
-| Tarjetas de características duplicadas (ícono + título + dos oraciones cada una) | P1 |
-| Dashboard oscuro aplicado por defecto sin razón de producto | P1 |
-| Sección que existe solo para llenar espacio (estadísticas falsas, testimonios inventados) | P1 |
-| Sin jerarquía visual — todos los elementos con el mismo peso | P1 |
-| Todo centrado, sin patrón de lectura alineado a la izquierda | P2 |
+| Grid de 3 columnas igualmente espaciado usado como relleno de contenido | `P1` |
+| Tarjetas de características duplicadas (ícono + título + dos oraciones cada una) | `P1` |
+| Dashboard oscuro aplicado por defecto sin razón de producto | `P1` |
+| Sección que existe solo para llenar espacio (estadísticas falsas, testimonios inventados) | `P1` |
+| Sin jerarquía visual — todos los elementos con el mismo peso | `P1` |
+| Todo centrado, sin patrón de lectura alineado a la izquierda | `P2` |
 
 ### Íconos
 
 | Patrón | Severidad |
 |---|---|
-| Emojis usados como íconos en navegación o tarjetas | P1 |
-| Dos o más librerías de íconos mezcladas en una pantalla | P2 |
-| Íconos con sus propios colores (no `currentColor`) | P2 |
-| Íconos decorativos antes de cada título o etiqueta | P2 |
+| Emojis usados como íconos en navegación o tarjetas | `P1` |
+| Dos o más librerías de íconos mezcladas en una pantalla | `P2` |
+| Íconos con sus propios colores (no `currentColor`) | `P2` |
+| Íconos decorativos antes de cada título o etiqueta | `P2` |
 
 ### Identidad de Plantilla
 
 | Patrón | Severidad |
 |---|---|
-| Cambiar el nombre del producto por un competidor — la UI sigue encajando | P1 |
-| Sin detalle de Firma — nada que solo este producto tendría | P1 |
-| Sin referencia al Mundo — los neutrales no tienen tinte hacia el dominio del producto | P2 |
-| Ilustración de stock genérica que podría pertenecer a cualquier producto | P2 |
+| Cambiar el nombre del producto por un competidor — la UI sigue encajando | `P1` |
+| Sin detalle de Firma — nada que solo este producto tendría | `P1` |
+| Sin referencia al Mundo — los neutrales no tienen tinte hacia el dominio del producto | `P2` |
+| Ilustración de stock genérica que podría pertenecer a cualquier producto | `P2` |
 
 ### Accesibilidad y Técnico
 
 | Patrón | Severidad |
 |---|---|
-| Contraste de texto por debajo de 4.5:1 (WCAG AA) | P0 |
-| Sin indicador de foco visible en elementos interactivos | P0 |
-| Botón de ícono sin `aria-label` | P1 |
-| Input de formulario sin `<label>` asociado | P1 |
-| `user-scalable=no` en el viewport meta | P1 |
-| `prefers-reduced-motion` no respetado | P1 |
-| `transition: all` en lugar de propiedades específicas | P2 |
-| Etiquetas de gráficos superponiéndose | P0 |
+| Contraste de texto por debajo de 4.5:1 (WCAG AA) | `P0` |
+| Sin indicador de foco visible en elementos interactivos | `P0` |
+| Botón de ícono sin `aria-label` | `P1` |
+| Input de formulario sin `<label>` asociado | `P1` |
+| `user-scalable=no` en el viewport meta | `P1` |
+| `prefers-reduced-motion` no respetado | `P1` |
+| `transition: all` en lugar de propiedades específicas | `P2` |
+| Etiquetas de gráficos superponiéndose | `P0` |
 
 ### Mobile y Touch
 
 | Patrón | Severidad |
 |---|---|
-| Objetivos táctiles menores de 44×44px | P1 |
-| Efectos hover sin guardia `@media (hover: hover)` | P2 |
-| `touch-action: manipulation` faltante en botones | P2 |
-| `overscroll-behavior: contain` faltante en modals | P2 |
+| Objetivos táctiles menores de 44×44px | `P1` |
+| Efectos hover sin guardia `@media (hover: hover)` | `P2` |
+| `touch-action: manipulation` faltante en botones | `P2` |
+| `overscroll-behavior: contain` faltante en modals | `P2` |
 
 ---
 
@@ -359,6 +400,16 @@ Las sesiones futuras leen esto primero. La dirección no se desvía en proyectos
 ---
 
 ## Principios de diseño aplicados
+
+### 🧠 Fundamentos Teóricos y Psicología del Diseño
+
+Esta skill evalúa interfaces basándose en psicología del comportamiento y marcos de diseño clásicos, no en estéticas pasajeras:
+
+- **La Regla Pico-Final (Daniel Kahneman):** Los usuarios juzgan las experiencias por sus momentos pico y final — no por el promedio. Por eso la skill presta especial atención a la interacción más intensa y a la pantalla final de cada flujo.
+- **Marco de Diseño Emocional (Don Norman):** Las interfaces deben abordar tres niveles simultáneamente — visceral (primera impresión), conductual (facilidad de uso) y reflexivo (significado e identidad). Una puntuación inferior a 7 en Product Fit suele indicar falla en el nivel reflexivo.
+- **Affordances (James J. Gibson / Don Norman):** Los elementos interactivos deben comunicar su función claramente sin requerir exploración. Los estados de foco ausentes, los botones de ícono sin etiqueta y los objetivos táctiles invisibles violan este principio.
+
+---
 
 ### Espaciado
 - Cuadrícula de 8px. Todos los márgenes, paddings, gaps son múltiplos de 4 u 8.
@@ -517,39 +568,28 @@ Las transiciones son interrumpibles. Si un usuario abre un drawer y lo cierra a 
 
 ```
 design-quality/
-├── README.md              ← English
-├── README.es.md           ← Español (este archivo)
-├── README.pt-BR.md        ← Português (Brasil)
-├── README.zh-CN.md        ← 简体中文
-├── README.fr.md           ← Français
-├── README.de.md           ← Deutsch
-├── README.ja.md           ← 日本語
-├── README.ko.md           ← 한국어
+├── README.md (+ traducciones)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md       ← la skill instalable
-│       └── references/
-│           ├── slop-signs.md
-│           ├── micro-polish.md
-│           ├── quality-dimensions.md
-│           ├── passes-visuals.md
-│           ├── passes-motion.md
-│           ├── designer-skills-index.md
-│           └── agents/            ← plantillas de agentes
-│               ├── review-slop.md
-│               ├── review-scorecard.md
-│               ├── review-emotion.md
-│               ├── deepdive-dispatch.md
-│               ├── fix-passes.md
-│               └── direction-research.md
-└── docs/
-    ├── review-guide.md
-    ├── fix-mode-walkthrough.md
-    └── slop-field-guide.md
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**Navegación rápida:**
+
+| Archivo | Descripción |
+|---|---|
+| [README.md](README.md) | Este archivo (+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)) |
+| [CHANGELOG.md](CHANGELOG.md) | Historial de versiones |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Cómo contribuir |
+| [LICENSE](LICENSE) | Licencia MIT |
+| [SKILL.md](skills/design-quality/SKILL.md) | La skill instalable |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | Catálogo completo de anti-patrones |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Detalles de las dimensiones del scorecard |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | Referencia de micro-polish |
 
 ---
 

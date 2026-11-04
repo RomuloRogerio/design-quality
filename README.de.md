@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 Eine Skill für Claude Code, die KI-generierte Interfaces bewertet und korrigiert.
@@ -30,13 +32,52 @@ Funktioniert mit React, Tailwind, HTML/CSS, Vue, Svelte, Dashboards, Apps, Landi
 
 ```bash
 # Global installieren
-claude skills install https://github.com/[ihr-handle]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # Oder direkt kopieren
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 In jeder Claude Code-Sitzung lädt die Skill dann automatisch, wenn Sie Claude bitten, eine UI zu überprüfen, zu kritisieren oder zu erstellen.
+
+<details>
+<summary>🔍 Beispiel Terminal-Ausgabe — Review Mode</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### Mit Cursor / Windsurf / jedem Claude-basierten Editor
 
@@ -187,76 +228,76 @@ Technik: das Interface in DevTools (Animations-Panel) auf 10% Geschwindigkeit ve
 
 | Muster | Schweregrad |
 |---|---|
-| Violett-blauer Verlauf auf Hintergrund, Karte oder Button | P1 |
-| Jeder Farbton-zu-Farbton-Verlauf auf einer Fläche | P1 |
-| Verlaufstext (`background-clip: text`) | P1 |
-| Leuchtender Rand (`box-shadow` mit gesättigter Farbe) | P1 |
-| Radiale Farbkugel / atmosphärische Wäsche hinter dem Inhalt | P1 |
-| Hintergrund, der auf einem App-Bildschirm als Farbton lesbar ist | P1 |
-| Farbiger Schatten auf Karten oder Buttons | P2 |
-| "Glassmorphismus"-Unschärfe ohne bedeutsamen Ebenengrund | P2 |
+| Violett-blauer Verlauf auf Hintergrund, Karte oder Button | `P1` |
+| Jeder Farbton-zu-Farbton-Verlauf auf einer Fläche | `P1` |
+| Verlaufstext (`background-clip: text`) | `P1` |
+| Leuchtender Rand (`box-shadow` mit gesättigter Farbe) | `P1` |
+| Radiale Farbkugel / atmosphärische Wäsche hinter dem Inhalt | `P1` |
+| Hintergrund, der auf einem App-Bildschirm als Farbton lesbar ist | `P1` |
+| Farbiger Schatten auf Karten oder Buttons | `P2` |
+| "Glassmorphismus"-Unschärfe ohne bedeutsamen Ebenengrund | `P2` |
 
 ### Typografie
 
 | Muster | Schweregrad |
 |---|---|
-| Emojis in Beschriftungen oder Überschriften ("Neu ✨", "🚀 Starten") | P1 |
-| ALL CAPS-Etiketten mit Tracking auf jedem Abschnitts-Header | P1 |
-| Riesige Hero-Überschrift auf einem funktionalen operativen Tool | P1 |
-| Copy, die schreit ("Revolutionieren Sie Ihren Workflow Heute") | P1 |
-| Nur Inter ohne andere typografische Entscheidung | P2 |
-| Kein visueller Gewichtsunterschied zwischen Überschrift und Fließtext | P1 |
+| Emojis in Beschriftungen oder Überschriften ("Neu ✨", "🚀 Starten") | `P1` |
+| ALL CAPS-Etiketten mit Tracking auf jedem Abschnitts-Header | `P1` |
+| Riesige Hero-Überschrift auf einem funktionalen operativen Tool | `P1` |
+| Copy, die schreit ("Revolutionieren Sie Ihren Workflow Heute") | `P1` |
+| Nur Inter ohne andere typografische Entscheidung | `P2` |
+| Kein visueller Gewichtsunterschied zwischen Überschrift und Fließtext | `P1` |
 
 ### Layout und Struktur
 
 | Muster | Schweregrad |
 |---|---|
-| Gleichmäßig abstandsbasiertes 3-Spalten-Karten-Grid als Inhaltsfüller | P1 |
-| Doppelte Feature-Karten (Icon + Überschrift + zwei Sätze jeweils) | P1 |
-| Dunkles Dashboard standardmäßig ohne Produktgrund angewendet | P1 |
-| Abschnitt existiert nur zum Füllen von Raum (gefälschte Statistiken, erfundene Testimonials) | P1 |
-| Keine visuelle Hierarchie — jedes Element mit demselben Gewicht | P1 |
-| Alles zentriert, kein linksbündiges Lesemuster | P2 |
+| Gleichmäßig abstandsbasiertes 3-Spalten-Karten-Grid als Inhaltsfüller | `P1` |
+| Doppelte Feature-Karten (Icon + Überschrift + zwei Sätze jeweils) | `P1` |
+| Dunkles Dashboard standardmäßig ohne Produktgrund angewendet | `P1` |
+| Abschnitt existiert nur zum Füllen von Raum (gefälschte Statistiken, erfundene Testimonials) | `P1` |
+| Keine visuelle Hierarchie — jedes Element mit demselben Gewicht | `P1` |
+| Alles zentriert, kein linksbündiges Lesemuster | `P2` |
 
 ### Icons
 
 | Muster | Schweregrad |
 |---|---|
-| Emojis als Icons in Navigation oder Karten verwendet | P1 |
-| Zwei oder mehr Icon-Bibliotheken auf einem Bildschirm gemischt | P2 |
-| Icons mit eigenen Farben (nicht `currentColor`) | P2 |
-| Dekorative Icons vor jeder Überschrift oder Beschriftung | P2 |
+| Emojis als Icons in Navigation oder Karten verwendet | `P1` |
+| Zwei oder mehr Icon-Bibliotheken auf einem Bildschirm gemischt | `P2` |
+| Icons mit eigenen Farben (nicht `currentColor`) | `P2` |
+| Dekorative Icons vor jeder Überschrift oder Beschriftung | `P2` |
 
 ### Vorlagen-Identität
 
 | Muster | Schweregrad |
 |---|---|
-| Produktname durch Konkurrenten ersetzen — UI passt immer noch | P1 |
-| Kein Signatur-Detail — nichts, was nur dieses Produkt hätte | P1 |
-| Keine Welt-Referenz — Neutrale haben keine Tönung in Richtung der Produktdomäne | P2 |
-| Generische Stock-Illustration, die zu jedem Produkt passen könnte | P2 |
+| Produktname durch Konkurrenten ersetzen — UI passt immer noch | `P1` |
+| Kein Signatur-Detail — nichts, was nur dieses Produkt hätte | `P1` |
+| Keine Welt-Referenz — Neutrale haben keine Tönung in Richtung der Produktdomäne | `P2` |
+| Generische Stock-Illustration, die zu jedem Produkt passen könnte | `P2` |
 
 ### Barrierefreiheit und Technik
 
 | Muster | Schweregrad |
 |---|---|
-| Textkontrast unter 4.5:1 (WCAG AA) | P0 |
-| Kein sichtbarer Fokusindikator auf interaktiven Elementen | P0 |
-| Icon-Button ohne `aria-label` | P1 |
-| Formulareingabe ohne zugeordnetes `<label>` | P1 |
-| `user-scalable=no` im Viewport-Meta | P1 |
-| `prefers-reduced-motion` nicht respektiert | P1 |
-| `transition: all` statt spezifischer Eigenschaften | P2 |
-| Sich überlappende Chart-Beschriftungen | P0 |
+| Textkontrast unter 4.5:1 (WCAG AA) | `P0` |
+| Kein sichtbarer Fokusindikator auf interaktiven Elementen | `P0` |
+| Icon-Button ohne `aria-label` | `P1` |
+| Formulareingabe ohne zugeordnetes `<label>` | `P1` |
+| `user-scalable=no` im Viewport-Meta | `P1` |
+| `prefers-reduced-motion` nicht respektiert | `P1` |
+| `transition: all` statt spezifischer Eigenschaften | `P2` |
+| Sich überlappende Chart-Beschriftungen | `P0` |
 
 ### Mobile und Touch
 
 | Muster | Schweregrad |
 |---|---|
-| Touch-Ziele kleiner als 44×44px | P1 |
-| Hover-Effekte ohne `@media (hover: hover)`-Schutz | P2 |
-| `touch-action: manipulation` bei Buttons fehlend | P2 |
-| `overscroll-behavior: contain` bei Modals fehlend | P2 |
+| Touch-Ziele kleiner als 44×44px | `P1` |
+| Hover-Effekte ohne `@media (hover: hover)`-Schutz | `P2` |
+| `touch-action: manipulation` bei Buttons fehlend | `P2` |
+| `overscroll-behavior: contain` bei Modals fehlend | `P2` |
 
 ---
 
@@ -300,6 +341,16 @@ Dichte     ░░░░░░░░░░  1–10   (1 = geräumig/redaktionell,
 ---
 
 ## Angewandte Design-Prinzipien
+
+### 🧠 Theoretische Grundlagen und Designpsychologie
+
+Diese Skill bewertet Interfaces auf Basis solider Verhaltenspsychologie und klassischer Designframeworks, nicht auf Basis flüchtiger Ästhetik:
+
+- **Die Spitzenwert-Abschluss-Regel (Daniel Kahneman):** Nutzer beurteilen Erfahrungen anhand ihrer Höhepunkte und des Abschlusses — nicht des Durchschnitts. Deshalb schenkt die Skill der intensivsten Interaktion und dem letzten Bildschirm jedes Flows besondere Aufmerksamkeit.
+- **Emotionales Design-Framework (Don Norman):** Interfaces müssen drei Ebenen gleichzeitig ansprechen — viszeral (erster Eindruck), verhaltensbezogen (Benutzerfreundlichkeit) und reflektiv (Bedeutung und Identität). Ein Score unter 7 bei Product Fit signalisiert oft ein Versagen auf der reflektiven Ebene.
+- **Affordanzen (James J. Gibson / Don Norman):** Interaktive Elemente müssen ihre Funktion klar kommunizieren, ohne Erkundung zu erfordern. Fehlende Fokuszustände, unbeschriftete Icon-Buttons und unsichtbare Touch-Targets verletzen dieses Prinzip.
+
+---
 
 ### Abstände
 - 8px-Raster. Alle Margins, Paddings, Gaps sind Vielfache von 4 oder 8.
@@ -438,24 +489,28 @@ Onboarding-Schritte, Leerzustand → erstes Element, Erfolgszustände — 150–
 
 ```
 design-quality/
-├── README.md              ← English
-├── README.es.md           ← Español
-├── README.pt-BR.md        ← Português (Brasil)
-├── README.zh-CN.md        ← 简体中文
-├── README.fr.md           ← Français
-├── README.de.md           ← Deutsch (diese Datei)
-├── README.ja.md           ← 日本語
-├── README.ko.md           ← 한국어
+├── README.md (+ Übersetzungen)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md
-│       └── references/
-│           └── agents/   ← spezialisierte Agenten (Review·Fix·Direction)
-└── docs/
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**Schnellnavigation:**
+
+| Datei | Beschreibung |
+|---|---|
+| [README.md](README.md) | Diese Datei (+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)) |
+| [CHANGELOG.md](CHANGELOG.md) | Versionshistorie |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Wie man beiträgt |
+| [LICENSE](LICENSE) | MIT-Lizenz |
+| [SKILL.md](skills/design-quality/SKILL.md) | Die installierbare Skill |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | Vollständiger Anti-Pattern-Katalog |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Scorecard-Dimensionen im Detail |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | Micro-Polish-Referenz |
 
 ---
 

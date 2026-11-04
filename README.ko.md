@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 AI가 생성한 인터페이스를 평가하고 수정하는 Claude Code 스킬입니다.
@@ -30,13 +32,52 @@ React, Tailwind, HTML/CSS, Vue, Svelte, 대시보드, 앱, 랜딩 페이지, 컴
 
 ```bash
 # 전역 설치
-claude skills install https://github.com/[your-handle]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # 또는 직접 복사
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 이후 모든 Claude Code 세션에서 UI 리뷰, 비평 또는 제작을 요청하면 스킬이 자동으로 로드됩니다.
+
+<details>
+<summary>🔍 터미널 출력 예시 — Review 모드</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### Cursor / Windsurf / Claude 기반 편집기와 함께
 
@@ -187,76 +228,76 @@ UI를 작성하기 전에 스킬이 요구하는 것:
 
 | 패턴 | 심각도 |
 |---|---|
-| 배경, 카드, 버튼의 보라-파랑 그라데이션 | P1 |
-| 표면의 어떤 색상-색상 그라데이션 | P1 |
-| 그라데이션 텍스트(`background-clip: text`) | P1 |
-| 빛나는 테두리(채도 높은 `box-shadow`) | P1 |
-| 콘텐츠 뒤의 방사형 색상 블럽 / 분위기 워시 | P1 |
-| 앱 화면에서 색상으로 읽히는 배경 | P1 |
-| 카드나 버튼의 컬러 그림자 | P2 |
-| 의미 있는 레이어링 이유 없는 "글래스모피즘" 블러 | P2 |
+| 배경, 카드, 버튼의 보라-파랑 그라데이션 | `P1` |
+| 표면의 어떤 색상-색상 그라데이션 | `P1` |
+| 그라데이션 텍스트(`background-clip: text`) | `P1` |
+| 빛나는 테두리(채도 높은 `box-shadow`) | `P1` |
+| 콘텐츠 뒤의 방사형 색상 블럽 / 분위기 워시 | `P1` |
+| 앱 화면에서 색상으로 읽히는 배경 | `P1` |
+| 카드나 버튼의 컬러 그림자 | `P2` |
+| 의미 있는 레이어링 이유 없는 "글래스모피즘" 블러 | `P2` |
 
 ### 타이포그래피
 
 | 패턴 | 심각도 |
 |---|---|
-| 레이블이나 제목의 이모지("신기능 ✨", "🚀 시작") | P1 |
-| 모든 섹션 헤더에 트래킹이 있는 대문자 레이블 | P1 |
-| 기능적 업무 도구의 과도한 히어로 제목 | P1 |
-| 소리 지르는 카피("지금 바로 워크플로우를 혁신하세요") | P1 |
-| 다른 타이포그래피 결정 없이 Inter만 사용 | P2 |
-| 제목과 본문 사이 시각적 굵기 차이 없음 | P1 |
+| 레이블이나 제목의 이모지("신기능 ✨", "🚀 시작") | `P1` |
+| 모든 섹션 헤더에 트래킹이 있는 대문자 레이블 | `P1` |
+| 기능적 업무 도구의 과도한 히어로 제목 | `P1` |
+| 소리 지르는 카피("지금 바로 워크플로우를 혁신하세요") | `P1` |
+| 다른 타이포그래피 결정 없이 Inter만 사용 | `P2` |
+| 제목과 본문 사이 시각적 굵기 차이 없음 | `P1` |
 
 ### 레이아웃 및 구조
 
 | 패턴 | 심각도 |
 |---|---|
-| 콘텐츠 채우기용 균등 간격 3열 카드 그리드 | P1 |
-| 중복된 기능 카드(아이콘 + 제목 + 두 문장씩) | P1 |
-| 제품 이유 없이 기본으로 적용된 다크 대시보드 | P1 |
-| 공간 채우기용으로만 존재하는 섹션(가짜 통계, 만들어진 후기) | P1 |
-| 시각적 계층 구조 없음 — 모든 요소 같은 비중 | P1 |
-| 모든 것 중앙 정렬, 왼쪽 정렬 읽기 패턴 없음 | P2 |
+| 콘텐츠 채우기용 균등 간격 3열 카드 그리드 | `P1` |
+| 중복된 기능 카드(아이콘 + 제목 + 두 문장씩) | `P1` |
+| 제품 이유 없이 기본으로 적용된 다크 대시보드 | `P1` |
+| 공간 채우기용으로만 존재하는 섹션(가짜 통계, 만들어진 후기) | `P1` |
+| 시각적 계층 구조 없음 — 모든 요소 같은 비중 | `P1` |
+| 모든 것 중앙 정렬, 왼쪽 정렬 읽기 패턴 없음 | `P2` |
 
 ### 아이콘
 
 | 패턴 | 심각도 |
 |---|---|
-| 내비게이션이나 카드에서 아이콘으로 사용된 이모지 | P1 |
-| 한 화면에 두 개 이상의 아이콘 라이브러리 혼합 | P2 |
-| 고유 색상을 가진 아이콘(not `currentColor`) | P2 |
-| 모든 제목이나 레이블 앞의 장식용 아이콘 | P2 |
+| 내비게이션이나 카드에서 아이콘으로 사용된 이모지 | `P1` |
+| 한 화면에 두 개 이상의 아이콘 라이브러리 혼합 | `P2` |
+| 고유 색상을 가진 아이콘(not `currentColor`) | `P2` |
+| 모든 제목이나 레이블 앞의 장식용 아이콘 | `P2` |
 
 ### 템플릿 정체성
 
 | 패턴 | 심각도 |
 |---|---|
-| 제품명을 경쟁사로 바꿔도 UI가 여전히 맞음 | P1 |
-| 시그니처 디테일 없음 — 오직 이 제품만이 가질 수 있는 것 없음 | P1 |
-| 세계관 참조 없음 — 중성 색상이 제품 도메인 방향으로 기울지 않음 | P2 |
-| 어떤 제품에도 맞는 일반 스톡 일러스트 | P2 |
+| 제품명을 경쟁사로 바꿔도 UI가 여전히 맞음 | `P1` |
+| 시그니처 디테일 없음 — 오직 이 제품만이 가질 수 있는 것 없음 | `P1` |
+| 세계관 참조 없음 — 중성 색상이 제품 도메인 방향으로 기울지 않음 | `P2` |
+| 어떤 제품에도 맞는 일반 스톡 일러스트 | `P2` |
 
 ### 접근성 및 기술
 
 | 패턴 | 심각도 |
 |---|---|
-| 텍스트 대비 4.5:1 미만(WCAG AA) | P0 |
-| 인터랙티브 요소에 가시적 포커스 표시기 없음 | P0 |
-| `aria-label` 없는 아이콘 버튼 | P1 |
-| 연관된 `<label>` 없는 폼 입력 | P1 |
-| viewport meta의 `user-scalable=no` | P1 |
-| `prefers-reduced-motion` 미준수 | P1 |
-| 특정 속성 대신 `transition: all` 사용 | P2 |
-| 겹치는 차트 레이블 | P0 |
+| 텍스트 대비 4.5:1 미만(WCAG AA) | `P0` |
+| 인터랙티브 요소에 가시적 포커스 표시기 없음 | `P0` |
+| `aria-label` 없는 아이콘 버튼 | `P1` |
+| 연관된 `<label>` 없는 폼 입력 | `P1` |
+| viewport meta의 `user-scalable=no` | `P1` |
+| `prefers-reduced-motion` 미준수 | `P1` |
+| 특정 속성 대신 `transition: all` 사용 | `P2` |
+| 겹치는 차트 레이블 | `P0` |
 
 ### 모바일 및 터치
 
 | 패턴 | 심각도 |
 |---|---|
-| 44×44px 미만의 터치 타겟 | P1 |
-| `@media (hover: hover)` 가드 없는 hover 효과 | P2 |
-| 버튼에 `touch-action: manipulation` 누락 | P2 |
-| 모달에 `overscroll-behavior: contain` 누락 | P2 |
+| 44×44px 미만의 터치 타겟 | `P1` |
+| `@media (hover: hover)` 가드 없는 hover 효과 | `P2` |
+| 버튼에 `touch-action: manipulation` 누락 | `P2` |
+| 모달에 `overscroll-behavior: contain` 누락 | `P2` |
 
 ---
 
@@ -300,6 +341,16 @@ UI를 작성하기 전에 스킬이 요구하는 것:
 ---
 
 ## 적용되는 디자인 원칙
+
+### 🧠 이론적 기반과 디자인 심리학
+
+이 스킬은 일시적인 미학이 아닌, 견고한 행동 심리학과 고전적인 디자인 프레임워크를 기반으로 인터페이스를 평가합니다:
+
+- **피크-엔드 법칙 (Daniel Kahneman):** 사용자는 경험을 평균이 아닌, 최고조 순간과 마지막 순간으로 판단합니다. 그래서 이 스킬은 각 플로우에서 가장 강렬한 인터랙션과 마지막 화면에 특별히 주목합니다.
+- **감성 디자인 프레임워크 (Don Norman):** 인터페이스는 세 가지 수준을 동시에 다루어야 합니다 — 본능적 (첫인상), 행동적 (사용 편의성), 성찰적 (의미와 정체성). Product Fit 점수가 7 미만이면 성찰적 수준에서의 실패를 의미하는 경우가 많습니다.
+- **어포던스 (James J. Gibson / Don Norman):** 인터랙티브 요소는 탐색 없이도 기능을 명확히 전달해야 합니다. 없는 포커스 상태, 레이블 없는 아이콘 버튼, 보이지 않는 터치 타겟은 모두 이 원칙을 위반합니다.
+
+---
 
 ### 간격
 - 8px 그리드. 모든 마진, 패딩, 갭은 4 또는 8의 배수.
@@ -457,24 +508,28 @@ transition은 중단 가능합니다. 사용자가 드로어를 열고 애니메
 
 ```
 design-quality/
-├── README.md              ← English
-├── README.es.md           ← Español
-├── README.pt-BR.md        ← Português (Brasil)
-├── README.zh-CN.md        ← 简体中文
-├── README.fr.md           ← Français
-├── README.de.md           ← Deutsch
-├── README.ja.md           ← 日本語
-├── README.ko.md           ← 한국어 (이 파일)
+├── README.md (+ 번역본)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md
-│       └── references/
-│           └── agents/   ← 전문 에이전트 프롬프트 (Review·Fix·Direction)
-└── docs/
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**빠른 탐색:**
+
+| 파일 | 설명 |
+|---|---|
+| [README.md](README.md) | 이 파일 (+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)) |
+| [CHANGELOG.md](CHANGELOG.md) | 버전 기록 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 기여 방법 |
+| [LICENSE](LICENSE) | MIT 라이선스 |
+| [SKILL.md](skills/design-quality/SKILL.md) | 설치 가능한 스킬 파일 |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | 전체 안티패턴 카탈로그 |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | 스코어카드 차원 상세 |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | 마이크로 폴리시 레퍼런스 |
 
 ---
 

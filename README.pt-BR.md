@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 Uma skill para Claude Code que avalia e corrige interfaces geradas por IA.
@@ -30,13 +32,52 @@ Funciona com React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing p
 
 ```bash
 # Instalar globalmente
-claude skills install https://github.com/[seu-handle]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # Ou copiar diretamente
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 Em qualquer sessão do Claude Code, a skill carrega automaticamente quando você pede para revisar, criticar ou construir uma UI.
+
+<details>
+<summary>🔍 Exemplo de output do terminal — Modo Review</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### Com Cursor / Windsurf / qualquer editor com Claude
 
@@ -185,76 +226,76 @@ Técnica: reduza para 10% de velocidade no DevTools (painel Animations). Percorr
 
 | Padrão | Severidade |
 |---|---|
-| Gradiente roxo-azul em fundo, card ou botão | P1 |
-| Qualquer gradiente entre cores em uma superfície | P1 |
-| Texto em gradiente (`background-clip: text`) | P1 |
-| Borda com brilho colorido (`box-shadow` com cor saturada) | P1 |
-| Blob radial de cor / lavagem atmosférica atrás do conteúdo | P1 |
-| Fundo que parece uma cor (laranja, azul, verde) em uma tela de app | P1 |
-| Sombra colorida em cards ou botões | P2 |
-| Blur "Glassmorphism" sem razão de camadas significativa | P2 |
+| Gradiente roxo-azul em fundo, card ou botão | `P1` |
+| Qualquer gradiente entre cores em uma superfície | `P1` |
+| Texto em gradiente (`background-clip: text`) | `P1` |
+| Borda com brilho colorido (`box-shadow` com cor saturada) | `P1` |
+| Blob radial de cor / lavagem atmosférica atrás do conteúdo | `P1` |
+| Fundo que parece uma cor (laranja, azul, verde) em uma tela de app | `P1` |
+| Sombra colorida em cards ou botões | `P2` |
+| Blur "Glassmorphism" sem razão de camadas significativa | `P2` |
 
 ### Tipografia
 
 | Padrão | Severidade |
 |---|---|
-| Emoji em labels ou headings ("Novo ✨", "🚀 Lançar") | P1 |
-| Labels em ALL CAPS com tracking em todo cabeçalho de seção | P1 |
-| Headline de herói enorme em uma ferramenta operacional funcional | P1 |
-| Copy que grita ("Revolucione Seu Fluxo de Trabalho Hoje") | P1 |
-| Apenas Inter sem outra decisão tipográfica | P2 |
-| Sem diferença de peso visual entre heading e body | P1 |
+| Emoji em labels ou headings ("Novo ✨", "🚀 Lançar") | `P1` |
+| Labels em ALL CAPS com tracking em todo cabeçalho de seção | `P1` |
+| Headline de herói enorme em uma ferramenta operacional funcional | `P1` |
+| Copy que grita ("Revolucione Seu Fluxo de Trabalho Hoje") | `P1` |
+| Apenas Inter sem outra decisão tipográfica | `P2` |
+| Sem diferença de peso visual entre heading e body | `P1` |
 
 ### Layout & Estrutura
 
 | Padrão | Severidade |
 |---|---|
-| Grid de cards 3 colunas igualmente espaçados como preenchimento de conteúdo | P1 |
-| Cards de features duplicados (ícone + heading + duas frases cada) | P1 |
-| Dashboard escuro aplicado por padrão sem razão de produto | P1 |
-| Seção que existe apenas para preencher espaço (estatísticas fake, depoimentos inventados) | P1 |
-| Sem hierarquia visual — todo elemento com o mesmo peso | P1 |
-| Tudo centralizado, sem padrão de leitura alinhado à esquerda | P2 |
+| Grid de cards 3 colunas igualmente espaçados como preenchimento de conteúdo | `P1` |
+| Cards de features duplicados (ícone + heading + duas frases cada) | `P1` |
+| Dashboard escuro aplicado por padrão sem razão de produto | `P1` |
+| Seção que existe apenas para preencher espaço (estatísticas fake, depoimentos inventados) | `P1` |
+| Sem hierarquia visual — todo elemento com o mesmo peso | `P1` |
+| Tudo centralizado, sem padrão de leitura alinhado à esquerda | `P2` |
 
 ### Ícones
 
 | Padrão | Severidade |
 |---|---|
-| Emoji usado como ícones em navegação ou cards | P1 |
-| Duas ou mais bibliotecas de ícones misturadas em uma tela | P2 |
-| Ícones com suas próprias cores (não `currentColor`) | P2 |
-| Ícones decorativos antes de cada heading ou label | P2 |
+| Emoji usado como ícones em navegação ou cards | `P1` |
+| Duas ou mais bibliotecas de ícones misturadas em uma tela | `P2` |
+| Ícones com suas próprias cores (não `currentColor`) | `P2` |
+| Ícones decorativos antes de cada heading ou label | `P2` |
 
 ### Identidade de Template
 
 | Padrão | Severidade |
 |---|---|
-| Trocar o nome do produto pelo de um concorrente — a UI ainda se encaixa | P1 |
-| Sem detalhe de Assinatura — nada que só este produto teria | P1 |
-| Sem referência de Mundo — neutros sem tinte em direção ao domínio do produto | P2 |
-| Ilustração de stock genérica que poderia pertencer a qualquer produto | P2 |
+| Trocar o nome do produto pelo de um concorrente — a UI ainda se encaixa | `P1` |
+| Sem detalhe de Assinatura — nada que só este produto teria | `P1` |
+| Sem referência de Mundo — neutros sem tinte em direção ao domínio do produto | `P2` |
+| Ilustração de stock genérica que poderia pertencer a qualquer produto | `P2` |
 
 ### Acessibilidade & Técnico
 
 | Padrão | Severidade |
 |---|---|
-| Contraste de texto abaixo de 4.5:1 (WCAG AA) | P0 |
-| Sem indicador de foco visível em elementos interativos | P0 |
-| Botão de ícone sem `aria-label` | P1 |
-| Input de formulário sem `<label>` associado | P1 |
-| `user-scalable=no` no viewport meta | P1 |
-| `prefers-reduced-motion` não respeitado | P1 |
-| `transition: all` em vez de propriedades específicas | P2 |
-| Labels de gráfico sobrepostos | P0 |
+| Contraste de texto abaixo de 4.5:1 (WCAG AA) | `P0` |
+| Sem indicador de foco visível em elementos interativos | `P0` |
+| Botão de ícone sem `aria-label` | `P1` |
+| Input de formulário sem `<label>` associado | `P1` |
+| `user-scalable=no` no viewport meta | `P1` |
+| `prefers-reduced-motion` não respeitado | `P1` |
+| `transition: all` em vez de propriedades específicas | `P2` |
+| Labels de gráfico sobrepostos | `P0` |
 
 ### Mobile & Touch
 
 | Padrão | Severidade |
 |---|---|
-| Alvos de toque menores que 44×44px | P1 |
-| Efeitos hover sem guarda `@media (hover: hover)` | P2 |
-| `touch-action: manipulation` faltando em botões | P2 |
-| `overscroll-behavior: contain` faltando em modais | P2 |
+| Alvos de toque menores que 44×44px | `P1` |
+| Efeitos hover sem guarda `@media (hover: hover)` | `P2` |
+| `touch-action: manipulation` faltando em botões | `P2` |
+| `overscroll-behavior: contain` faltando em modais | `P2` |
 
 ---
 

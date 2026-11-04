@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 # design-quality
 
 一个用于 Claude Code 的技能，用于评估和修复 AI 生成的界面。
@@ -30,13 +32,52 @@ AI 生成 UI 很快，也总是以相同的方式出错。紫蓝色渐变、渐�
 
 ```bash
 # 全局安装
-claude skills install https://github.com/[你的用户名]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # 或直接复制
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 之后，在任何 Claude Code 会话中，当你要求 Claude 审查、评价或构建 UI 时，技能会自动加载。
+
+<details>
+<summary>🔍 终端输出示例 — Review 模式</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### 使用 Cursor / Windsurf / 任何 Claude 驱动的编辑器
 
@@ -187,76 +228,76 @@ cp -r skills/design-quality ~/.claude/skills/
 
 | 模式 | 严重程度 |
 |---|---|
-| 背景、卡片或按钮上的紫蓝色渐变 | P1 |
-| 任何表面上的色相渐变 | P1 |
-| 渐变文字（`background-clip: text`） | P1 |
-| 发光边框（饱和色的 `box-shadow`） | P1 |
-| 内容背后的径向色块 / 氛围光晕 | P1 |
-| 应用界面背景读起来像色相 | P1 |
-| 卡片或按钮上的彩色阴影 | P2 |
-| 没有有意义分层原因的"玻璃拟态"模糊 | P2 |
+| 背景、卡片或按钮上的紫蓝色渐变 | `P1` |
+| 任何表面上的色相渐变 | `P1` |
+| 渐变文字（`background-clip: text`） | `P1` |
+| 发光边框（饱和色的 `box-shadow`） | `P1` |
+| 内容背后的径向色块 / 氛围光晕 | `P1` |
+| 应用界面背景读起来像色相 | `P1` |
+| 卡片或按钮上的彩色阴影 | `P2` |
+| 没有有意义分层原因的"玻璃拟态"模糊 | `P2` |
 
 ### 排版
 
 | 模式 | 严重程度 |
 |---|---|
-| 标签或标题中的 emoji（"全新 ✨"、"🚀 启动"） | P1 |
-| 每个章节标题都用跟踪字距的全大写标签 | P1 |
-| 功能操作工具上的超大英雄标题 | P1 |
-| 叫卖式文案（"今天就彻底改变你的工作流程"） | P1 |
-| 只用 Inter，没有其他排版决策 | P2 |
-| 标题与正文之间没有视觉字重差异 | P1 |
+| 标签或标题中的 emoji（"全新 ✨"、"🚀 启动"） | `P1` |
+| 每个章节标题都用跟踪字距的全大写标签 | `P1` |
+| 功能操作工具上的超大英雄标题 | `P1` |
+| 叫卖式文案（"今天就彻底改变你的工作流程"） | `P1` |
+| 只用 Inter，没有其他排版决策 | `P2` |
+| 标题与正文之间没有视觉字重差异 | `P1` |
 
 ### 布局与结构
 
 | 模式 | 严重程度 |
 |---|---|
-| 等距三列卡片网格充当内容填充 | P1 |
-| 重复的功能卡（图标 + 标题 + 两句话） | P1 |
-| 默认深色仪表板，没有产品原因 | P1 |
-| 仅为填充空间而存在的章节（虚假数据、编造的用户评价） | P1 |
-| 没有视觉层次——所有元素权重相同 | P1 |
-| 全部居中，没有左对齐阅读模式 | P2 |
+| 等距三列卡片网格充当内容填充 | `P1` |
+| 重复的功能卡（图标 + 标题 + 两句话） | `P1` |
+| 默认深色仪表板，没有产品原因 | `P1` |
+| 仅为填充空间而存在的章节（虚假数据、编造的用户评价） | `P1` |
+| 没有视觉层次——所有元素权重相同 | `P1` |
+| 全部居中，没有左对齐阅读模式 | `P2` |
 
 ### 图标
 
 | 模式 | 严重程度 |
 |---|---|
-| 导航或卡片中用 emoji 充当图标 | P1 |
-| 同一界面混用两种或更多图标库 | P2 |
-| 图标有自己的颜色（不是 `currentColor`） | P2 |
-| 每个标题或标签前都有装饰性图标 | P2 |
+| 导航或卡片中用 emoji 充当图标 | `P1` |
+| 同一界面混用两种或更多图标库 | `P2` |
+| 图标有自己的颜色（不是 `currentColor`） | `P2` |
+| 每个标题或标签前都有装饰性图标 | `P2` |
 
 ### 模板身份
 
 | 模式 | 严重程度 |
 |---|---|
-| 把产品名换成竞争对手——UI 依然适配 | P1 |
-| 没有签名细节——没有任何只属于这个产品的东西 | P1 |
-| 没有世界观参考——中性色调没有向产品领域倾斜 | P2 |
-| 适用于任何产品的通用配图 | P2 |
+| 把产品名换成竞争对手——UI 依然适配 | `P1` |
+| 没有签名细节——没有任何只属于这个产品的东西 | `P1` |
+| 没有世界观参考——中性色调没有向产品领域倾斜 | `P2` |
+| 适用于任何产品的通用配图 | `P2` |
 
 ### 无障碍与技术
 
 | 模式 | 严重程度 |
 |---|---|
-| 文字对比度低于 4.5:1（WCAG AA） | P0 |
-| 交互元素上没有可见的焦点指示器 | P0 |
-| 图标按钮没有 `aria-label` | P1 |
-| 表单输入没有关联的 `<label>` | P1 |
-| viewport meta 中有 `user-scalable=no` | P1 |
-| 不尊重 `prefers-reduced-motion` | P1 |
-| 使用 `transition: all` 而非具体属性 | P2 |
-| 图表标签重叠 | P0 |
+| 文字对比度低于 4.5:1（WCAG AA） | `P0` |
+| 交互元素上没有可见的焦点指示器 | `P0` |
+| 图标按钮没有 `aria-label` | `P1` |
+| 表单输入没有关联的 `<label>` | `P1` |
+| viewport meta 中有 `user-scalable=no` | `P1` |
+| 不尊重 `prefers-reduced-motion` | `P1` |
+| 使用 `transition: all` 而非具体属性 | `P2` |
+| 图表标签重叠 | `P0` |
 
 ### 移动端与触控
 
 | 模式 | 严重程度 |
 |---|---|
-| 触控目标小于 44×44px | P1 |
-| 悬停效果没有 `@media (hover: hover)` 防护 | P2 |
-| 按钮上缺少 `touch-action: manipulation` | P2 |
-| 模态框上缺少 `overscroll-behavior: contain` | P2 |
+| 触控目标小于 44×44px | `P1` |
+| 悬停效果没有 `@media (hover: hover)` 防护 | `P2` |
+| 按钮上缺少 `touch-action: manipulation` | `P2` |
+| 模态框上缺少 `overscroll-behavior: contain` | `P2` |
 
 ---
 
@@ -300,6 +341,16 @@ cp -r skills/design-quality ~/.claude/skills/
 ---
 
 ## 应用的设计原则
+
+### 🧠 理论基础与设计心理学
+
+本技能基于扎实的行为心理学和经典设计框架来评估界面，而非瞬息万变的审美趋势：
+
+- **峰终定律（Daniel Kahneman）：** 用户对体验的判断来自峰值时刻和结束时刻——而非整体平均。这就是为什么本技能特别关注每个流程中最强烈的交互和最终界面。
+- **情感化设计框架（Don Norman）：** 界面必须同时兼顾三个层次——本能层（第一印象）、行为层（使用便利性）和反思层（意义与身份）。Product Fit 低于 7 分，往往意味着在反思层失败。
+- **可供性（James J. Gibson / Don Norman）：** 交互元素必须在无需探索的情况下清晰传达其功能。缺失的焦点状态、无标签的图标按钮和不可见的触控目标都违反了这一原则。
+
+---
 
 ### 间距
 - 8px 网格。所有边距、内边距、间隙都是 4 或 8 的倍数。
@@ -457,24 +508,28 @@ transition 是可中断的。如果用户打开抽屉后在动画中途关闭，
 
 ```
 design-quality/
-├── README.md              ← English
-├── README.es.md           ← Español
-├── README.pt-BR.md        ← Português (Brasil)
-├── README.zh-CN.md        ← 简体中文（本文件）
-├── README.fr.md           ← Français
-├── README.de.md           ← Deutsch
-├── README.ja.md           ← 日本語
-├── README.ko.md           ← 한국어
+├── README.md（+ 多语言翻译）
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md
-│       └── references/
-│           └── agents/   ← 专用智能体提示词（Review·Fix·Direction）
-└── docs/
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**快速导航：**
+
+| 文件 | 描述 |
+|---|---|
+| [README.md](README.md) | 本文件（+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)） |
+| [CHANGELOG.md](CHANGELOG.md) | 版本历史 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | 如何贡献 |
+| [LICENSE](LICENSE) | MIT 许可证 |
+| [SKILL.md](skills/design-quality/SKILL.md) | 可安装的技能文件 |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | 完整反模式目录 |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | 评分维度详情 |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | 微打磨参考 |
 
 ---
 
