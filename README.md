@@ -10,19 +10,7 @@
 
 A Claude Code skill for evaluating and fixing AI-generated interfaces.
 
-AI generates UIs fast. It also generates them wrong — in the same ways, every time. Purple gradients, gradient text, glowing borders, emoji icons, card grids with no content, Inter-everything typography, generic hero headlines on operational tools. These are tells. This skill catches them, scores the interface on 8 dimensions, and fixes them pass by pass.
-
----
-
-## What it does
-
-**Review Mode** — audits a UI for AI slop signs, scores it on 8 dimensions (1–10), and produces a prioritized fix list (P0–P3).
-
-**Create Mode** — sets a product direction before writing any UI. Refuses to start without one. Derives character, world, moments, and a signature detail from what the product actually does — not from trends.
-
-**Fix Mode** — applies fixes in 10 sequential passes: spacing → color → icons → copy → typography → layout → details → accessibility → visuals → motion.
-
-**Polish Mode** — for interfaces that are mostly designed but feel slightly off. Slows to 10% speed in DevTools and walks every state.
+AI generates UIs fast, and wrong in the same ways every time. Purple gradients, gradient text, glowing borders, emoji icons, card grids with no content, Inter-everything typography, generic hero headlines on operational tools. These are tells. This skill catches them, scores the interface on 8 dimensions, and fixes them pass by pass.
 
 Works on React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing pages, components.
 
@@ -40,10 +28,10 @@ claude skills install https://github.com/RomuloRogerio/design-quality
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
-Then in any Claude Code session, the skill loads automatically when you ask Claude to review, critique, or build a UI.
+Then ask Claude to review, critique, or build a UI.
 
 <details>
-<summary>🔍 Example terminal output — Review Mode</summary>
+<summary>Example output: Review Mode</summary>
 
 ```
 $ claude review this design
@@ -52,10 +40,10 @@ $ claude review this design
 ✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
 
 ## Slop Audit
-❌ Purple-to-blue gradient background (P1) — App.css line 12
-❌ Gradient text with background-clip (P1) — HeroTitle component
-❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
-❌ ALL CAPS tracked section header (P1) — features section
+P1  Purple-to-blue gradient background  App.css:12
+P1  Gradient text with background-clip  HeroTitle component
+P1  Emoji in navigation label "🚀 Launch"  Navbar.tsx
+P1  ALL CAPS tracked section header  features section
 
 ## Template Check
 Could this UI belong to any other SaaS product? YES → P1
@@ -74,7 +62,7 @@ Overall:        5/10
 
 ## Verdict
 Best part: clear primary CTA, readable label
-Worst part: gradient + gradient text — maximum slop signal
+Worst part: gradient + gradient text. Maximum slop signal.
 Required fix (P0): none
 Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
 ```
@@ -89,58 +77,75 @@ Copy the `skills/design-quality/` folder anywhere visible to your agent. In the 
 
 Upload `skills/design-quality/SKILL.md` and all files in `skills/design-quality/references/` as project knowledge. Claude will apply the skill to UI-related requests.
 
-### Trigger phrases
+---
 
-The skill activates on:
-- "review this design"
-- "critique this UI"
-- "does this look AI-generated?"
-- "unslop this"
-- "make it less generic"
-- "build this page"
-- "design this screen"
-- "polish this interface"
-- "improve the UI"
-- "redesign"
+## Usage examples
+
+**Review a UI for slop and score it:**
+```
+review this design
+critique this UI
+does this look AI-generated?
+unslop this
+```
+
+**Start a new UI with a product direction first:**
+```
+build a dashboard for a fleet monitoring tool
+design the onboarding flow for a freelance invoicing app
+```
+
+**Run fix passes on existing code:**
+```
+fix the spacing and color in this component
+run a full fix pass on App.tsx
+```
+
+**Ant Design audit:**
+```
+review this React admin panel against Ant Design standards
+check if this component follows Ant Design token rules
+```
+
+**Architecture planning:**
+```
+design a URL shortener that handles 100M requests/day
+how should I store and serve user-uploaded videos at scale?
+```
 
 ---
 
 ## Skills in this repo
 
-Three skills, each usable independently or together:
-
 | Skill | File | Use for |
 |---|---|---|
 | **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | General UI review, slop detection, 8-dimension scorecard, Create/Fix/Polish modes |
-| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 review — tokens, components, 4px grid, motion, elevation |
-| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Scalable architecture — 5-step framework, DB selection, caching, queues, CAP |
-| **all** | [`skills/all.md`](skills/all.md) | Load all three at once; Claude picks the relevant one automatically |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6: tokens, components, 4px grid, motion, elevation |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Scalable architecture: 5-step framework, DB selection, caching, queues, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | Loads all three; Claude picks the right one based on context |
 
 ---
 
 ## Plugin (Claude Code slash commands)
 
-The `plugin/` folder adds four slash commands and a status bar hint to any Claude Code session.
+The `plugin/` folder gives Claude Code four slash commands and a status bar hint.
 
 | Command | What it does |
 |---|---|
-| `/dq-review` | Full UI audit: slop detection, 8-dimension scorecard, P0–P3 fix list |
-| `/direction` | Create Mode — derives direction (Character · World · Moments · Signature) before any UI code |
-| `/fix` | Fix Mode — 10 sequential passes: Spacing → Color → Icons → Copy → Typography → Layout → Details → A11y → Visuals → Motion |
-| `/polish` | Polish Mode — walks every state at 10% speed (hover · focus · active · loading · empty · error) |
+| `/dq-review` | Full audit: slop detection, 8-dimension scorecard, P0–P3 fix list |
+| `/direction` | Derives product direction before writing any UI code |
+| `/fix` | 10 sequential passes: Spacing → Color → Icons → Copy → Typography → Layout → Details → A11y → Visuals → Motion |
+| `/polish` | Walks every state at 10% speed: hover, focus, active, loading, empty, error |
 
-After editing any `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue`, or `.svelte` file, the status bar shows `/dq-review · /fix · /polish` as a reminder.
+After editing any `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue`, or `.svelte` file, the status bar shows `/dq-review · /fix · /polish`.
 
 **Install:**
 ```bash
-# Clone the repo
 git clone https://github.com/RomuloRogerio/design-quality
-
-# Run Claude Code with the plugin
 claude --plugin-dir ~/design-quality/plugin
 ```
 
-**Or load permanently** — add to `~/.claude/settings.json`:
+To load permanently, add to `~/.claude/settings.json`:
 ```json
 {
   "pluginDirs": ["~/design-quality/plugin"]
@@ -165,11 +170,11 @@ The result is always recognizable:
 
 **Copy:** "Revolutionize Your Workflow Today." "Powerful integrations." "Advanced Analytics." Copy that could belong to any product in the category.
 
-**Identity:** If you swapped the product name for any competitor, the interface would still fit. No World, no Signature, no Moments — nothing that only this product would have.
+**Identity:** Swap the product name for any competitor and the interface still fits. No World, no Signature, no Moments. Nothing that only this product would have.
 
 ### What this skill does differently
 
-It catches these patterns systematically, scores what's there, and fixes in the right order. It also prevents them upfront by requiring a product direction before writing any UI.
+It catches these patterns, scores what's there, and fixes in the right order. It also blocks them upfront by requiring a product direction before writing any UI.
 
 ---
 
@@ -206,20 +211,20 @@ Quick wins (P1): [top 3]
 ```
 
 Severity scale:
-- **P0** — breaks usability or readability. Fix before anything else.
-- **P1** — makes it look clearly AI-generated.
-- **P2** — weakens the craft but doesn't break it.
-- **P3** — nice-to-have improvement.
+- **P0:** breaks usability or readability. Fix first.
+- **P1:** makes it look AI-generated.
+- **P2:** weakens the craft without breaking it.
+- **P3:** nice to have.
 
 ### Create Mode
 
-Before writing any UI, the skill gates on:
-1. **Context type** — app screen (density governs) vs. page (composition governs)
-2. **Product understanding** — what it does, who it's for, what the primary task is
-3. **Direction** — five lines derived from the product: Product, Character, World, Moments, Signature
-4. **Design Dials** — three knobs as quick signal: Variance / Motion / Density (1–10 each)
+Before writing any UI, the skill asks for:
+1. **Context type:** app screen (density governs) vs. page (composition governs)
+2. **Product understanding:** what it does, who it's for, what the primary task is
+3. **Direction:** five lines derived from the product: Product, Character, World, Moments, Signature
+4. **Design Dials:** Variance / Motion / Density (1–10 each)
 
-After confirmation, it creates a `PROJECT_DESIGN.md` in the project root that persists the direction across sessions. Future sessions read this file first — direction doesn't drift.
+After confirmation, it creates a `PROJECT_DESIGN.md` in the project root. Future sessions read this file first so direction stays consistent.
 
 Direction example for a time-tracking tool:
 ```
@@ -232,18 +237,18 @@ Signature: A subtle ticking second-hand animation on the active timer
 
 ### Fix Mode
 
-Ten sequential passes — complete each before starting the next:
+Ten sequential passes. Complete each before starting the next.
 
-1. **Spacing** — 8px grid alignment, rhythm, grouping
-2. **Color** — remove slop, build from a neutral ramp
-3. **Icons** — one library, one size, one stroke weight, `currentColor`
-4. **Copy** — remove emoji labels, calm the shouting, make copy product-specific
-5. **Typography** — hierarchy, weights, `text-wrap: balance` on headings
-6. **Layout** — alignment, density
-7. **Details** — concentric radii, shadows (not both shadow AND border), borders
-8. **Accessibility & Touch** — focus states, `aria-label`, `touch-action: manipulation`, 44px targets
-9. **Visuals** — empty state illustrations, icon consistency, image aspect ratios
-10. **Motion** — last pass, only where it adds meaning
+1. **Spacing:** 8px grid alignment, rhythm, grouping
+2. **Color:** remove slop, build from a neutral ramp
+3. **Icons:** one library, one size, one stroke weight, `currentColor`
+4. **Copy:** remove emoji labels, calm the shouting, make copy product-specific
+5. **Typography:** hierarchy, weights, `text-wrap: balance` on headings
+6. **Layout:** alignment, density
+7. **Details:** concentric radii, shadow OR border (not both)
+8. **Accessibility & Touch:** focus states, `aria-label`, `touch-action: manipulation`, 44px targets
+9. **Visuals:** empty state illustrations, icon consistency, image aspect ratios
+10. **Motion:** last pass, only where it adds meaning
 
 ### Polish Mode
 
@@ -263,7 +268,7 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 | **Taste** | Does it feel intentional without looking templated? |
 | **Restraint** | No unnecessary decoration, filler, or style cosplay? |
 | **Density** | Is the amount of information right for the task? |
-| **Craft** | Spacing, type, alignment, contrast, component states — polished? |
+| **Craft** | Spacing, type, alignment, contrast, component states: all polished? |
 | **Responsiveness** | Does the design survive mobile and narrow layouts? |
 
 ### What each score means
@@ -271,18 +276,18 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 **Product fit:**
 - 9–10: Only this product could look like this
 - 7–8: Clearly aligned with the category, a few generic choices
-- 5–6: Could belong to several products — safe but not specific
+- 5–6: Could belong to several products. Safe but not specific.
 - 3–4: Generic SaaS applied regardless of what the product does
 - 1–2: Design actively contradicts the product
 
 **Hierarchy:**
 - 9–10: The primary action is obvious, secondary recedes, tertiary is discoverable
-- 5–6: Requires effort to parse — multiple things competing at equal weight
+- 5–6: Requires effort to parse. Multiple things competing at equal weight.
 - 1–2: Decorative elements draw more attention than functional ones
 
 **Craft:**
 - 9–10: 8px grid everywhere, all states handled, contrast checked
-- 5–6: Good intent, uneven execution — grid breaks, missing states
+- 5–6: Good intent, uneven execution: grid breaks, missing states
 - 1–2: No discernible grid or type system
 
 **Responsiveness:**
@@ -326,7 +331,7 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 | Duplicate feature cards (icon + heading + two sentences each) | `P1` |
 | Dark dashboard applied by default with no product reason | `P1` |
 | Section exists only to fill space (fake stats, invented testimonials) | `P1` |
-| No visual hierarchy — every element the same weight | `P1` |
+| No visual hierarchy: every element the same weight | `P1` |
 | Everything centered, no left-aligned reading pattern | `P2` |
 
 ### Icons
@@ -342,9 +347,9 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 
 | Pattern | Severity |
 |---|---|
-| Swap product name for competitor — UI still fits | `P1` |
-| No Signature detail — nothing only this product would have | `P1` |
-| No World reference — neutrals have no tint toward the product's domain | `P2` |
+| Swap product name for competitor: UI still fits | `P1` |
+| No Signature detail: nothing only this product would have | `P1` |
+| No World reference: neutrals have no tint toward the product's domain | `P2` |
 | Generic stock illustration that could belong to any product | `P2` |
 
 ### Accessibility & Technical
@@ -375,12 +380,12 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 
 The five lines every design needs before writing code:
 
-**Product** — what it does and for whom, one plain sentence.
+**Product:** what it does and for whom, one plain sentence.
 
-**Character** — 2–3 concrete words. `calm, exact, a little warm` or `fast, technical, playful`.
+**Character:** 2–3 concrete words. `calm, exact, a little warm` or `fast, technical, playful`.
 Banned: clean, modern, sleek, minimal, premium. These describe every template.
 
-**World** — the material or place the product belongs to naturally.
+**World:** the material or place the product belongs to naturally.
 - Note app → paper and ink
 - Monitoring tool → instruments and night shifts
 - Travel app → maps and window light
@@ -388,10 +393,10 @@ Banned: clean, modern, sleek, minimal, premium. These describe every template.
 
 This tints the neutrals, the accent, and the visual moments.
 
-**Moments** — 1–2 places on the screen where the design gets rich and specific.
+**Moments:** 1–2 places on the screen where the design gets rich and specific.
 Everything else stays quiet so these read instantly.
 
-**Signature** — one small detail only this product would have, repeated consistently.
+**Signature:** one small detail only this product would have, repeated consistently.
 - Monitoring tool → live status dot
 - Developer tool → keycap aesthetic
 - Delivery app → route line
@@ -441,19 +446,17 @@ Mono: [font name] (if applicable)
 ## Border radius: [value]px
 ```
 
-Future sessions read this first. Direction doesn't drift across long projects.
-
 ---
 
 ## Design principles applied
 
-### 🧠 Theoretical Foundation & Psychology of Design
+### Theoretical foundation
 
-This skill evaluates interfaces based on robust behavioral psychology and classical design frameworks rather than transient aesthetics:
+Three frameworks from behavioral psychology and design theory:
 
-- **The Peak-End Rule (Daniel Kahneman):** Users judge experiences by their peak and end moments — not the average. This is why the skill pays special attention to the most intense interaction and the final screen of every flow.
-- **Emotional Design Framework (Don Norman):** Interfaces must address three levels simultaneously — visceral (first impression), behavioral (ease of use), and reflective (meaning and identity). A score below 7 on Product Fit often signals failure at the reflective level.
-- **Affordances (James J. Gibson / Don Norman):** Interactive elements must communicate their function clearly without requiring exploration. Missing focus states, unlabeled icon buttons, and invisible touch targets all violate this principle.
+- **Peak-End Rule (Kahneman):** Users judge an experience by its peak moment and its ending, not the average. The skill pays particular attention to the most intense interaction and the final screen of every flow.
+- **Emotional Design (Norman):** Interfaces work at three levels: visceral (first impression), behavioral (ease of use), and reflective (meaning and identity). A score below 7 on Product Fit usually means failure at the reflective level.
+- **Affordances (Gibson / Norman):** Interactive elements must communicate their function without requiring exploration. Missing focus states, unlabeled icon buttons, and invisible touch targets all fail this.
 
 ---
 
@@ -466,7 +469,7 @@ This skill evaluates interfaces based on robust behavioral psychology and classi
 - One neutral ramp, tinted toward the World.
 - One accent, used rarely: primary action, selection, the one number that matters.
 - Three text roles: primary, secondary, muted. Never ten slightly different grays.
-- Prefer OKLCH for new color tokens: `oklch(L% C H)` — perceptually uniform, easier to adjust.
+- Prefer OKLCH for new color tokens: `oklch(L% C H)`. Perceptually uniform, easier to adjust.
 - Banned: hue gradients on surfaces, gradient text, colored glows, radial blobs, neon borders.
 
 ### Typography
@@ -522,7 +525,7 @@ Error: embarrassed?
 Flag when:
 - Loading copy is "Loading..." → P2 (should be "Getting your data" or similar)
 - Error message blames the user for a system failure → P1
-- Empty state offers nothing — no instruction, no CTA → P1
+- Empty state offers nothing (no instruction, no CTA) → P1
 - Success is absorbed silently (no acknowledgment) → P2
 
 ---
@@ -565,7 +568,7 @@ button:active {
 }
 ```
 
-Always 0.96 — never smaller than 0.95.
+Always 0.96. Never smaller than 0.95.
 
 ### Transitions
 
@@ -600,10 +603,10 @@ transition: transform 200ms ease-out, opacity 200ms ease-out;
 Motion is a budget. Ask for every animation: does removing it make the interface worse, or just less flashy? If the answer is "just less flashy," remove it.
 
 **High-frequency interactions (used >10×/day): no custom animation.**
-Row hover, keystroke feedback, tab switch, toggle — instant response or minimal transition at ≤150ms.
+Row hover, keystroke feedback, tab switch, toggle: instant response or minimal transition at ≤150ms.
 
 **Low-frequency actions (used rarely or first time only): earn animation.**
-Onboarding steps, empty state → first item, success states — 150–300ms with simple ease-out.
+Onboarding steps, empty state → first item, success states: 150–300ms with simple ease-out.
 
 **CSS transitions over keyframes for interactive elements.**
 Transitions are interruptible. If a user opens a drawer and closes it mid-animation, a transition reverses smoothly. A keyframe animation restarts from the beginning.
@@ -666,11 +669,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add slop signs, propose new di
 
 ## Related
 
-- [designer-skills](https://github.com/Owl-Listener/designer-skills) — 111 focused design skills that this skill references for deep dives
-- [impeccable](https://github.com/pbakaus/impeccable) — design standards for AI-generated interfaces
+- [designer-skills](https://github.com/Owl-Listener/designer-skills): 111 focused design skills referenced for deep dives
+- [impeccable](https://github.com/pbakaus/impeccable): design standards for AI-generated interfaces
 
 ---
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
