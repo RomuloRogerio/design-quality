@@ -2,11 +2,11 @@
 
 ---
 
-![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![모든 AI와 호환](https://img.shields.io/badge/호환-모든%20AI-6366f1) ![Claude Code 플러그인](https://img.shields.io/badge/플러그인-Claude%20Code-orange)
 
 # design-quality
 
-AI가 생성한 인터페이스를 평가하고 수정하는 Claude Code 스킬입니다.
+AI 코딩 어시스턴트를 위한 디자인 품질 스킬 — Claude Code, Cursor, Codex, Copilot 또는 마크다운 지시를 수락하는 모든 도구에서 사용 가능합니다.
 
 AI는 UI를 빠르게 생성합니다. 하지만 항상 같은 방식으로 틀립니다. 보라-파랑 그라데이션, 그라데이션 텍스트, 빛나는 테두리, 아이콘 대신 이모지, 내용 없는 카드 그리드, Inter만 쓰는 타이포그래피, 업무 도구에 과도한 히어로 제목. 이것들이 특징입니다. 이 스킬은 이를 체계적으로 감지하고, 8개 차원에서 인터페이스를 채점하며, 단계별로 수정합니다.
 
@@ -68,9 +68,22 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 </details>
 
-### Cursor / Windsurf / Claude 기반 편집기와 함께
+### 모든 AI 어시스턴트와 함께 사용 (Cursor, Codex, Copilot, Gemini…)
 
-`skills/design-quality/` 폴더를 에이전트가 접근할 수 있는 위치에 복사합니다. 에이전트 설정에서 `SKILL.md`를 컨텍스트 파일 또는 시스템 프롬프트 추가 항목으로 지정합니다.
+스킬 파일 내용을 채팅에 직접 붙여넣거나 컨텍스트/시스템 프롬프트로 추가하세요:
+
+```
+# AI 채팅에서:
+"이 스킬을 사용해서 UI를 리뷰해줘: [skills/design-quality/SKILL.md 내용 붙여넣기]"
+
+# 또는 에이전트 설정에서 파일 참조:
+skills/design-quality/SKILL.md   → UI 리뷰
+skills/ant-design.md              → Ant Design 감사
+skills/system-design.md           → 아키텍처 계획
+skills/all.md                     → 세 가지 모두 동시에
+```
+
+스킬은 순수 마크다운 — Claude Code 의존성 없음. 플러그인(슬래시 명령)은 Claude Code 전용입니다.
 
 ### Claude.ai 프로젝트와 함께
 
