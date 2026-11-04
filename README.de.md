@@ -2,11 +2,11 @@
 
 ---
 
-![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Funktioniert mit jeder KI](https://img.shields.io/badge/funktioniert%20mit-jeder%20KI-6366f1) ![Plugin für Claude Code](https://img.shields.io/badge/Plugin-Claude%20Code-orange)
 
 # design-quality
 
-Eine Skill für Claude Code, die KI-generierte Interfaces bewertet und korrigiert.
+Eine Design-Quality-Skill für KI-Coding-Assistenten — Claude Code, Cursor, Codex, Copilot oder jedes Tool, das Markdown-Anweisungen akzeptiert.
 
 KI generiert UIs schnell. Sie generiert sie auch falsch, immer auf die gleiche Weise. Violett-blaue Verläufe, Farbverlauf-Text, leuchtende Ränder, Emojis als Icons, Karten-Grids ohne Inhalt, Inter-only Typografie, riesige Hero-Headlines auf operativen Tools. Das sind die Erkennungszeichen. Diese Skill erkennt sie, bewertet das Interface auf 8 Dimensionen und korrigiert sie Schritt für Schritt.
 
@@ -68,9 +68,22 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 </details>
 
-### Mit Cursor / Windsurf / jedem Claude-basierten Editor
+### Mit jedem KI-Assistenten (Cursor, Codex, Copilot, Gemini…)
 
-Kopieren Sie den Ordner `skills/design-quality/` an jeden für Ihren Agenten sichtbaren Ort. In der Agentenkonfiguration zeigen Sie auf `SKILL.md` als Kontextdatei oder System-Prompt-Ergänzung.
+Füge den Skill-Dateiinhalt direkt in deinen Chat ein oder füge ihn als Kontext/System-Prompt hinzu:
+
+```
+# Im KI-Chat:
+"Nutze diesen Skill zur Überprüfung meiner UI: [füge den Inhalt von skills/design-quality/SKILL.md ein]"
+
+# Oder referenziere die Datei in der Agentenkonfiguration:
+skills/design-quality/SKILL.md   → UI-Überprüfung
+skills/ant-design.md              → Ant Design Audit
+skills/system-design.md           → Architekturplanung
+skills/all.md                     → Alle drei gleichzeitig
+```
+
+Die Skills sind reines Markdown — keine Claude Code Abhängigkeit. Das Plugin (Slash-Befehle) ist Claude Code exklusiv.
 
 ### Mit Claude.ai Projects
 

@@ -2,11 +2,11 @@
 
 ---
 
-![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Funciona con cualquier IA](https://img.shields.io/badge/funciona%20con-cualquier%20IA-6366f1) ![Plugin para Claude Code](https://img.shields.io/badge/plugin-Claude%20Code-orange)
 
 # design-quality
 
-Una skill para Claude Code que evalúa y corrige interfaces generadas por IA.
+Una skill de calidad de diseño para asistentes de IA — Claude Code, Cursor, Codex, Copilot o cualquier herramienta que acepte instrucciones en markdown.
 
 La IA genera interfaces rápido. También las genera mal, siempre de la misma forma. Gradientes de púrpura a azul, texto en gradiente, bordes luminosos con color, emojis como íconos, grids de tarjetas sin contenido, tipografía solo con Inter, titulares de héroe enormes en herramientas operacionales. Estas son las señales. Esta skill las detecta, puntúa la interfaz en 8 dimensiones y la corrige paso a paso.
 
@@ -67,9 +67,22 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 </details>
 
-### Con Cursor / Windsurf / cualquier editor con Claude
+### Con cualquier asistente de IA (Cursor, Codex, Copilot, Gemini…)
 
-Copia la carpeta `skills/design-quality/` en cualquier lugar visible para tu agente. En la configuración del agente, apunta a `SKILL.md` como archivo de contexto o adición al system prompt.
+Pega el contenido del archivo de skill directamente en tu chat, o agrégalo como contexto/system prompt:
+
+```
+# En tu chat de IA:
+"Usa esta skill para revisar mi UI: [pega el contenido de skills/design-quality/SKILL.md]"
+
+# O referencia el archivo en la configuración del agente:
+skills/design-quality/SKILL.md   → Revisión de UI
+skills/ant-design.md              → Auditoría Ant Design
+skills/system-design.md           → Planificación de arquitectura
+skills/all.md                     → Las tres a la vez
+```
+
+Las skills son markdown puro — sin dependencia de Claude Code. El plugin (slash commands) es exclusivo de Claude Code.
 
 ### Con Claude.ai Projects
 

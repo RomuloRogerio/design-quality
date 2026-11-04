@@ -2,11 +2,11 @@
 
 ---
 
-![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![适用于任何AI](https://img.shields.io/badge/适用于-任何AI-6366f1) ![Claude Code插件](https://img.shields.io/badge/插件-Claude%20Code-orange)
 
 # design-quality
 
-一个用于 Claude Code 的技能，用于评估和修复 AI 生成的界面。
+一个面向AI编程助手的设计质量技能 — 适用于Claude Code、Cursor、Codex、Copilot或任何接受Markdown指令的工具。
 
 AI 生成 UI 很快，也总是以相同的方式出错。紫蓝色渐变、渐变文字、彩色发光边框、用 emoji 充当图标、没有内容的卡片网格、清一色 Inter 字体、在操作工具上用夸张的大标题。这些都是典型特征。这个技能会系统性地检测它们，从 8 个维度对界面打分，并逐步修复问题。
 
@@ -68,9 +68,22 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 </details>
 
-### 使用 Cursor / Windsurf / 任何 Claude 驱动的编辑器
+### 使用任何AI助手（Cursor、Codex、Copilot、Gemini等）
 
-将 `skills/design-quality/` 文件夹复制到代理可见的任何位置。在代理配置中，将 `SKILL.md` 指定为上下文文件或系统提示的补充。
+将技能文件内容直接粘贴到聊天中，或作为上下文/系统提示添加：
+
+```
+# 在AI聊天中：
+"使用此技能审查我的界面：[粘贴 skills/design-quality/SKILL.md 的内容]"
+
+# 或在代理配置中引用文件：
+skills/design-quality/SKILL.md   → 界面审查
+skills/ant-design.md              → Ant Design审计
+skills/system-design.md           → 架构规划
+skills/all.md                     → 全部三个技能
+```
+
+技能文件是纯Markdown格式，无需Claude Code依赖。插件（斜杠命令）仅支持Claude Code。
 
 ### 使用 Claude.ai 项目
 
