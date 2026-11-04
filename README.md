@@ -6,6 +6,8 @@
 
 ![design-quality](./cover.png)
 
+![Before / After demo](./docs/demo.gif)
+
 # design-quality
 
 A Claude Code skill for evaluating and fixing AI-generated interfaces.
