@@ -8,19 +8,7 @@
 
 Uma skill para Claude Code que avalia e corrige interfaces geradas por IA.
 
-IA gera interfaces rápido. E as gera erradas — sempre do mesmo jeito. Gradientes roxo-azul, texto em gradiente, bordas com brilho colorido, emojis como ícones, grids de cards sem conteúdo real, tipografia só com Inter, headlines de herói gigantes em ferramentas operacionais. Esses são os sinais. Esta skill os detecta, pontua a interface em 8 dimensões e corrige passo a passo.
-
----
-
-## O que faz
-
-**Modo Review** — audita uma UI procurando sinais de AI slop, pontua em 8 dimensões (1–10) e produz uma lista priorizada de correções (P0–P3).
-
-**Modo Create** — define uma direção de produto antes de escrever qualquer UI. Recusa-se a começar sem uma. Deriva caráter, mundo, momentos e um detalhe de assinatura do que o produto realmente faz — não de tendências.
-
-**Modo Fix** — aplica correções em 10 passes sequenciais: espaçamento → cor → ícones → copy → tipografia → layout → detalhes → acessibilidade → visuais → motion.
-
-**Modo Polish** — para interfaces que estão quase prontas mas parecem ligeiramente erradas. Reduz para 10% de velocidade no DevTools e percorre cada estado.
+IA gera interfaces rápido, e sempre erradas do mesmo jeito. Gradientes roxo-azul, texto em gradiente, bordas com brilho colorido, emojis como ícones, grids de cards sem conteúdo real, tipografia só com Inter, headlines de herói gigantes em ferramentas operacionais. Esses são os sinais. Esta skill os detecta, pontua a interface em 8 dimensões e corrige passo a passo.
 
 Funciona com React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing pages, componentes.
 
@@ -38,10 +26,10 @@ claude skills install https://github.com/RomuloRogerio/design-quality
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
-Em qualquer sessão do Claude Code, a skill carrega automaticamente quando você pede para revisar, criticar ou construir uma UI.
+Peça ao Claude para revisar, criticar ou construir uma UI.
 
 <details>
-<summary>🔍 Exemplo de output do terminal — Modo Review</summary>
+<summary>Exemplo de output: Modo Review</summary>
 
 ```
 $ claude review this design
@@ -72,7 +60,7 @@ Overall:        5/10
 
 ## Verdict
 Best part: clear primary CTA, readable label
-Worst part: gradient + gradient text — maximum slop signal
+Worst part: gradient + gradient text. Maximum slop signal.
 Required fix (P0): none
 Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
 ```
@@ -87,43 +75,65 @@ Copie a pasta `skills/design-quality/` para qualquer lugar visível para o seu a
 
 Faça upload de `skills/design-quality/SKILL.md` e todos os arquivos em `skills/design-quality/references/` como conhecimento do projeto. O Claude aplicará a skill em pedidos relacionados a UI.
 
-### Frases que ativam a skill
+---
 
-- "revise este design"
-- "critique esta UI"
-- "isso parece gerado por IA?"
-- "remova o slop"
-- "deixe menos genérico"
-- "construa esta página"
-- "design esta tela"
-- "melhore a UI"
-- "redesign"
+## Exemplos de uso
+
+**Revisar uma UI em busca de slop e pontuar:**
+```
+revise este design
+critique esta UI
+isso parece gerado por IA?
+remova o slop
+```
+
+**Começar uma nova UI com direção de produto primeiro:**
+```
+construa um dashboard para uma ferramenta de monitoramento de frota
+design o fluxo de onboarding de um app de faturamento para freelancers
+```
+
+**Rodar passes de correção em código existente:**
+```
+corrija o espaçamento e as cores neste componente
+rode um passe completo de correção em App.tsx
+```
+
+**Auditoria Ant Design:**
+```
+revise este painel React admin contra os padrões Ant Design
+verifique se este componente segue as regras de tokens Ant Design
+```
+
+**Planejamento de arquitetura:**
+```
+projete um encurtador de URL que suporte 100M requisições/dia
+como devo armazenar e servir vídeos enviados por usuários em escala?
+```
 
 ---
 
 ## Skills neste repositório
 
-Três skills, cada uma usável de forma independente ou em conjunto:
-
 | Skill | Arquivo | Para que serve |
 |---|---|---|
 | **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revisão geral de UI, detecção de slop, scorecard 8 dimensões, modos Create/Fix/Polish |
-| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revisão Ant Design v6 — tokens, componentes, grid 4px, motion, elevação |
-| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Arquitetura escalável — framework 5 passos, seleção de BD, cache, filas, CAP |
-| **all** | [`skills/all.md`](skills/all.md) | Carrega as três de uma vez; Claude escolhe a relevante automaticamente |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revisão Ant Design v6: tokens, componentes, grid 4px, motion, elevação |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Arquitetura escalável: framework 5 passos, seleção de BD, cache, filas, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | Carrega as três de uma vez; Claude escolhe a certa pelo contexto |
 
 ---
 
 ## Plugin (comandos slash do Claude Code)
 
-A pasta `plugin/` adiciona quatro comandos slash e um hint na barra de status a qualquer sessão do Claude Code.
+A pasta `plugin/` dá ao Claude Code quatro comandos slash e um hint na barra de status.
 
 | Comando | O que faz |
 |---|---|
-| `/dq-review` | Auditoria completa de UI: detecção de slop, scorecard 8 dimensões, lista de correções P0–P3 |
-| `/direction` | Modo Create — deriva direção (Caráter · Mundo · Momentos · Assinatura) antes de qualquer código de UI |
-| `/fix` | Modo Fix — 10 passes sequenciais: Espaçamento → Cor → Ícones → Copy → Tipografia → Layout → Detalhes → A11y → Visuais → Motion |
-| `/polish` | Modo Polish — percorre cada estado a 10% de velocidade (hover · focus · active · loading · empty · error) |
+| `/dq-review` | Auditoria completa: detecção de slop, scorecard 8 dimensões, lista P0–P3 |
+| `/direction` | Deriva direção de produto antes de qualquer código de UI |
+| `/fix` | 10 passes sequenciais: Espaçamento → Cor → Ícones → Copy → Tipografia → Layout → Detalhes → A11y → Visuais → Motion |
+| `/polish` | Percorre cada estado a 10% de velocidade: hover, focus, active, loading, empty, error |
 
 Após editar qualquer arquivo `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` ou `.svelte`, a barra de status exibe `/dq-review · /fix · /polish` como lembrete.
 
@@ -136,7 +146,7 @@ git clone https://github.com/RomuloRogerio/design-quality
 claude --plugin-dir ~/design-quality/plugin
 ```
 
-**Ou carregar permanentemente** — adicione ao `~/.claude/settings.json`:
+**Ou carregar permanentemente:** adicione ao `~/.claude/settings.json`:
 ```json
 {
   "pluginDirs": ["~/design-quality/plugin"]
@@ -161,7 +171,7 @@ O resultado é sempre reconhecível:
 
 **Copy:** "Revolucione Seu Fluxo de Trabalho Hoje." "Integrações poderosas." "Análise Avançada." Copy que poderia pertencer a qualquer produto da categoria.
 
-**Identidade:** Se você trocar o nome do produto pelo de qualquer concorrente, a interface ainda se encaixa. Sem Mundo, sem Assinatura, sem Momentos — nada que só este produto teria.
+**Identidade:** Se você trocar o nome do produto pelo de qualquer concorrente, a interface ainda se encaixa. Sem Mundo, sem Assinatura, sem Momentos: nada que só este produto teria.
 
 ### O que esta skill faz diferente
 
@@ -202,20 +212,20 @@ Quick wins (P1): [top 3]
 ```
 
 Escala de severidade:
-- **P0** — quebra usabilidade ou legibilidade. Corrigir antes de qualquer outra coisa.
-- **P1** — faz parecer claramente gerado por IA.
-- **P2** — enfraquece o craft mas não quebra.
-- **P3** — melhoria desejável mas não urgente.
+- **P0:** quebra usabilidade ou legibilidade. Corrigir antes de qualquer outra coisa.
+- **P1:** faz parecer claramente gerado por IA.
+- **P2:** enfraquece o craft mas não quebra.
+- **P3:** melhoria desejável mas não urgente.
 
 ### Modo Create
 
 Antes de escrever qualquer UI, a skill exige:
-1. **Tipo de contexto** — tela de app (densidade governa) vs. página (composição governa)
-2. **Entendimento do produto** — o que faz, para quem, qual é a tarefa principal
-3. **Direção** — cinco linhas derivadas do produto: Produto, Caráter, Mundo, Momentos, Assinatura
-4. **Design Dials** — três ajustes como sinal rápido: Variância / Motion / Densidade (1–10 cada)
+1. **Tipo de contexto:** tela de app (densidade governa) vs. página (composição governa)
+2. **Entendimento do produto:** o que faz, para quem, qual é a tarefa principal
+3. **Direção:** cinco linhas derivadas do produto: Produto, Caráter, Mundo, Momentos, Assinatura
+4. **Design Dials:** três ajustes como sinal rápido: Variância / Motion / Densidade (1–10 cada)
 
-Após confirmação, cria um arquivo `PROJECT_DESIGN.md` na raiz do projeto que persiste a direção entre sessões. Sessões futuras leem este arquivo primeiro — a direção não deriva.
+Após confirmação, cria um arquivo `PROJECT_DESIGN.md` na raiz do projeto que persiste a direção entre sessões. Sessões futuras leem este arquivo primeiro: a direção não deriva.
 
 Exemplo de direção para uma ferramenta de controle de tempo:
 ```
@@ -228,18 +238,18 @@ Assinatura: Uma animação sutil de segundo-ponteiro no timer ativo
 
 ### Modo Fix
 
-Dez passes sequenciais — complete cada um antes de iniciar o próximo:
+Dez passes sequenciais: complete cada um antes de iniciar o próximo:
 
-1. **Espaçamento** — alinhamento de grid 8px, ritmo, agrupamento
-2. **Cor** — remover slop, construir a partir de uma rampa neutra
-3. **Ícones** — uma biblioteca, um tamanho, um peso de traço, `currentColor`
-4. **Copy** — remover labels com emoji, acalmar o exagero, tornar o copy específico ao produto
-5. **Tipografia** — hierarquia, pesos, `text-wrap: balance` em headings
-6. **Layout** — alinhamento, densidade
-7. **Detalhes** — raios concêntricos, sombras (não sombra E borda juntas), bordas
-8. **Acessibilidade & Touch** — estados de foco, `aria-label`, `touch-action: manipulation`, alvos de 44px
-9. **Visuais** — ilustrações de estado vazio, consistência de ícones, aspect ratios de imagens
-10. **Motion** — último passe, só onde adiciona significado
+1. **Espaçamento:** alinhamento de grid 8px, ritmo, agrupamento
+2. **Cor:** remover slop, construir a partir de uma rampa neutra
+3. **Ícones:** uma biblioteca, um tamanho, um peso de traço, `currentColor`
+4. **Copy:** remover labels com emoji, acalmar o exagero, tornar o copy específico ao produto
+5. **Tipografia:** hierarquia, pesos, `text-wrap: balance` em headings
+6. **Layout:** alinhamento, densidade
+7. **Detalhes:** raios concêntricos, sombras (não sombra E borda juntas), bordas
+8. **Acessibilidade & Touch:** estados de foco, `aria-label`, `touch-action: manipulation`, alvos de 44px
+9. **Visuais:** ilustrações de estado vazio, consistência de ícones, aspect ratios de imagens
+10. **Motion:** último passe, só onde adiciona significado
 
 ### Modo Polish
 
@@ -259,7 +269,7 @@ Técnica: reduza para 10% de velocidade no DevTools (painel Animations). Percorr
 | **Taste** | Parece intencional sem parecer templado? |
 | **Restraint** | Sem decoração desnecessária, preenchimento ou estilo cosplay? |
 | **Density** | A quantidade de informação é certa para a tarefa? |
-| **Craft** | Espaçamento, tipo, alinhamento, contraste, estados de componentes — polidos? |
+| **Craft** | Espaçamento, tipo, alinhamento, contraste, estados de componentes: polidos? |
 | **Responsiveness** | O design sobrevive a layouts mobile e estreitos? |
 
 ---
@@ -298,7 +308,7 @@ Técnica: reduza para 10% de velocidade no DevTools (painel Animations). Percorr
 | Cards de features duplicados (ícone + heading + duas frases cada) | `P1` |
 | Dashboard escuro aplicado por padrão sem razão de produto | `P1` |
 | Seção que existe apenas para preencher espaço (estatísticas fake, depoimentos inventados) | `P1` |
-| Sem hierarquia visual — todo elemento com o mesmo peso | `P1` |
+| Sem hierarquia visual: todo elemento com o mesmo peso | `P1` |
 | Tudo centralizado, sem padrão de leitura alinhado à esquerda | `P2` |
 
 ### Ícones
@@ -314,9 +324,9 @@ Técnica: reduza para 10% de velocidade no DevTools (painel Animations). Percorr
 
 | Padrão | Severidade |
 |---|---|
-| Trocar o nome do produto pelo de um concorrente — a UI ainda se encaixa | `P1` |
-| Sem detalhe de Assinatura — nada que só este produto teria | `P1` |
-| Sem referência de Mundo — neutros sem tinte em direção ao domínio do produto | `P2` |
+| Trocar o nome do produto pelo de um concorrente: a UI ainda se encaixa | `P1` |
+| Sem detalhe de Assinatura: nada que só este produto teria | `P1` |
+| Sem referência de Mundo: neutros sem tinte em direção ao domínio do produto | `P2` |
 | Ilustração de stock genérica que poderia pertencer a qualquer produto | `P2` |
 
 ### Acessibilidade & Técnico
@@ -347,12 +357,12 @@ Técnica: reduza para 10% de velocidade no DevTools (painel Animations). Percorr
 
 As cinco linhas que todo design precisa antes de escrever código:
 
-**Produto** — o que faz e para quem, uma frase simples.
+**Produto:** o que faz e para quem, uma frase simples.
 
-**Caráter** — 2–3 palavras concretas. `calmo, exato, um pouco quente` ou `rápido, técnico, brincalhão`.
+**Caráter:** 2–3 palavras concretas. `calmo, exato, um pouco quente` ou `rápido, técnico, brincalhão`.
 Banidas: limpo, moderno, elegante, minimalista, premium. Essas descrevem todos os templates.
 
-**Mundo** — o material ou lugar em que o produto naturalmente pertence.
+**Mundo:** o material ou lugar em que o produto naturalmente pertence.
 - App de notas → papel e tinta
 - Ferramenta de monitoramento → instrumentos e turnos noturnos
 - App de viagens → mapas e luz de janela
@@ -360,10 +370,10 @@ Banidas: limpo, moderno, elegante, minimalista, premium. Essas descrevem todos o
 
 Isso tinta os neutros, o acento e os momentos visuais.
 
-**Momentos** — 1–2 lugares na tela onde o design fica rico e específico.
+**Momentos:** 1–2 lugares na tela onde o design fica rico e específico.
 Todo o resto fica silencioso para que esses se leiam imediatamente.
 
-**Assinatura** — um pequeno detalhe que só este produto teria, repetido consistentemente.
+**Assinatura:** um pequeno detalhe que só este produto teria, repetido consistentemente.
 - Ferramenta de monitoramento → ponto de status ao vivo
 - Ferramenta de desenvolvedor → estética de teclas de teclado
 - App de entrega → linha de rota
@@ -399,7 +409,7 @@ button:active {
 }
 ```
 
-Sempre 0.96 — nunca menor que 0.95.
+Sempre 0.96: nunca menor que 0.95.
 
 ### Transições
 
@@ -442,4 +452,4 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md) para como adicionar sinais de slop, prop
 
 ## Licença
 
-MIT — veja [LICENSE](LICENSE).
+MIT: veja [LICENSE](LICENSE).

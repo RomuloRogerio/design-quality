@@ -8,21 +8,10 @@
 
 Eine Skill für Claude Code, die KI-generierte Interfaces bewertet und korrigiert.
 
-KI generiert UIs schnell. Sie generiert sie auch falsch — immer auf die gleiche Weise. Violett-blaue Verläufe, Farbverlauf-Text, leuchtende Ränder, Emojis als Icons, Karten-Grids ohne Inhalt, Inter-only Typografie, riesige Hero-Headlines auf operativen Tools. Das sind die Erkennungszeichen. Diese Skill erkennt sie, bewertet das Interface auf 8 Dimensionen und korrigiert sie Schritt für Schritt.
-
----
-
-## Was sie tut
-
-**Überprüfungsmodus** — prüft ein Interface auf KI-Klischee-Zeichen, bewertet es auf 8 Dimensionen (1–10) und erstellt eine priorisierte Korrektionsliste (P0–P3).
-
-**Erstellungsmodus** — legt eine Produktrichtung fest, bevor eine UI geschrieben wird. Verweigert den Start ohne eine. Leitet Charakter, Welt, Momente und ein Signatur-Detail aus dem ab, was das Produkt tatsächlich tut — nicht aus Trends.
-
-**Korrektionsmodus** — wendet Korrekturen in 10 sequenziellen Durchläufen an: Abstände → Farbe → Icons → Copy → Typografie → Layout → Details → Barrierefreiheit → Visuals → Bewegung.
-
-**Verfeinerungsmodus** — für Interfaces, die größtenteils gut gestaltet sind, sich aber leicht falsch anfühlen. Verlangsamt auf 10% Geschwindigkeit in DevTools und durchläuft jeden Zustand.
+KI generiert UIs schnell. Sie generiert sie auch falsch, immer auf die gleiche Weise. Violett-blaue Verläufe, Farbverlauf-Text, leuchtende Ränder, Emojis als Icons, Karten-Grids ohne Inhalt, Inter-only Typografie, riesige Hero-Headlines auf operativen Tools. Das sind die Erkennungszeichen. Diese Skill erkennt sie, bewertet das Interface auf 8 Dimensionen und korrigiert sie Schritt für Schritt.
 
 Funktioniert mit React, Tailwind, HTML/CSS, Vue, Svelte, Dashboards, Apps, Landing Pages, Komponenten.
+
 
 ---
 
@@ -41,7 +30,7 @@ cp -r skills/design-quality ~/.claude/skills/
 In jeder Claude Code-Sitzung lädt die Skill dann automatisch, wenn Sie Claude bitten, eine UI zu überprüfen, zu kritisieren oder zu erstellen.
 
 <details>
-<summary>🔍 Beispiel Terminal-Ausgabe — Review Mode</summary>
+<summary>🔍 Beispiel Terminal-Ausgabe: Review Mode</summary>
 
 ```
 $ claude review this design
@@ -87,31 +76,51 @@ Kopieren Sie den Ordner `skills/design-quality/` an jeden für Ihren Agenten sic
 
 Laden Sie `skills/design-quality/SKILL.md` und alle Dateien in `skills/design-quality/references/` als Projektwissen hoch. Claude wendet die Skill auf UI-bezogene Anfragen an.
 
-### Aktivierungsphrasen
+---
 
-Die Skill aktiviert sich bei:
-- "dieses Design überprüfen"
-- "diese UI kritisieren"
-- "sieht das KI-generiert aus?"
-- "generisches entfernen"
-- "weniger generisch machen"
-- "diese Seite bauen"
-- "diesen Bildschirm gestalten"
-- "diese Schnittstelle verfeinern"
-- "die UI verbessern"
-- "neu gestalten"
+## Verwendungsbeispiele
+
+**Eine UI reviewen und bewerten:**
+```
+dieses Design überprüfen
+diese UI kritisieren
+sieht das KI-generiert aus?
+generisches entfernen
+```
+
+**Eine neue UI mit Produktrichtung zuerst beginnen:**
+```
+ein Dashboard für ein Flottenüberwachungstool bauen
+den Onboarding-Fluss einer Rechnungsapp für Freelancer gestalten
+```
+
+**Korrektur-Durchläufe auf bestehendem Code ausführen:**
+```
+Abstände und Farben in dieser Komponente korrigieren
+einen vollständigen Korrektions-Durchlauf auf App.tsx ausführen
+```
+
+**Ant Design Audit:**
+```
+dieses React-Admin-Panel anhand der Ant Design-Standards überprüfen
+prüfen ob diese Komponente den Ant Design Token-Regeln entspricht
+```
+
+**Architekturplanung:**
+```
+einen URL-Shortener entwerfen, der 100M Anfragen/Tag unterstützt
+wie soll ich von Nutzern hochgeladene Videos in großem Maßstab speichern und bereitstellen?
+```
 
 ---
 
 ## Skills in diesem Repository
 
-Drei Skills, jede einzeln oder gemeinsam nutzbar:
-
 | Skill | Datei | Wofür |
 |---|---|---|
 | **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Allgemeine UI-Prüfung, KI-Klischee-Erkennung, 8-Dimensionen-Scorecard, Create/Fix/Polish-Modi |
-| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 Review — Tokens, Komponenten, 4px-Raster, Motion, Elevation |
-| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Skalierbare Architektur — 5-Schritte-Framework, DB-Auswahl, Caching, Queues, CAP |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 Review: Tokens, Komponenten, 4px-Raster, Motion, Elevation |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Skalierbare Architektur: 5-Schritte-Framework, DB-Auswahl, Caching, Queues, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | Alle drei auf einmal laden; Claude wählt automatisch die passende |
 
 ---
@@ -123,9 +132,9 @@ Der `plugin/`-Ordner fügt jeder Claude Code-Sitzung vier Slash-Befehle und eine
 | Befehl | Was er tut |
 |---|---|
 | `/dq-review` | Vollständiges UI-Audit: KI-Erkennung, 8-Dimensionen-Scorecard, P0–P3-Korrektuliste |
-| `/direction` | Create-Modus — leitet Richtung ab (Charakter · Welt · Momente · Signatur) vor jedem UI-Code |
-| `/fix` | Fix-Modus — 10 sequenzielle Passes: Abstände → Farbe → Icons → Copy → Typografie → Layout → Details → A11y → Visuals → Motion |
-| `/polish` | Polish-Modus — geht jeden Zustand mit 10 % Geschwindigkeit durch (hover · focus · active · loading · empty · error) |
+| `/direction` | Create-Modus: leitet Richtung ab (Charakter · Welt · Momente · Signatur) vor jedem UI-Code |
+| `/fix` | Fix-Modus: 10 sequenzielle Passes: Abstände → Farbe → Icons → Copy → Typografie → Layout → Details → A11y → Visuals → Motion |
+| `/polish` | Polish-Modus: geht jeden Zustand mit 10 % Geschwindigkeit durch (hover · focus · active · loading · empty · error) |
 
 Nach dem Bearbeiten einer `.tsx`-, `.jsx`-, `.css`-, `.scss`-, `.html`-, `.vue`- oder `.svelte`-Datei zeigt die Statusleiste `/dq-review · /fix · /polish` als Erinnerung.
 
@@ -138,7 +147,7 @@ git clone https://github.com/RomuloRogerio/design-quality
 claude --plugin-dir ~/design-quality/plugin
 ```
 
-**Oder dauerhaft laden** — zu `~/.claude/settings.json` hinzufügen:
+**Oder dauerhaft laden:** zu `~/.claude/settings.json` hinzufügen:
 ```json
 {
   "pluginDirs": ["~/design-quality/plugin"]
@@ -163,7 +172,7 @@ Das Ergebnis ist immer erkennbar:
 
 **Copy:** "Revolutionieren Sie Ihren Workflow Heute." "Leistungsstarke Integrationen." "Erweiterte Analytik." Copy, die zu jedem Produkt der Kategorie passen könnte.
 
-**Identität:** Wenn Sie den Produktnamen durch einen Konkurrenten ersetzen würden, würde das Interface immer noch passen. Keine Welt, keine Signatur, keine Momente — nichts, was nur dieses Produkt hätte.
+**Identität:** Wenn Sie den Produktnamen durch einen Konkurrenten ersetzen würden, würde das Interface immer noch passen. Keine Welt, keine Signatur, keine Momente: nichts, was nur dieses Produkt hätte.
 
 ### Was diese Skill anders macht
 
@@ -204,20 +213,20 @@ Schnelle Gewinne (P1): [Top 3]
 ```
 
 Schweregradskala:
-- **P0** — bricht Nutzbarkeit oder Lesbarkeit. Vor allem anderen korrigieren.
-- **P1** — lässt es eindeutig KI-generiert aussehen.
-- **P2** — schwächt das Craft, ohne es zu brechen.
-- **P3** — wünschenswerte Verbesserung.
+- **P0:** bricht Nutzbarkeit oder Lesbarkeit. Vor allem anderen korrigieren.
+- **P1:** lässt es eindeutig KI-generiert aussehen.
+- **P2:** schwächt das Craft, ohne es zu brechen.
+- **P3:** wünschenswerte Verbesserung.
 
 ### Erstellungsmodus
 
 Bevor eine UI geschrieben wird, verlangt die Skill:
-1. **Kontexttyp** — App-Bildschirm (Dichte bestimmt) vs. Seite (Komposition bestimmt)
-2. **Produktverständnis** — was es tut, für wen, was die Hauptaufgabe ist
-3. **Richtung** — fünf Linien aus dem Produkt abgeleitet: Produkt, Charakter, Welt, Momente, Signatur
-4. **Design-Regler** — drei Knöpfe als schnelles Signal: Varianz / Bewegung / Dichte (1–10 jeweils)
+1. **Kontexttyp:** App-Bildschirm (Dichte bestimmt) vs. Seite (Komposition bestimmt)
+2. **Produktverständnis:** was es tut, für wen, was die Hauptaufgabe ist
+3. **Richtung:** fünf Linien aus dem Produkt abgeleitet: Produkt, Charakter, Welt, Momente, Signatur
+4. **Design-Regler:** drei Knöpfe als schnelles Signal: Varianz / Bewegung / Dichte (1–10 jeweils)
 
-Nach Bestätigung wird eine `PROJECT_DESIGN.md` im Projektstamm erstellt, die die Richtung über Sitzungen hinweg beibehält. Zukünftige Sitzungen lesen diese Datei zuerst — die Richtung driftet nicht.
+Nach Bestätigung wird eine `PROJECT_DESIGN.md` im Projektstamm erstellt, die die Richtung über Sitzungen hinweg beibehält. Zukünftige Sitzungen lesen diese Datei zuerst: die Richtung driftet nicht.
 
 Richtungsbeispiel für ein Zeiterfassungs-Tool:
 ```
@@ -230,18 +239,18 @@ Signatur: Eine subtile Sekundenzeiger-Animation am aktiven Timer
 
 ### Korrektionsmodus
 
-Zehn sequenzielle Durchläufe — jeden abschließen, bevor der nächste beginnt:
+Zehn sequenzielle Durchläufe: jeden abschließen, bevor der nächste beginnt:
 
-1. **Abstände** — 8px-Raster-Ausrichtung, Rhythmus, Gruppierung
-2. **Farbe** — Klischees entfernen, aus einem neutralen Verlauf aufbauen
-3. **Icons** — eine Bibliothek, eine Größe, ein Strichstärke, `currentColor`
-4. **Copy** — Emoji-Beschriftungen entfernen, das Schreien beruhigen, Copy produktspezifisch machen
-5. **Typografie** — Hierarchie, Gewichte, `text-wrap: balance` auf Überschriften
-6. **Layout** — Ausrichtung, Dichte
-7. **Details** — konzentrische Radien, Schatten (nicht Schatten UND Rand gleichzeitig), Ränder
-8. **Barrierefreiheit und Touch** — Fokuszustände, `aria-label`, `touch-action: manipulation`, 44px-Ziele
-9. **Visuals** — Leerzustand-Illustrationen, Icon-Konsistenz, Bild-Seitenverhältnisse
-10. **Bewegung** — letzter Durchlauf, nur dort, wo er Bedeutung hinzufügt
+1. **Abstände:** 8px-Raster-Ausrichtung, Rhythmus, Gruppierung
+2. **Farbe:** Klischees entfernen, aus einem neutralen Verlauf aufbauen
+3. **Icons:** eine Bibliothek, eine Größe, ein Strichstärke, `currentColor`
+4. **Copy:** Emoji-Beschriftungen entfernen, das Schreien beruhigen, Copy produktspezifisch machen
+5. **Typografie:** Hierarchie, Gewichte, `text-wrap: balance` auf Überschriften
+6. **Layout:** Ausrichtung, Dichte
+7. **Details:** konzentrische Radien, Schatten (nicht Schatten UND Rand gleichzeitig), Ränder
+8. **Barrierefreiheit und Touch:** Fokuszustände, `aria-label`, `touch-action: manipulation`, 44px-Ziele
+9. **Visuals:** Leerzustand-Illustrationen, Icon-Konsistenz, Bild-Seitenverhältnisse
+10. **Bewegung:** letzter Durchlauf, nur dort, wo er Bedeutung hinzufügt
 
 ### Verfeinerungsmodus
 
@@ -261,7 +270,7 @@ Technik: das Interface in DevTools (Animations-Panel) auf 10% Geschwindigkeit ve
 | **Geschmack** | Fühlt es sich intentional an, ohne wie eine Vorlage auszusehen? |
 | **Zurückhaltung** | Keine unnötige Dekoration, Füllmaterial oder Style-Cosplay? |
 | **Dichte** | Ist die Informationsmenge für die Aufgabe richtig? |
-| **Craft** | Abstände, Typografie, Ausrichtung, Kontrast, Komponentenzustände — poliert? |
+| **Craft** | Abstände, Typografie, Ausrichtung, Kontrast, Komponentenzustände: poliert? |
 | **Responsivität** | Übersteht das Design Mobile und schmale Layouts? |
 
 ---
@@ -300,7 +309,7 @@ Technik: das Interface in DevTools (Animations-Panel) auf 10% Geschwindigkeit ve
 | Doppelte Feature-Karten (Icon + Überschrift + zwei Sätze jeweils) | `P1` |
 | Dunkles Dashboard standardmäßig ohne Produktgrund angewendet | `P1` |
 | Abschnitt existiert nur zum Füllen von Raum (gefälschte Statistiken, erfundene Testimonials) | `P1` |
-| Keine visuelle Hierarchie — jedes Element mit demselben Gewicht | `P1` |
+| Keine visuelle Hierarchie: jedes Element mit demselben Gewicht | `P1` |
 | Alles zentriert, kein linksbündiges Lesemuster | `P2` |
 
 ### Icons
@@ -316,9 +325,9 @@ Technik: das Interface in DevTools (Animations-Panel) auf 10% Geschwindigkeit ve
 
 | Muster | Schweregrad |
 |---|---|
-| Produktname durch Konkurrenten ersetzen — UI passt immer noch | `P1` |
-| Kein Signatur-Detail — nichts, was nur dieses Produkt hätte | `P1` |
-| Keine Welt-Referenz — Neutrale haben keine Tönung in Richtung der Produktdomäne | `P2` |
+| Produktname durch Konkurrenten ersetzen: UI passt immer noch | `P1` |
+| Kein Signatur-Detail: nichts, was nur dieses Produkt hätte | `P1` |
+| Keine Welt-Referenz: Neutrale haben keine Tönung in Richtung der Produktdomäne | `P2` |
 | Generische Stock-Illustration, die zu jedem Produkt passen könnte | `P2` |
 
 ### Barrierefreiheit und Technik
@@ -349,12 +358,12 @@ Technik: das Interface in DevTools (Animations-Panel) auf 10% Geschwindigkeit ve
 
 Die fünf Linien, die jedes Design vor dem Schreiben von Code braucht:
 
-**Produkt** — was es tut und für wen, ein einfacher Satz.
+**Produkt:** was es tut und für wen, ein einfacher Satz.
 
-**Charakter** — 2–3 konkrete Wörter. `ruhig, präzise, ein wenig warm` oder `schnell, technisch, verspielt`.
+**Charakter:** 2–3 konkrete Wörter. `ruhig, präzise, ein wenig warm` oder `schnell, technisch, verspielt`.
 Verboten: sauber, modern, elegant, minimal, premium. Diese beschreiben jede Vorlage.
 
-**Welt** — das Material oder der Ort, zu dem das Produkt natürlich gehört.
+**Welt:** das Material oder der Ort, zu dem das Produkt natürlich gehört.
 - Notiz-App → Papier und Tinte
 - Monitoring-Tool → Instrumente und Nachtschichten
 - Reise-App → Karten und Fensterlicht
@@ -362,10 +371,10 @@ Verboten: sauber, modern, elegant, minimal, premium. Diese beschreiben jede Vorl
 
 Das tönt die Neutralen, den Akzent und die visuellen Momente.
 
-**Momente** — 1–2 Stellen auf dem Bildschirm, wo das Design reich und spezifisch wird.
+**Momente:** 1–2 Stellen auf dem Bildschirm, wo das Design reich und spezifisch wird.
 Alles andere bleibt ruhig, damit diese sofort lesbar sind.
 
-**Signatur** — ein kleines Detail, das nur dieses Produkt hätte, konsistent wiederholt.
+**Signatur:** ein kleines Detail, das nur dieses Produkt hätte, konsistent wiederholt.
 - Monitoring-Tool → Live-Status-Punkt
 - Entwickler-Tool → Keycap-Ästhetik
 - Liefer-App → Routenlinie
@@ -386,12 +395,12 @@ Dichte     ░░░░░░░░░░  1–10   (1 = geräumig/redaktionell,
 
 ## Angewandte Design-Prinzipien
 
-### 🧠 Theoretische Grundlagen und Designpsychologie
+### Theoretische Grundlagen und Designpsychologie
 
 Diese Skill bewertet Interfaces auf Basis solider Verhaltenspsychologie und klassischer Designframeworks, nicht auf Basis flüchtiger Ästhetik:
 
-- **Die Spitzenwert-Abschluss-Regel (Daniel Kahneman):** Nutzer beurteilen Erfahrungen anhand ihrer Höhepunkte und des Abschlusses — nicht des Durchschnitts. Deshalb schenkt die Skill der intensivsten Interaktion und dem letzten Bildschirm jedes Flows besondere Aufmerksamkeit.
-- **Emotionales Design-Framework (Don Norman):** Interfaces müssen drei Ebenen gleichzeitig ansprechen — viszeral (erster Eindruck), verhaltensbezogen (Benutzerfreundlichkeit) und reflektiv (Bedeutung und Identität). Ein Score unter 7 bei Product Fit signalisiert oft ein Versagen auf der reflektiven Ebene.
+- **Die Spitzenwert-Abschluss-Regel (Daniel Kahneman):** Nutzer beurteilen Erfahrungen anhand ihrer Höhepunkte und des Abschlusses: nicht des Durchschnitts. Deshalb schenkt die Skill der intensivsten Interaktion und dem letzten Bildschirm jedes Flows besondere Aufmerksamkeit.
+- **Emotionales Design-Framework (Don Norman):** Interfaces müssen drei Ebenen gleichzeitig ansprechen: viszeral (erster Eindruck), verhaltensbezogen (Benutzerfreundlichkeit) und reflektiv (Bedeutung und Identität). Ein Score unter 7 bei Product Fit signalisiert oft ein Versagen auf der reflektiven Ebene.
 - **Affordanzen (James J. Gibson / Don Norman):** Interaktive Elemente müssen ihre Funktion klar kommunizieren, ohne Erkundung zu erfordern. Fehlende Fokuszustände, unbeschriftete Icon-Buttons und unsichtbare Touch-Targets verletzen dieses Prinzip.
 
 ---
@@ -457,7 +466,7 @@ Fehler: verlegen?
 Markieren, wenn:
 - Loading-Copy ist "Wird geladen..." → P2 (sollte "Ihre Daten werden abgerufen" oder ähnliches sein)
 - Fehlermeldung gibt dem Benutzer die Schuld für einen Systemfehler → P1
-- Leerzustand bietet nichts — keine Anweisung, kein CTA → P1
+- Leerzustand bietet nichts: keine Anweisung, kein CTA → P1
 - Erfolg wird lautlos absorbiert (keine Anerkennung) → P2
 
 ---
@@ -500,7 +509,7 @@ button:active {
 }
 ```
 
-Immer 0.96 — niemals kleiner als 0.95.
+Immer 0.96: niemals kleiner als 0.95.
 
 ### Übergänge
 
@@ -519,10 +528,10 @@ transition: transform 200ms ease-out, opacity 200ms ease-out;
 Bewegung ist ein Budget. Für jede Animation fragen: macht ihr Entfernen das Interface schlechter, oder nur weniger auffällig? Wenn die Antwort "nur weniger auffällig" ist, entfernen.
 
 **Hochfrequenz-Interaktionen (>10×/Tag genutzt): keine benutzerdefinierte Animation.**
-Zeilen-Hover, Tastatur-Feedback, Tab-Wechsel, Toggle — sofortige Reaktion oder minimaler Übergang bei ≤150ms.
+Zeilen-Hover, Tastatur-Feedback, Tab-Wechsel, Toggle: sofortige Reaktion oder minimaler Übergang bei ≤150ms.
 
 **Niedrigfrequenz-Aktionen (selten oder erstmals genutzt): Animation verdienen.**
-Onboarding-Schritte, Leerzustand → erstes Element, Erfolgszustände — 150–300ms mit einfachem ease-out.
+Onboarding-Schritte, Leerzustand → erstes Element, Erfolgszustände: 150–300ms mit einfachem ease-out.
 
 **CSS-Übergänge über Keyframes für interaktive Elemente.**
 Übergänge sind unterbrechbar. Wenn ein Benutzer ein Drawer öffnet und es mitten in der Animation schließt, kehrt ein Übergang sanft um. Eine Keyframe-Animation startet von vorn.
@@ -585,11 +594,11 @@ Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Anweisungen zum Hinzufügen von KI
 
 ## Verwandt
 
-- [designer-skills](https://github.com/Owl-Listener/designer-skills) — 111 spezialisierte Design-Skills, die diese Skill für Tiefenanalysen referenziert
-- [impeccable](https://github.com/pbakaus/impeccable) — Design-Standards für KI-generierte Interfaces
+- [designer-skills](https://github.com/Owl-Listener/designer-skills): 111 spezialisierte Design-Skills, die diese Skill für Tiefenanalysen referenziert
+- [impeccable](https://github.com/pbakaus/impeccable): Design-Standards für KI-generierte Interfaces
 
 ---
 
 ## Lizenz
 
-MIT — siehe [LICENSE](LICENSE).
+MIT: siehe [LICENSE](LICENSE).

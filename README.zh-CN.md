@@ -10,19 +10,8 @@
 
 AI 生成 UI 很快，也总是以相同的方式出错。紫蓝色渐变、渐变文字、彩色发光边框、用 emoji 充当图标、没有内容的卡片网格、清一色 Inter 字体、在操作工具上用夸张的大标题。这些都是典型特征。这个技能会系统性地检测它们，从 8 个维度对界面打分，并逐步修复问题。
 
----
-
-## 功能概述
-
-**审阅模式** — 审查 UI 中的 AI 劣质特征，在 8 个维度（1–10 分）上评分，并生成优先修复清单（P0–P3）。
-
-**创建模式** — 在编写任何 UI 之前先确立产品方向。拒绝在没有方向的情况下开始。从产品真正的功能中推导出特质、世界观、高光时刻和签名细节——而非趋势。
-
-**修复模式** — 按 10 个顺序阶段应用修复：间距 → 颜色 → 图标 → 文案 → 排版 → 布局 → 细节 → 无障碍 → 视觉 → 动效。
-
-**打磨模式** — 针对设计基本完成但感觉微微不对的界面。在 DevTools 中以 10% 速度慢放，逐一检查每个状态。
-
 适用于 React、Tailwind、HTML/CSS、Vue、Svelte、仪表板、应用程序、落地页、组件。
+
 
 ---
 
@@ -41,7 +30,7 @@ cp -r skills/design-quality ~/.claude/skills/
 之后，在任何 Claude Code 会话中，当你要求 Claude 审查、评价或构建 UI 时，技能会自动加载。
 
 <details>
-<summary>🔍 终端输出示例 — Review 模式</summary>
+<summary>🔍 终端输出示例: Review 模式</summary>
 
 ```
 $ claude review this design
@@ -87,31 +76,51 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 将 `skills/design-quality/SKILL.md` 和 `skills/design-quality/references/` 中的所有文件作为项目知识上传。Claude 会将该技能应用于 UI 相关的请求。
 
-### 触发短语
+---
 
-技能在以下情况下激活：
-- "审阅这个设计"
-- "评价这个 UI"
-- "这看起来像 AI 生成的吗？"
-- "去掉 AI 味"
-- "让它更有个性"
-- "构建这个页面"
-- "设计这个界面"
-- "打磨这个界面"
-- "改进 UI"
-- "重新设计"
+## 使用示例
+
+**审查 UI 并评分：**
+```
+审阅这个设计
+评价这个 UI
+这看起来是 AI 生成的吗？
+去掉 AI 味
+```
+
+**先确立产品方向，再开始新 UI：**
+```
+为车队监控工具构建一个仪表板
+设计自由职业者账单应用的引导流程
+```
+
+**对现有代码执行修复 Pass：**
+```
+修复这个组件的间距和颜色
+对 App.tsx 执行完整修复 Pass
+```
+
+**Ant Design 审查：**
+```
+对照 Ant Design 标准审查这个 React Admin 面板
+检查这个组件是否符合 Ant Design Token 规范
+```
+
+**架构规划：**
+```
+设计一个支持每天 1 亿次请求的短链接服务
+如何大规模存储和分发用户上传的视频？
+```
 
 ---
 
 ## 本仓库中的 Skills
 
-三个 Skills，每个均可单独使用或组合使用：
-
 | Skill | 文件 | 用途 |
 |---|---|---|
 | **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 通用 UI 审查、AI 劣质检测、8 维度评分卡、Create/Fix/Polish 模式 |
-| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 审查 — Token、组件、4px 栅格、动效、层级 |
-| **system-design** | [`skills/system-design.md`](skills/system-design.md) | 可扩展架构 — 5 步框架、数据库选型、缓存、消息队列、CAP |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 审查: Token、组件、4px 栅格、动效、层级 |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | 可扩展架构: 5 步框架、数据库选型、缓存、消息队列、CAP |
 | **all** | [`skills/all.md`](skills/all.md) | 一次加载全部三个；Claude 自动选择适用的 Skill |
 
 ---
@@ -123,9 +132,9 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 | 命令 | 功能 |
 |---|---|
 | `/dq-review` | 完整 UI 审计：AI 劣质检测、8 维度评分卡、P0–P3 修复清单 |
-| `/direction` | Create 模式 — 在编写任何 UI 代码前推导方向（角色 · 世界 · 时刻 · 签名细节） |
-| `/fix` | Fix 模式 — 10 个顺序修复 Pass：间距 → 颜色 → 图标 → 文案 → 字体 → 布局 → 细节 → 无障碍 → 视觉 → 动效 |
-| `/polish` | Polish 模式 — 以 10% 速度遍历每个状态（hover · focus · active · loading · empty · error） |
+| `/direction` | Create 模式: 在编写任何 UI 代码前推导方向（角色 · 世界 · 时刻 · 签名细节） |
+| `/fix` | Fix 模式: 10 个顺序修复 Pass：间距 → 颜色 → 图标 → 文案 → 字体 → 布局 → 细节 → 无障碍 → 视觉 → 动效 |
+| `/polish` | Polish 模式: 以 10% 速度遍历每个状态（hover · focus · active · loading · empty · error） |
 
 编辑任意 `.tsx`、`.jsx`、`.css`、`.scss`、`.html`、`.vue` 或 `.svelte` 文件后，状态栏显示 `/dq-review · /fix · /polish` 提醒。
 
@@ -138,7 +147,7 @@ git clone https://github.com/RomuloRogerio/design-quality
 claude --plugin-dir ~/design-quality/plugin
 ```
 
-**或永久加载** — 添加到 `~/.claude/settings.json`：
+**或永久加载:** 添加到 `~/.claude/settings.json`：
 ```json
 {
   "pluginDirs": ["~/design-quality/plugin"]
@@ -204,18 +213,18 @@ claude --plugin-dir ~/design-quality/plugin
 ```
 
 严重程度等级：
-- **P0** — 破坏可用性或可读性，优先修复。
-- **P1** — 明显看起来是 AI 生成的。
-- **P2** — 削弱工艺但不影响功能。
-- **P3** — 锦上添花的改进。
+- **P0:** 破坏可用性或可读性，优先修复。
+- **P1:** 明显看起来是 AI 生成的。
+- **P2:** 削弱工艺但不影响功能。
+- **P3:** 锦上添花的改进。
 
 ### 创建模式
 
 编写任何 UI 之前，技能要求：
-1. **上下文类型** — 应用界面（密度主导）还是页面（构图主导）
-2. **产品理解** — 产品是什么、面向谁、核心任务是什么
-3. **方向** — 从产品中推导的五条线：产品、特质、世界观、高光时刻、签名
-4. **设计仪表盘** — 三个快速信号旋钮：变化度 / 动效度 / 密度（各 1–10）
+1. **上下文类型:** 应用界面（密度主导）还是页面（构图主导）
+2. **产品理解:** 产品是什么、面向谁、核心任务是什么
+3. **方向:** 从产品中推导的五条线：产品、特质、世界观、高光时刻、签名
+4. **设计仪表盘:** 三个快速信号旋钮：变化度 / 动效度 / 密度（各 1–10）
 
 确认后，在项目根目录创建 `PROJECT_DESIGN.md` 文件，跨会话持久化方向。后续会话首先读取此文件——方向不会偏离。
 
@@ -232,16 +241,16 @@ claude --plugin-dir ~/design-quality/plugin
 
 十个顺序阶段——完成每个阶段后再开始下一个：
 
-1. **间距** — 8px 网格对齐、节奏、分组
-2. **颜色** — 移除劣质元素，从中性色调构建
-3. **图标** — 一套图标库、一种尺寸、一种描边粗细、`currentColor`
-4. **文案** — 移除 emoji 标签，平息过度叫卖，使文案专属于产品
-5. **排版** — 层次、字重、标题用 `text-wrap: balance`
-6. **布局** — 对齐、密度
-7. **细节** — 同心圆角、阴影（不能同时有阴影和边框）、边框
-8. **无障碍与触控** — 焦点状态、`aria-label`、`touch-action: manipulation`、44px 触控目标
-9. **视觉** — 空状态插画、图标一致性、图片宽高比
-10. **动效** — 最后一个阶段，只在增加意义时使用
+1. **间距:** 8px 网格对齐、节奏、分组
+2. **颜色:** 移除劣质元素，从中性色调构建
+3. **图标:** 一套图标库、一种尺寸、一种描边粗细、`currentColor`
+4. **文案:** 移除 emoji 标签，平息过度叫卖，使文案专属于产品
+5. **排版:** 层次、字重、标题用 `text-wrap: balance`
+6. **布局:** 对齐、密度
+7. **细节:** 同心圆角、阴影（不能同时有阴影和边框）、边框
+8. **无障碍与触控:** 焦点状态、`aria-label`、`touch-action: manipulation`、44px 触控目标
+9. **视觉:** 空状态插画、图标一致性、图片宽高比
+10. **动效:** 最后一个阶段，只在增加意义时使用
 
 ### 打磨模式
 
@@ -349,12 +358,12 @@ claude --plugin-dir ~/design-quality/plugin
 
 每个设计在写代码前需要的五条线：
 
-**产品** — 它做什么、为谁做，一句话。
+**产品:** 它做什么、为谁做，一句话。
 
-**特质** — 2–3 个具体词汇。`冷静、精确、略带温度` 或 `快速、技术感、有趣`。
+**特质:** 2–3 个具体词汇。`冷静、精确、略带温度` 或 `快速、技术感、有趣`。
 禁用词：干净、现代、优雅、简约、高端。这些词适用于所有模板。
 
-**世界观** — 产品自然归属的材质或场所。
+**世界观:** 产品自然归属的材质或场所。
 - 笔记应用 → 纸张与墨水
 - 监控工具 → 仪器与夜班
 - 旅游应用 → 地图与窗光
@@ -362,10 +371,10 @@ claude --plugin-dir ~/design-quality/plugin
 
 这会影响中性色的色调、强调色和视觉高光时刻。
 
-**高光时刻** — 界面上 1–2 个设计变得丰富而具体的地方。
+**高光时刻:** 界面上 1–2 个设计变得丰富而具体的地方。
 其他地方保持安静，以便这些地方能即时被看到。
 
-**签名** — 只有这个产品才会有的一个小细节，持续重复。
+**签名:** 只有这个产品才会有的一个小细节，持续重复。
 - 监控工具 → 实时状态点
 - 开发者工具 → 按键帽美学
 - 配送应用 → 路线线条
@@ -386,7 +395,7 @@ claude --plugin-dir ~/design-quality/plugin
 
 ## 应用的设计原则
 
-### 🧠 理论基础与设计心理学
+### 理论基础与设计心理学
 
 本技能基于扎实的行为心理学和经典设计框架来评估界面，而非瞬息万变的审美趋势：
 
@@ -405,7 +414,7 @@ claude --plugin-dir ~/design-quality/plugin
 - 一套中性色调，向世界观倾斜。
 - 一个强调色，少量使用：主要操作、选中状态、最重要的那个数字。
 - 三种文字角色：主要、次要、弱化。永远不要十种略有不同的灰色。
-- 新颜色令牌优先使用 OKLCH：`oklch(L% C H)` — 感知均匀，更易调整。
+- 新颜色令牌优先使用 OKLCH：`oklch(L% C H)`: 感知均匀，更易调整。
 - 禁止：表面上的色相渐变、渐变文字、彩色发光、径向色块、霓虹边框。
 
 ### 排版
@@ -604,11 +613,11 @@ design-quality/
 
 ## 相关项目
 
-- [designer-skills](https://github.com/Owl-Listener/designer-skills) — 111 个专项设计技能，本技能在深入分析时会引用
-- [impeccable](https://github.com/pbakaus/impeccable) — AI 生成界面的设计标准
+- [designer-skills](https://github.com/Owl-Listener/designer-skills): 111 个专项设计技能，本技能在深入分析时会引用
+- [impeccable](https://github.com/pbakaus/impeccable): AI 生成界面的设计标准
 
 ---
 
 ## 许可证
 
-MIT — 参见 [LICENSE](LICENSE)。
+MIT: 参见 [LICENSE](LICENSE)。
