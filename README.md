@@ -105,6 +105,50 @@ The skill activates on:
 
 ---
 
+## Skills in this repo
+
+Three skills, each usable independently or together:
+
+| Skill | File | Use for |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | General UI review, slop detection, 8-dimension scorecard, Create/Fix/Polish modes |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 review — tokens, components, 4px grid, motion, elevation |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Scalable architecture — 5-step framework, DB selection, caching, queues, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | Load all three at once; Claude picks the relevant one automatically |
+
+---
+
+## Plugin (Claude Code slash commands)
+
+The `plugin/` folder adds four slash commands and a status bar hint to any Claude Code session.
+
+| Command | What it does |
+|---|---|
+| `/dq-review` | Full UI audit: slop detection, 8-dimension scorecard, P0–P3 fix list |
+| `/direction` | Create Mode — derives direction (Character · World · Moments · Signature) before any UI code |
+| `/fix` | Fix Mode — 10 sequential passes: Spacing → Color → Icons → Copy → Typography → Layout → Details → A11y → Visuals → Motion |
+| `/polish` | Polish Mode — walks every state at 10% speed (hover · focus · active · loading · empty · error) |
+
+After editing any `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue`, or `.svelte` file, the status bar shows `/dq-review · /fix · /polish` as a reminder.
+
+**Install:**
+```bash
+# Clone the repo
+git clone https://github.com/RomuloRogerio/design-quality
+
+# Run Claude Code with the plugin
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**Or load permanently** — add to `~/.claude/settings.json`:
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## The problem this solves
 
 ### What AI UIs look like
@@ -570,11 +614,17 @@ Transitions are interruptible. If a user opens a drawer and closes it mid-animat
 
 ```
 design-quality/
-├── README.md (+ translations)
+├── README.md (+ 7 translations)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── plugin/                     ← Claude Code slash commands
+│   ├── .claude-plugin/
+│   └── hooks/
 └── skills/
+    ├── all.md                  ← load all three skills at once
+    ├── ant-design.md           ← Ant Design v6 review & fix
+    ├── system-design.md        ← scalable architecture planning
     └── design-quality/
         ├── SKILL.md
         └── references/
@@ -588,15 +638,20 @@ design-quality/
 | [CHANGELOG.md](CHANGELOG.md) | Version history |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
 | [LICENSE](LICENSE) | MIT license |
-| [SKILL.md](skills/design-quality/SKILL.md) | The installable skill |
+| **Skills** | |
+| [skills/all.md](skills/all.md) | Load all three skills at once |
+| [skills/design-quality/SKILL.md](skills/design-quality/SKILL.md) | UI review, slop detection, scorecard, Create/Fix/Polish |
+| [skills/ant-design.md](skills/ant-design.md) | Ant Design v6 token/component review |
+| [skills/system-design.md](skills/system-design.md) | Scalable architecture planning |
+| **Plugin** | |
+| [plugin/hooks/register.ts](plugin/hooks/register.ts) | Slash command hooks source |
+| [plugin/README.md](plugin/README.md) | Plugin install instructions |
+| **References** | |
 | [slop-signs.md](skills/design-quality/references/slop-signs.md) | Full anti-pattern catalog |
 | [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Scorecard dimension details |
 | [micro-polish.md](skills/design-quality/references/micro-polish.md) | Micro-polish reference |
 | [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | Visual fix passes |
 | [passes-motion.md](skills/design-quality/references/passes-motion.md) | Motion fix passes |
-| [review-slop.md](skills/design-quality/references/agents/review-slop.md) | Slop audit subagent |
-| [review-scorecard.md](skills/design-quality/references/agents/review-scorecard.md) | 8-dimension scorer subagent |
-| [fix-passes.md](skills/design-quality/references/agents/fix-passes.md) | 10 fix pass subagents |
 | [review-guide.md](docs/review-guide.md) | Review mode walkthrough |
 | [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | Fix mode walkthrough |
 | [slop-field-guide.md](docs/slop-field-guide.md) | Slop field guide |
