@@ -4,6 +4,14 @@
 
 ![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![모든 AI와 호환](https://img.shields.io/badge/호환-모든%20AI-6366f1) ![Claude Code 플러그인](https://img.shields.io/badge/플러그인-Claude%20Code-orange)
 
+**[→ 라이브 데모: romulorogerio.github.io/design-quality](https://romulorogerio.github.io/design-quality)**
+
+![design-quality](./cover.png)
+
+## Demo
+
+![Before / After — AI slop vs reviewed interface](./docs/demo.gif)
+
 # design-quality
 
 AI 코딩 어시스턴트를 위한 디자인 품질 스킬 — Claude Code, Cursor, Codex, Copilot 또는 마크다운 지시를 수락하는 모든 도구에서 사용 가능합니다.

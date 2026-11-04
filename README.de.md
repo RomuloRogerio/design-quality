@@ -4,6 +4,14 @@
 
 ![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Funktioniert mit jeder KI](https://img.shields.io/badge/funktioniert%20mit-jeder%20KI-6366f1) ![Plugin für Claude Code](https://img.shields.io/badge/Plugin-Claude%20Code-orange)
 
+**[→ Live-Demo: romulorogerio.github.io/design-quality](https://romulorogerio.github.io/design-quality)**
+
+![design-quality](./cover.png)
+
+## Demo
+
+![Before / After — AI slop vs reviewed interface](./docs/demo.gif)
+
 # design-quality
 
 Eine Design-Quality-Skill für KI-Coding-Assistenten — Claude Code, Cursor, Codex, Copilot oder jedes Tool, das Markdown-Anweisungen akzeptiert.

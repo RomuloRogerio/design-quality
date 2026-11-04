@@ -4,6 +4,14 @@
 
 ![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![あらゆるAIで使用可能](https://img.shields.io/badge/対応-あらゆるAI-6366f1) ![Claude Codeプラグイン](https://img.shields.io/badge/プラグイン-Claude%20Code-orange)
 
+**[→ ライブデモ: romulorogerio.github.io/design-quality](https://romulorogerio.github.io/design-quality)**
+
+![design-quality](./cover.png)
+
+## Demo
+
+![Before / After — AI slop vs reviewed interface](./docs/demo.gif)
+
 # design-quality
 
 AIコーディングアシスタント向けデザイン品質スキル — Claude Code、Cursor、Codex、Copilot、またはMarkdown指示を受け入れるあらゆるツールで使用可能。
