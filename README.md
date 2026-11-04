@@ -2,13 +2,13 @@
 
 ---
 
-![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Works with any AI](https://img.shields.io/badge/works%20with-any%20AI-6366f1) ![Plugin for Claude Code](https://img.shields.io/badge/plugin-Claude%20Code-orange)
 
 ![design-quality](./cover.png)
 
 # design-quality
 
-A Claude Code skill for evaluating and fixing AI-generated interfaces.
+A design quality skill for AI coding assistants — Claude Code, Cursor, Codex, Copilot, or any tool that accepts markdown instructions.
 
 AI generates UIs fast, and wrong in the same ways every time. Purple gradients, gradient text, glowing borders, emoji icons, card grids with no content, Inter-everything typography, generic hero headlines on operational tools. These are tells. This skill catches them, scores the interface on 8 dimensions, and fixes them pass by pass.
 
@@ -73,9 +73,22 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 </details>
 
-### With Cursor / Windsurf / any Claude-powered editor
+### With any AI assistant (Cursor, Codex, Copilot, Gemini…)
 
-Copy the `skills/design-quality/` folder anywhere visible to your agent. In the agent configuration, point to `SKILL.md` as a context file or system prompt addition.
+Paste the skill file content directly into your chat, or add it as context/system prompt:
+
+```
+# In your AI chat:
+"Use this skill to review my UI: [paste contents of skills/design-quality/SKILL.md]"
+
+# Or reference the file in your agent config:
+skills/design-quality/SKILL.md   → UI review
+skills/ant-design.md              → Ant Design audit
+skills/system-design.md           → Architecture planning
+skills/all.md                     → All three at once
+```
+
+The skills are plain markdown — no Claude Code dependency. The plugin (slash commands) is Claude Code only.
 
 ### With Claude.ai Projects
 
