@@ -4,6 +4,14 @@
 
 ![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Fonctionne avec tout IA](https://img.shields.io/badge/fonctionne%20avec-tout%20IA-6366f1) ![Plugin pour Claude Code](https://img.shields.io/badge/plugin-Claude%20Code-orange)
 
+**[→ Démo en direct: romulorogerio.github.io/design-quality](https://romulorogerio.github.io/design-quality)**
+
+![design-quality](./cover.png)
+
+## Demo
+
+![Before / After — AI slop vs reviewed interface](./docs/demo.gif)
+
 # design-quality
 
 Une skill de qualité de design pour les assistants IA — Claude Code, Cursor, Codex, Copilot ou tout outil acceptant des instructions en markdown.

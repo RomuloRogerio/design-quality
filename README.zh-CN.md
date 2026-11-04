@@ -4,6 +4,14 @@
 
 ![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![适用于任何AI](https://img.shields.io/badge/适用于-任何AI-6366f1) ![Claude Code插件](https://img.shields.io/badge/插件-Claude%20Code-orange)
 
+**[→ 在线演示: romulorogerio.github.io/design-quality](https://romulorogerio.github.io/design-quality)**
+
+![design-quality](./cover.png)
+
+## Demo
+
+![Before / After — AI slop vs reviewed interface](./docs/demo.gif)
+
 # design-quality
 
 一个面向AI编程助手的设计质量技能 — 适用于Claude Code、Cursor、Codex、Copilot或任何接受Markdown指令的工具。
