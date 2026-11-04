@@ -4,6 +4,8 @@
 
 ![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Works with any AI](https://img.shields.io/badge/works%20with-any%20AI-6366f1) ![Plugin for Claude Code](https://img.shields.io/badge/plugin-Claude%20Code-orange)
 
+**[→ Live demo: romulorogerio.github.io/design-quality](https://romulorogerio.github.io/design-quality)**
+
 ![design-quality](./cover.png)
 
 # design-quality
