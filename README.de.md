@@ -103,6 +103,50 @@ Die Skill aktiviert sich bei:
 
 ---
 
+## Skills in diesem Repository
+
+Drei Skills, jede einzeln oder gemeinsam nutzbar:
+
+| Skill | Datei | Wofür |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Allgemeine UI-Prüfung, KI-Klischee-Erkennung, 8-Dimensionen-Scorecard, Create/Fix/Polish-Modi |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 Review — Tokens, Komponenten, 4px-Raster, Motion, Elevation |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Skalierbare Architektur — 5-Schritte-Framework, DB-Auswahl, Caching, Queues, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | Alle drei auf einmal laden; Claude wählt automatisch die passende |
+
+---
+
+## Plugin (Claude Code Slash-Befehle)
+
+Der `plugin/`-Ordner fügt jeder Claude Code-Sitzung vier Slash-Befehle und einen Statusleisten-Hinweis hinzu.
+
+| Befehl | Was er tut |
+|---|---|
+| `/dq-review` | Vollständiges UI-Audit: KI-Erkennung, 8-Dimensionen-Scorecard, P0–P3-Korrektuliste |
+| `/direction` | Create-Modus — leitet Richtung ab (Charakter · Welt · Momente · Signatur) vor jedem UI-Code |
+| `/fix` | Fix-Modus — 10 sequenzielle Passes: Abstände → Farbe → Icons → Copy → Typografie → Layout → Details → A11y → Visuals → Motion |
+| `/polish` | Polish-Modus — geht jeden Zustand mit 10 % Geschwindigkeit durch (hover · focus · active · loading · empty · error) |
+
+Nach dem Bearbeiten einer `.tsx`-, `.jsx`-, `.css`-, `.scss`-, `.html`-, `.vue`- oder `.svelte`-Datei zeigt die Statusleiste `/dq-review · /fix · /polish` als Erinnerung.
+
+**Installieren:**
+```bash
+# Repository klonen
+git clone https://github.com/RomuloRogerio/design-quality
+
+# Claude Code mit dem Plugin starten
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**Oder dauerhaft laden** — zu `~/.claude/settings.json` hinzufügen:
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## Das gelöste Problem
 
 ### Wie KI-UIs aussehen
@@ -489,11 +533,17 @@ Onboarding-Schritte, Leerzustand → erstes Element, Erfolgszustände — 150–
 
 ```
 design-quality/
-├── README.md (+ Übersetzungen)
+├── README.md (+ 7 Übersetzungen)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── plugin/                     ← Claude Code Slash-Befehle
+│   ├── .claude-plugin/
+│   └── hooks/
 └── skills/
+    ├── all.md                  ← alle drei Skills auf einmal laden
+    ├── ant-design.md           ← Ant Design v6 — Review und Fix
+    ├── system-design.md        ← skalierbare Architekturplanung
     └── design-quality/
         ├── SKILL.md
         └── references/
@@ -507,10 +557,23 @@ design-quality/
 | [CHANGELOG.md](CHANGELOG.md) | Versionshistorie |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Wie man beiträgt |
 | [LICENSE](LICENSE) | MIT-Lizenz |
-| [SKILL.md](skills/design-quality/SKILL.md) | Die installierbare Skill |
+| **Skills** | |
+| [skills/all.md](skills/all.md) | Alle drei Skills auf einmal laden |
+| [skills/design-quality/SKILL.md](skills/design-quality/SKILL.md) | UI-Review, KI-Erkennung, Scorecard, Create/Fix/Polish |
+| [skills/ant-design.md](skills/ant-design.md) | Ant Design v6 Token/Komponenten-Review |
+| [skills/system-design.md](skills/system-design.md) | Skalierbare Architekturplanung |
+| **Plugin** | |
+| [plugin/hooks/register.ts](plugin/hooks/register.ts) | Quellcode der Slash-Befehl-Hooks |
+| [plugin/README.md](plugin/README.md) | Plugin-Installationsanleitung |
+| **Referenzen** | |
 | [slop-signs.md](skills/design-quality/references/slop-signs.md) | Vollständiger Anti-Pattern-Katalog |
 | [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Scorecard-Dimensionen im Detail |
 | [micro-polish.md](skills/design-quality/references/micro-polish.md) | Micro-Polish-Referenz |
+| [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | Visuelle Korrektur-Passes |
+| [passes-motion.md](skills/design-quality/references/passes-motion.md) | Motion-Korrektur-Passes |
+| [review-guide.md](docs/review-guide.md) | Leitfaden für den Review-Modus |
+| [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | Leitfaden für den Fix-Modus |
+| [slop-field-guide.md](docs/slop-field-guide.md) | KI-Klischee-Feldführer |
 
 ---
 

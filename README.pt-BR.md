@@ -101,6 +101,50 @@ Faça upload de `skills/design-quality/SKILL.md` e todos os arquivos em `skills/
 
 ---
 
+## Skills neste repositório
+
+Três skills, cada uma usável de forma independente ou em conjunto:
+
+| Skill | Arquivo | Para que serve |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revisão geral de UI, detecção de slop, scorecard 8 dimensões, modos Create/Fix/Polish |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revisão Ant Design v6 — tokens, componentes, grid 4px, motion, elevação |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Arquitetura escalável — framework 5 passos, seleção de BD, cache, filas, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | Carrega as três de uma vez; Claude escolhe a relevante automaticamente |
+
+---
+
+## Plugin (comandos slash do Claude Code)
+
+A pasta `plugin/` adiciona quatro comandos slash e um hint na barra de status a qualquer sessão do Claude Code.
+
+| Comando | O que faz |
+|---|---|
+| `/dq-review` | Auditoria completa de UI: detecção de slop, scorecard 8 dimensões, lista de correções P0–P3 |
+| `/direction` | Modo Create — deriva direção (Caráter · Mundo · Momentos · Assinatura) antes de qualquer código de UI |
+| `/fix` | Modo Fix — 10 passes sequenciais: Espaçamento → Cor → Ícones → Copy → Tipografia → Layout → Detalhes → A11y → Visuais → Motion |
+| `/polish` | Modo Polish — percorre cada estado a 10% de velocidade (hover · focus · active · loading · empty · error) |
+
+Após editar qualquer arquivo `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` ou `.svelte`, a barra de status exibe `/dq-review · /fix · /polish` como lembrete.
+
+**Instalar:**
+```bash
+# Clone o repositório
+git clone https://github.com/RomuloRogerio/design-quality
+
+# Inicie o Claude Code com o plugin
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**Ou carregar permanentemente** — adicione ao `~/.claude/settings.json`:
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## O problema que resolve
 
 ### Como são as UIs geradas por IA

@@ -103,6 +103,50 @@ La skill s'active sur :
 
 ---
 
+## Skills dans ce dépôt
+
+Trois skills, chacune utilisable indépendamment ou ensemble :
+
+| Skill | Fichier | Pour quoi |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revue générale d'UI, détection de générique IA, scorecard 8 dimensions, modes Create/Fix/Polish |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revue Ant Design v6 — tokens, composants, grille 4px, motion, élévation |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | Architecture scalable — framework 5 étapes, choix de BDD, cache, files de messages, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | Charge les trois à la fois ; Claude choisit la pertinente automatiquement |
+
+---
+
+## Plugin (commandes slash Claude Code)
+
+Le dossier `plugin/` ajoute quatre commandes slash et un hint dans la barre de statut à toute session Claude Code.
+
+| Commande | Ce qu'elle fait |
+|---|---|
+| `/dq-review` | Audit complet d'UI : détection générique, scorecard 8 dimensions, liste de corrections P0–P3 |
+| `/direction` | Mode Create — dérive la direction (Caractère · Monde · Moments · Signature) avant tout code UI |
+| `/fix` | Mode Fix — 10 passes séquentielles : Espacement → Couleur → Icônes → Copy → Typographie → Layout → Détails → A11y → Visuels → Motion |
+| `/polish` | Mode Polish — parcourt chaque état à 10 % de vitesse (hover · focus · active · loading · empty · error) |
+
+Après l'édition de tout fichier `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` ou `.svelte`, la barre de statut affiche `/dq-review · /fix · /polish` en rappel.
+
+**Installer :**
+```bash
+# Cloner le dépôt
+git clone https://github.com/RomuloRogerio/design-quality
+
+# Démarrer Claude Code avec le plugin
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**Ou charger en permanence** — ajouter à `~/.claude/settings.json` :
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## Le problème résolu
 
 ### À quoi ressemblent les interfaces IA
@@ -508,11 +552,17 @@ Les transitions sont interruptibles. Si un utilisateur ouvre un drawer et le fer
 
 ```
 design-quality/
-├── README.md (+ traductions)
+├── README.md (+ 7 traductions)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── plugin/                     ← commandes slash Claude Code
+│   ├── .claude-plugin/
+│   └── hooks/
 └── skills/
+    ├── all.md                  ← charger les trois skills à la fois
+    ├── ant-design.md           ← Ant Design v6 — révision et correction
+    ├── system-design.md        ← planification d'architecture évolutive
     └── design-quality/
         ├── SKILL.md
         └── references/
@@ -526,10 +576,23 @@ design-quality/
 | [CHANGELOG.md](CHANGELOG.md) | Historique des versions |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Comment contribuer |
 | [LICENSE](LICENSE) | Licence MIT |
-| [SKILL.md](skills/design-quality/SKILL.md) | La skill installable |
+| **Skills** | |
+| [skills/all.md](skills/all.md) | Charger les trois skills à la fois |
+| [skills/design-quality/SKILL.md](skills/design-quality/SKILL.md) | Revue UI, détection générique, scorecard, Create/Fix/Polish |
+| [skills/ant-design.md](skills/ant-design.md) | Revue tokens/composants Ant Design v6 |
+| [skills/system-design.md](skills/system-design.md) | Planification d'architecture évolutive |
+| **Plugin** | |
+| [plugin/hooks/register.ts](plugin/hooks/register.ts) | Code source des hooks de commandes slash |
+| [plugin/README.md](plugin/README.md) | Instructions d'installation du plugin |
+| **Références** | |
 | [slop-signs.md](skills/design-quality/references/slop-signs.md) | Catalogue complet des anti-patterns |
 | [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Détails des dimensions du scorecard |
 | [micro-polish.md](skills/design-quality/references/micro-polish.md) | Référence de micro-polissage |
+| [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | Passes de correction visuelle |
+| [passes-motion.md](skills/design-quality/references/passes-motion.md) | Passes de correction du mouvement |
+| [review-guide.md](docs/review-guide.md) | Guide du mode de révision |
+| [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | Guide du mode de correction |
+| [slop-field-guide.md](docs/slop-field-guide.md) | Guide de terrain du générique IA |
 
 ---
 

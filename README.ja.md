@@ -103,6 +103,50 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 ---
 
+## このリポジトリのスキル
+
+3つのスキル — それぞれ単独または組み合わせて使用可能：
+
+| スキル | ファイル | 用途 |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 汎用 UI レビュー、AI スロップ検出、8次元スコアカード、Create/Fix/Polish モード |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 レビュー — トークン、コンポーネント、4px グリッド、モーション、エレベーション |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | スケーラブルなアーキテクチャ — 5ステップフレームワーク、DB選定、キャッシュ、キュー、CAP |
+| **all** | [`skills/all.md`](skills/all.md) | 3つすべてを一度に読み込む；Claude が自動的に適切なものを選択 |
+
+---
+
+## プラグイン（Claude Code スラッシュコマンド）
+
+`plugin/` フォルダは、任意の Claude Code セッションに4つのスラッシュコマンドとステータスバーヒントを追加します。
+
+| コマンド | 機能 |
+|---|---|
+| `/dq-review` | 完全な UI 監査：スロップ検出、8次元スコアカード、P0–P3 修正リスト |
+| `/direction` | Create モード — UI コードを書く前に方向を導出（キャラクター · 世界 · モーメント · シグネチャー） |
+| `/fix` | Fix モード — 10の順次パス：間隔 → カラー → アイコン → コピー → タイポグラフィ → レイアウト → 詳細 → A11y → ビジュアル → モーション |
+| `/polish` | Polish モード — 10% 速度で各状態を走査（hover · focus · active · loading · empty · error） |
+
+`.tsx`、`.jsx`、`.css`、`.scss`、`.html`、`.vue`、または `.svelte` ファイルを編集すると、ステータスバーに `/dq-review · /fix · /polish` が表示されます。
+
+**インストール：**
+```bash
+# リポジトリをクローン
+git clone https://github.com/RomuloRogerio/design-quality
+
+# プラグインで Claude Code を起動
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**または永続的に読み込む** — `~/.claude/settings.json` に追加：
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## 解決する問題
 
 ### AIのUIが持つ外観
@@ -508,11 +552,17 @@ transitionは中断可能です。ユーザーがドロワーを開いてアニ�
 
 ```
 design-quality/
-├── README.md（+ 翻訳）
+├── README.md（+ 7言語翻訳）
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── plugin/                     ← Claude Code スラッシュコマンド
+│   ├── .claude-plugin/
+│   └── hooks/
 └── skills/
+    ├── all.md                  ← 3つのスキルを一度に読み込む
+    ├── ant-design.md           ← Ant Design v6 レビュー & 修正
+    ├── system-design.md        ← スケーラブルなアーキテクチャ計画
     └── design-quality/
         ├── SKILL.md
         └── references/
@@ -526,10 +576,23 @@ design-quality/
 | [CHANGELOG.md](CHANGELOG.md) | バージョン履歴 |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | 貢献方法 |
 | [LICENSE](LICENSE) | MITライセンス |
-| [SKILL.md](skills/design-quality/SKILL.md) | インストール可能なスキルファイル |
+| **スキル** | |
+| [skills/all.md](skills/all.md) | 3つすべてのスキルを一度に読み込む |
+| [skills/design-quality/SKILL.md](skills/design-quality/SKILL.md) | UI レビュー、スロップ検出、スコアカード、Create/Fix/Polish |
+| [skills/ant-design.md](skills/ant-design.md) | Ant Design v6 トークン/コンポーネントレビュー |
+| [skills/system-design.md](skills/system-design.md) | スケーラブルなアーキテクチャ計画 |
+| **プラグイン** | |
+| [plugin/hooks/register.ts](plugin/hooks/register.ts) | スラッシュコマンド Hooks ソースコード |
+| [plugin/README.md](plugin/README.md) | プラグインインストール手順 |
+| **リファレンス** | |
 | [slop-signs.md](skills/design-quality/references/slop-signs.md) | 完全なアンチパターンカタログ |
 | [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | スコアカード次元の詳細 |
 | [micro-polish.md](skills/design-quality/references/micro-polish.md) | マイクロポリッシュリファレンス |
+| [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | ビジュアル修正パス |
+| [passes-motion.md](skills/design-quality/references/passes-motion.md) | モーション修正パス |
+| [review-guide.md](docs/review-guide.md) | レビューモードガイド |
+| [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | 修正モードガイド |
+| [slop-field-guide.md](docs/slop-field-guide.md) | AI スロップフィールドガイド |
 
 ---
 

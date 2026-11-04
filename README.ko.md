@@ -103,6 +103,50 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 ---
 
+## 이 저장소의 스킬
+
+세 가지 스킬 — 각각 독립적으로 또는 함께 사용 가능:
+
+| 스킬 | 파일 | 용도 |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 일반 UI 리뷰, AI 슬롭 감지, 8차원 스코어카드, Create/Fix/Polish 모드 |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 리뷰 — 토큰, 컴포넌트, 4px 그리드, 모션, 엘리베이션 |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | 확장 가능한 아키텍처 — 5단계 프레임워크, DB 선택, 캐싱, 큐, CAP |
+| **all** | [`skills/all.md`](skills/all.md) | 세 가지 모두 한 번에 로드; Claude가 자동으로 관련 스킬 선택 |
+
+---
+
+## 플러그인 (Claude Code 슬래시 명령어)
+
+`plugin/` 폴더는 모든 Claude Code 세션에 4개의 슬래시 명령어와 상태 표시줄 힌트를 추가합니다.
+
+| 명령어 | 기능 |
+|---|---|
+| `/dq-review` | 완전한 UI 감사: 슬롭 감지, 8차원 스코어카드, P0–P3 수정 목록 |
+| `/direction` | Create 모드 — UI 코드 작성 전 방향 도출 (캐릭터 · 세계 · 모먼트 · 시그니처) |
+| `/fix` | Fix 모드 — 10개 순차 패스: 간격 → 색상 → 아이콘 → 카피 → 타이포그래피 → 레이아웃 → 디테일 → A11y → 비주얼 → 모션 |
+| `/polish` | Polish 모드 — 10% 속도로 모든 상태 순회 (hover · focus · active · loading · empty · error) |
+
+`.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` 또는 `.svelte` 파일 편집 후 상태 표시줄에 `/dq-review · /fix · /polish`가 표시됩니다.
+
+**설치:**
+```bash
+# 저장소 클론
+git clone https://github.com/RomuloRogerio/design-quality
+
+# 플러그인으로 Claude Code 시작
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**또는 영구 로드** — `~/.claude/settings.json`에 추가:
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## 해결하는 문제
 
 ### AI UI의 모습
@@ -508,11 +552,17 @@ transition은 중단 가능합니다. 사용자가 드로어를 열고 애니메
 
 ```
 design-quality/
-├── README.md (+ 번역본)
+├── README.md (+ 7개 번역본)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── plugin/                     ← Claude Code 슬래시 명령어
+│   ├── .claude-plugin/
+│   └── hooks/
 └── skills/
+    ├── all.md                  ← 세 스킬 한 번에 로드
+    ├── ant-design.md           ← Ant Design v6 리뷰 & 수정
+    ├── system-design.md        ← 확장 가능한 아키텍처 계획
     └── design-quality/
         ├── SKILL.md
         └── references/
@@ -526,10 +576,23 @@ design-quality/
 | [CHANGELOG.md](CHANGELOG.md) | 버전 기록 |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | 기여 방법 |
 | [LICENSE](LICENSE) | MIT 라이선스 |
-| [SKILL.md](skills/design-quality/SKILL.md) | 설치 가능한 스킬 파일 |
+| **스킬** | |
+| [skills/all.md](skills/all.md) | 세 가지 스킬 모두 한 번에 로드 |
+| [skills/design-quality/SKILL.md](skills/design-quality/SKILL.md) | UI 리뷰, 슬롭 감지, 스코어카드, Create/Fix/Polish |
+| [skills/ant-design.md](skills/ant-design.md) | Ant Design v6 토큰/컴포넌트 리뷰 |
+| [skills/system-design.md](skills/system-design.md) | 확장 가능한 아키텍처 계획 |
+| **플러그인** | |
+| [plugin/hooks/register.ts](plugin/hooks/register.ts) | 슬래시 명령어 Hooks 소스 코드 |
+| [plugin/README.md](plugin/README.md) | 플러그인 설치 안내 |
+| **참고 자료** | |
 | [slop-signs.md](skills/design-quality/references/slop-signs.md) | 전체 안티패턴 카탈로그 |
 | [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | 스코어카드 차원 상세 |
 | [micro-polish.md](skills/design-quality/references/micro-polish.md) | 마이크로 폴리시 레퍼런스 |
+| [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | 비주얼 수정 패스 |
+| [passes-motion.md](skills/design-quality/references/passes-motion.md) | 모션 수정 패스 |
+| [review-guide.md](docs/review-guide.md) | 리뷰 모드 가이드 |
+| [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | 수정 모드 가이드 |
+| [slop-field-guide.md](docs/slop-field-guide.md) | AI 슬롭 현장 가이드 |
 
 ---
 

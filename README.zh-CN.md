@@ -103,6 +103,50 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 ---
 
+## 本仓库中的 Skills
+
+三个 Skills，每个均可单独使用或组合使用：
+
+| Skill | 文件 | 用途 |
+|---|---|---|
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 通用 UI 审查、AI 劣质检测、8 维度评分卡、Create/Fix/Polish 模式 |
+| **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 审查 — Token、组件、4px 栅格、动效、层级 |
+| **system-design** | [`skills/system-design.md`](skills/system-design.md) | 可扩展架构 — 5 步框架、数据库选型、缓存、消息队列、CAP |
+| **all** | [`skills/all.md`](skills/all.md) | 一次加载全部三个；Claude 自动选择适用的 Skill |
+
+---
+
+## 插件（Claude Code 斜杠命令）
+
+`plugin/` 文件夹为任意 Claude Code 会话添加四个斜杠命令和状态栏提示。
+
+| 命令 | 功能 |
+|---|---|
+| `/dq-review` | 完整 UI 审计：AI 劣质检测、8 维度评分卡、P0–P3 修复清单 |
+| `/direction` | Create 模式 — 在编写任何 UI 代码前推导方向（角色 · 世界 · 时刻 · 签名细节） |
+| `/fix` | Fix 模式 — 10 个顺序修复 Pass：间距 → 颜色 → 图标 → 文案 → 字体 → 布局 → 细节 → 无障碍 → 视觉 → 动效 |
+| `/polish` | Polish 模式 — 以 10% 速度遍历每个状态（hover · focus · active · loading · empty · error） |
+
+编辑任意 `.tsx`、`.jsx`、`.css`、`.scss`、`.html`、`.vue` 或 `.svelte` 文件后，状态栏显示 `/dq-review · /fix · /polish` 提醒。
+
+**安装：**
+```bash
+# 克隆仓库
+git clone https://github.com/RomuloRogerio/design-quality
+
+# 以插件模式启动 Claude Code
+claude --plugin-dir ~/design-quality/plugin
+```
+
+**或永久加载** — 添加到 `~/.claude/settings.json`：
+```json
+{
+  "pluginDirs": ["~/design-quality/plugin"]
+}
+```
+
+---
+
 ## 解决的问题
 
 ### AI 界面的外观
@@ -508,11 +552,17 @@ transition 是可中断的。如果用户打开抽屉后在动画中途关闭，
 
 ```
 design-quality/
-├── README.md（+ 多语言翻译）
+├── README.md（+ 7 种语言翻译）
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── plugin/                     ← Claude Code 斜杠命令
+│   ├── .claude-plugin/
+│   └── hooks/
 └── skills/
+    ├── all.md                  ← 一次加载三个 Skills
+    ├── ant-design.md           ← Ant Design v6 评审与修复
+    ├── system-design.md        ← 可扩展架构规划
     └── design-quality/
         ├── SKILL.md
         └── references/
@@ -526,10 +576,23 @@ design-quality/
 | [CHANGELOG.md](CHANGELOG.md) | 版本历史 |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | 如何贡献 |
 | [LICENSE](LICENSE) | MIT 许可证 |
-| [SKILL.md](skills/design-quality/SKILL.md) | 可安装的技能文件 |
+| **Skills** | |
+| [skills/all.md](skills/all.md) | 一次加载全部三个 Skills |
+| [skills/design-quality/SKILL.md](skills/design-quality/SKILL.md) | UI 审查、劣质检测、评分卡、Create/Fix/Polish |
+| [skills/ant-design.md](skills/ant-design.md) | Ant Design v6 Token/组件审查 |
+| [skills/system-design.md](skills/system-design.md) | 可扩展架构规划 |
+| **插件** | |
+| [plugin/hooks/register.ts](plugin/hooks/register.ts) | 斜杠命令 Hooks 源码 |
+| [plugin/README.md](plugin/README.md) | 插件安装说明 |
+| **参考资料** | |
 | [slop-signs.md](skills/design-quality/references/slop-signs.md) | 完整反模式目录 |
 | [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | 评分维度详情 |
 | [micro-polish.md](skills/design-quality/references/micro-polish.md) | 微打磨参考 |
+| [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | 视觉修复 Pass |
+| [passes-motion.md](skills/design-quality/references/passes-motion.md) | 动效修复 Pass |
+| [review-guide.md](docs/review-guide.md) | 审查模式指南 |
+| [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | 修复模式指南 |
+| [slop-field-guide.md](docs/slop-field-guide.md) | AI 劣质现场指南 |
 
 ---
 
