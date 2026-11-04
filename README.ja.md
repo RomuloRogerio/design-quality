@@ -2,11 +2,11 @@
 
 ---
 
-![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![あらゆるAIで使用可能](https://img.shields.io/badge/対応-あらゆるAI-6366f1) ![Claude Codeプラグイン](https://img.shields.io/badge/プラグイン-Claude%20Code-orange)
 
 # design-quality
 
-AI生成のインターフェースを評価・修正する Claude Code スキルです。
+AIコーディングアシスタント向けデザイン品質スキル — Claude Code、Cursor、Codex、Copilot、またはMarkdown指示を受け入れるあらゆるツールで使用可能。
 
 AIはUIを素早く生成します。しかし、いつも同じ方法で間違えます。紫から青へのグラデーション、グラデーションテキスト、光るボーダー、絵文字アイコン、内容のないカードグリッド、Inter一辺倒のタイポグラフィ、業務ツールの過大なヒーロー見出し。これらが特徴です。このスキルはそれらを検出し、8つの次元でインターフェースをスコアリングし、一歩ずつ修正します。
 
@@ -68,9 +68,22 @@ Quick wins (P1): remove gradient background, strip gradient text, replace emoji 
 
 </details>
 
-### Cursor / Windsurf / Claudeを使ったエディタで使用
+### あらゆるAIアシスタントで使用（Cursor、Codex、Copilot、Geminiなど）
 
-`skills/design-quality/` フォルダをエージェントから参照できる場所にコピーします。エージェントの設定で、`SKILL.md`をコンテキストファイルまたはシステムプロンプトの追加として指定します。
+スキルファイルの内容をチャットに直接貼り付けるか、コンテキスト/システムプロンプトとして追加してください：
+
+```
+# AIチャットで：
+「このスキルを使ってUIをレビューして：[skills/design-quality/SKILL.mdの内容を貼り付け]」
+
+# またはエージェント設定でファイルを参照：
+skills/design-quality/SKILL.md   → UIレビュー
+skills/ant-design.md              → Ant Design監査
+skills/system-design.md           → アーキテクチャ設計
+skills/all.md                     → 3つすべて同時に
+```
+
+スキルはプレーンMarkdown — Claude Codeへの依存なし。プラグイン（スラッシュコマンド）はClaude Code専用。
 
 ### Claude.ai プロジェクトで使用
 
