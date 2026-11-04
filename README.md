@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/github/license/RomuloRogerio/design-quality) ![Stars](https://img.shields.io/github/stars/RomuloRogerio/design-quality?style=flat) ![Translations](https://img.shields.io/badge/translations-8-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-orange)
+
 ![design-quality](./cover.png)
 
 # design-quality
@@ -32,13 +34,52 @@ Works on React, Tailwind, HTML/CSS, Vue, Svelte, dashboards, apps, landing pages
 
 ```bash
 # Install globally
-claude skills install https://github.com/[your-handle]/design-quality
+claude skills install https://github.com/RomuloRogerio/design-quality
 
 # Or copy directly
 cp -r skills/design-quality ~/.claude/skills/
 ```
 
 Then in any Claude Code session, the skill loads automatically when you ask Claude to review, critique, or build a UI.
+
+<details>
+<summary>🔍 Example terminal output — Review Mode</summary>
+
+```
+$ claude review this design
+
+🤖 [design-quality] Analyzing repository and screenshot context...
+✨ Found 4 AI-slop indicators. Evaluating against 8-dimension scorecard.
+
+## Slop Audit
+❌ Purple-to-blue gradient background (P1) — App.css line 12
+❌ Gradient text with background-clip (P1) — HeroTitle component
+❌ Emoji in navigation label "🚀 Launch" (P1) — Navbar.tsx
+❌ ALL CAPS tracked section header (P1) — features section
+
+## Template Check
+Could this UI belong to any other SaaS product? YES → P1
+No World reference, no Signature detail found.
+
+## Scorecard
+Product fit:    4/10   generic SaaS applied
+Hierarchy:      6/10   primary action visible but competing elements
+Clarity:        7/10   labels readable, states missing
+Taste:          3/10   templated
+Restraint:      2/10   excessive decoration
+Density:        6/10   appropriate for content
+Craft:          5/10   grid inconsistent in footer
+Responsiveness: 7/10   mobile layout works
+Overall:        5/10
+
+## Verdict
+Best part: clear primary CTA, readable label
+Worst part: gradient + gradient text — maximum slop signal
+Required fix (P0): none
+Quick wins (P1): remove gradient background, strip gradient text, replace emoji icons
+```
+
+</details>
 
 ### With Cursor / Windsurf / any Claude-powered editor
 
@@ -213,76 +254,76 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 
 | Pattern | Severity |
 |---|---|
-| Purple-to-blue gradient on background, card, or button | P1 |
-| Any hue-to-hue gradient on a surface | P1 |
-| Gradient text (`background-clip: text`) | P1 |
-| Glowing border (`box-shadow` with saturated color) | P1 |
-| Radial color blob / atmospheric wash behind content | P1 |
-| Background that reads as a hue on an app screen | P1 |
-| Colored shadow on cards or buttons | P2 |
-| "Glassmorphism" blur without a meaningful layering reason | P2 |
+| Purple-to-blue gradient on background, card, or button | `P1` |
+| Any hue-to-hue gradient on a surface | `P1` |
+| Gradient text (`background-clip: text`) | `P1` |
+| Glowing border (`box-shadow` with saturated color) | `P1` |
+| Radial color blob / atmospheric wash behind content | `P1` |
+| Background that reads as a hue on an app screen | `P1` |
+| Colored shadow on cards or buttons | `P2` |
+| "Glassmorphism" blur without a meaningful layering reason | `P2` |
 
 ### Typography
 
 | Pattern | Severity |
 |---|---|
-| Emoji in labels or headings ("New ✨", "🚀 Launch") | P1 |
-| ALL CAPS tracked labels on every section header | P1 |
-| Oversized hero headline on a functional operational tool | P1 |
-| Copy that shouts ("Revolutionize Your Workflow Today") | P1 |
-| Only Inter with no other typographic decision | P2 |
-| No visual weight difference between heading and body | P1 |
+| Emoji in labels or headings ("New ✨", "🚀 Launch") | `P1` |
+| ALL CAPS tracked labels on every section header | `P1` |
+| Oversized hero headline on a functional operational tool | `P1` |
+| Copy that shouts ("Revolutionize Your Workflow Today") | `P1` |
+| Only Inter with no other typographic decision | `P2` |
+| No visual weight difference between heading and body | `P1` |
 
 ### Layout & Structure
 
 | Pattern | Severity |
 |---|---|
-| Evenly-spaced 3-column card grid used as content filler | P1 |
-| Duplicate feature cards (icon + heading + two sentences each) | P1 |
-| Dark dashboard applied by default with no product reason | P1 |
-| Section exists only to fill space (fake stats, invented testimonials) | P1 |
-| No visual hierarchy — every element the same weight | P1 |
-| Everything centered, no left-aligned reading pattern | P2 |
+| Evenly-spaced 3-column card grid used as content filler | `P1` |
+| Duplicate feature cards (icon + heading + two sentences each) | `P1` |
+| Dark dashboard applied by default with no product reason | `P1` |
+| Section exists only to fill space (fake stats, invented testimonials) | `P1` |
+| No visual hierarchy — every element the same weight | `P1` |
+| Everything centered, no left-aligned reading pattern | `P2` |
 
 ### Icons
 
 | Pattern | Severity |
 |---|---|
-| Emoji used as icons in navigation or cards | P1 |
-| Two or more icon libraries mixed on one screen | P2 |
-| Icons with their own colors (not `currentColor`) | P2 |
-| Decorative icons before every heading or label | P2 |
+| Emoji used as icons in navigation or cards | `P1` |
+| Two or more icon libraries mixed on one screen | `P2` |
+| Icons with their own colors (not `currentColor`) | `P2` |
+| Decorative icons before every heading or label | `P2` |
 
 ### Template Identity
 
 | Pattern | Severity |
 |---|---|
-| Swap product name for competitor — UI still fits | P1 |
-| No Signature detail — nothing only this product would have | P1 |
-| No World reference — neutrals have no tint toward the product's domain | P2 |
-| Generic stock illustration that could belong to any product | P2 |
+| Swap product name for competitor — UI still fits | `P1` |
+| No Signature detail — nothing only this product would have | `P1` |
+| No World reference — neutrals have no tint toward the product's domain | `P2` |
+| Generic stock illustration that could belong to any product | `P2` |
 
 ### Accessibility & Technical
 
 | Pattern | Severity |
 |---|---|
-| Text contrast below 4.5:1 (WCAG AA) | P0 |
-| No visible focus indicator on interactive elements | P0 |
-| Icon button with no `aria-label` | P1 |
-| Form input with no associated `<label>` | P1 |
-| `user-scalable=no` in viewport meta | P1 |
-| `prefers-reduced-motion` not respected | P1 |
-| `transition: all` instead of specific properties | P2 |
-| Chart labels overlapping | P0 |
+| Text contrast below 4.5:1 (WCAG AA) | `P0` |
+| No visible focus indicator on interactive elements | `P0` |
+| Icon button with no `aria-label` | `P1` |
+| Form input with no associated `<label>` | `P1` |
+| `user-scalable=no` in viewport meta | `P1` |
+| `prefers-reduced-motion` not respected | `P1` |
+| `transition: all` instead of specific properties | `P2` |
+| Chart labels overlapping | `P0` |
 
 ### Mobile & Touch
 
 | Pattern | Severity |
 |---|---|
-| Touch targets smaller than 44×44px | P1 |
-| Hover effects without `@media (hover: hover)` guard | P2 |
-| `touch-action: manipulation` missing on buttons | P2 |
-| `overscroll-behavior: contain` missing on modals | P2 |
+| Touch targets smaller than 44×44px | `P1` |
+| Hover effects without `@media (hover: hover)` guard | `P2` |
+| `touch-action: manipulation` missing on buttons | `P2` |
+| `overscroll-behavior: contain` missing on modals | `P2` |
 
 ---
 
@@ -361,6 +402,16 @@ Future sessions read this first. Direction doesn't drift across long projects.
 ---
 
 ## Design principles applied
+
+### 🧠 Theoretical Foundation & Psychology of Design
+
+This skill evaluates interfaces based on robust behavioral psychology and classical design frameworks rather than transient aesthetics:
+
+- **The Peak-End Rule (Daniel Kahneman):** Users judge experiences by their peak and end moments — not the average. This is why the skill pays special attention to the most intense interaction and the final screen of every flow.
+- **Emotional Design Framework (Don Norman):** Interfaces must address three levels simultaneously — visceral (first impression), behavioral (ease of use), and reflective (meaning and identity). A score below 7 on Product Fit often signals failure at the reflective level.
+- **Affordances (James J. Gibson / Don Norman):** Interactive elements must communicate their function clearly without requiring exploration. Missing focus states, unlabeled icon buttons, and invisible touch targets all violate this principle.
+
+---
 
 ### Spacing
 - 8px grid. All margins, paddings, gaps are multiples of 4 or 8.
@@ -519,32 +570,36 @@ Transitions are interruptible. If a user opens a drawer and closes it mid-animat
 
 ```
 design-quality/
-├── README.md              ← this file (+ 7 translations)
+├── README.md (+ translations)
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── LICENSE
-├── skills/
-│   └── design-quality/
-│       ├── SKILL.md       ← the installable skill
-│       └── references/
-│           ├── slop-signs.md
-│           ├── micro-polish.md
-│           ├── quality-dimensions.md
-│           ├── passes-visuals.md
-│           ├── passes-motion.md
-│           ├── designer-skills-index.md
-│           └── agents/            ← subagent prompt templates
-│               ├── review-slop.md          ← slop audit agent
-│               ├── review-scorecard.md     ← 8-dimension scorer agent
-│               ├── review-emotion.md       ← felt state + peak-end agent
-│               ├── deepdive-dispatch.md    ← auto deep-dive routing table
-│               ├── fix-passes.md           ← 10 fix pass agents
-│               └── direction-research.md   ← product research agent
-└── docs/
-    ├── review-guide.md
-    ├── fix-mode-walkthrough.md
-    └── slop-field-guide.md
+└── skills/
+    └── design-quality/
+        ├── SKILL.md
+        └── references/
 ```
+
+**Quick navigation:**
+
+| File | Description |
+|---|---|
+| [README.md](README.md) | This file (+ [es](README.es.md) · [pt-BR](README.pt-BR.md) · [zh-CN](README.zh-CN.md) · [fr](README.fr.md) · [de](README.de.md) · [ja](README.ja.md) · [ko](README.ko.md)) |
+| [CHANGELOG.md](CHANGELOG.md) | Version history |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
+| [LICENSE](LICENSE) | MIT license |
+| [SKILL.md](skills/design-quality/SKILL.md) | The installable skill |
+| [slop-signs.md](skills/design-quality/references/slop-signs.md) | Full anti-pattern catalog |
+| [quality-dimensions.md](skills/design-quality/references/quality-dimensions.md) | Scorecard dimension details |
+| [micro-polish.md](skills/design-quality/references/micro-polish.md) | Micro-polish reference |
+| [passes-visuals.md](skills/design-quality/references/passes-visuals.md) | Visual fix passes |
+| [passes-motion.md](skills/design-quality/references/passes-motion.md) | Motion fix passes |
+| [review-slop.md](skills/design-quality/references/agents/review-slop.md) | Slop audit subagent |
+| [review-scorecard.md](skills/design-quality/references/agents/review-scorecard.md) | 8-dimension scorer subagent |
+| [fix-passes.md](skills/design-quality/references/agents/fix-passes.md) | 10 fix pass subagents |
+| [review-guide.md](docs/review-guide.md) | Review mode walkthrough |
+| [fix-mode-walkthrough.md](docs/fix-mode-walkthrough.md) | Fix mode walkthrough |
+| [slop-field-guide.md](docs/slop-field-guide.md) | Slop field guide |
 
 ---
 
