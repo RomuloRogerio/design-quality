@@ -120,6 +120,13 @@ corrija o espaçamento e as cores neste componente
 rode um passe completo de correção em App.tsx
 ```
 
+**Aplicar um kit de marca (MIV, JSON de tokens, logotipos, aplicações):**
+```
+aqui está o MIV da marca, leia antes de criar qualquer tela
+aplique esta marca na landing page
+este dashboard está fiel à marca?
+```
+
 **Auditoria Ant Design:**
 ```
 revise este painel React admin contra os padrões Ant Design
@@ -138,7 +145,7 @@ como devo armazenar e servir vídeos enviados por usuários em escala?
 
 | Skill | Arquivo | Para que serve |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revisão geral de UI, detecção de slop, scorecard 8 dimensões, modos Create/Fix/Polish |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revisão geral de UI, detecção de slop, scorecard 8 dimensões, modos Brand/Create/Fix/Polish, leitura de kit de marca |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revisão Ant Design v6: tokens, componentes, grid 4px, motion, elevação |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | Arquitetura escalável: framework 5 passos, seleção de BD, cache, filas, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | Carrega as três de uma vez; Claude escolhe a certa pelo contexto |
@@ -147,7 +154,7 @@ como devo armazenar e servir vídeos enviados por usuários em escala?
 
 ## Plugin (comandos slash do Claude Code)
 
-A pasta `plugin/` dá ao Claude Code quatro comandos slash e um hint na barra de status.
+A pasta `plugin/` dá ao Claude Code cinco comandos slash e um hint na barra de status.
 
 | Comando | O que faz |
 |---|---|
@@ -155,6 +162,7 @@ A pasta `plugin/` dá ao Claude Code quatro comandos slash e um hint na barra de
 | `/direction` | Deriva direção de produto antes de qualquer código de UI |
 | `/fix` | 10 passes sequenciais: Espaçamento → Cor → Ícones → Copy → Tipografia → Layout → Detalhes → A11y → Visuais → Motion |
 | `/polish` | Percorre cada estado a 10% de velocidade: hover, focus, active, loading, empty, error |
+| `/brand` | Lê um kit de marca (MIV, JSON de tokens, logotipos, aplicações) e gera um `BRAND.md` confirmado |
 
 Após editar qualquer arquivo `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` ou `.svelte`, a barra de status exibe `/dq-review · /fix · /polish` como lembrete.
 
@@ -201,6 +209,31 @@ Detecta esses padrões sistematicamente, pontua o que está lá e corrige na ord
 ---
 
 ## Modos
+
+### Modo Brand
+
+Entrada: um kit de marca. Coloque numa pasta `brand/` ou anexe os arquivos no chat:
+
+```
+brand/
+  miv.pdf          manual de identidade visual (PDF ou imagens das páginas)
+  tokens.json      tokens de design ou JSON da marca, em qualquer formato
+  logos/           SVG de preferência, PNG também serve
+  applications/    fotos ou prints da marca aplicada (aceita também aplicacoes/)
+```
+
+A skill lê o manual página por página, converte o JSON para o formato W3C Design Tokens, faz o
+inventário dos logotipos e estuda as aplicações. Depois escreve um `BRAND.md` com regras do logo,
+cores com os valores oficiais, fontes, tom de voz, exceções da marca e tokens protegidos, e pede
+sua confirmação.
+
+A partir daí, todos os modos trabalham dentro da marca:
+- **Review** ganha um agente de fidelidade à marca e uma nona nota
+- **Create** usa as cores e as fontes da marca
+- **Fix** nunca troca cor, fonte ou logo da marca
+- Um padrão que o manual documenta, como um gradiente oficial, deixa de contar como slop onde o manual permite
+
+O logo é sempre o arquivo enviado: nunca redesenhado em texto ou CSS, nunca recolorido ou distorcido.
 
 ### Modo Review
 

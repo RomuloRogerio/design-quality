@@ -10,6 +10,7 @@ Claude Code plugin that surfaces the [design-quality skill](../skills/) as slash
 | `/direction` | Create Mode — derives product direction (Character · World · Moments · Signature) before any UI code |
 | `/fix` | Fix Mode — 10 sequential passes: Spacing → Color → Icons → Copy → Typography → Layout → Details → A11y → Visuals → Motion |
 | `/polish` | Polish Mode — walks every state at 10% speed (hover · focus · active · loading · empty · error) |
+| `/brand` | Brand Mode — reads a brand kit (MIV / brand manual, tokens JSON, logos, applications) into a confirmed `BRAND.md` |
 
 ## Status bar
 

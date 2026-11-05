@@ -19,6 +19,18 @@ Pass 10 (Motion)     → sequential, must run last
 
 All agents are forks — they inherit context of the current code/UI.
 
+## Brand guard
+
+When a `BRAND.md` exists in the project root, prepend this block to every pass prompt below:
+
+```
+BRAND GUARD — read BRAND.md first, especially "Protected tokens" and "Brand exceptions".
+- Never change a brand color, brand font family, logo file, or how the logo is drawn.
+- Never remove a pattern listed under "Brand exceptions" when it is used where the manual allows.
+- Replace off-brand values with the nearest BRAND.md token, never with a new value.
+- If a fix would require changing a protected token, do not apply it. Report it for human review.
+```
+
 ---
 
 ## Pass 1 — Spacing Agent
@@ -64,6 +76,12 @@ BUILD:
 VERIFY:
 - Accent color with text on it: must be ≥ 4.5:1 contrast ratio
 
+WITH A BRAND (BRAND.md exists):
+- Brand colors fill the accent and brand roles; do not invent a new accent
+- Keep official gradients listed under "Brand exceptions", only in the contexts listed there
+- Replace every off-brand color with the nearest BRAND.md token or a neutral ramp step
+- If a brand color fails contrast as text, change its use (large text, fills, borders), never the color
+
 Report what was removed, what was rebuilt, and any color decisions that need human review.
 ```
 
@@ -81,6 +99,7 @@ Rules:
 - All icons use currentColor — remove any explicit color values on icons
 - No emoji as icons — replace with SVG equivalents from the chosen library
 - No decorative icons before every heading — remove unless the icon carries meaning
+- With a brand: if BRAND.md defines an icon style, follow it over the library preference order
 
 Report: icons standardized, emoji replaced, decorative icons removed.
 ```
@@ -106,6 +125,9 @@ SPECIFY:
 - "Submit" → verb that describes the actual action ("Save settings", "Send message", "Place order")
 - "Get started" on an operational tool → action describing first step
 - Generic error messages → specific, non-blaming language
+
+VOICE (with a brand):
+- Rewrite in the tone of voice described in BRAND.md; keep the brand tagline exactly as written
 
 Do not invent product details you don't know. When uncertain, mark [COPY_REVIEW_NEEDED] inline.
 
@@ -138,6 +160,10 @@ NUMBERS:
 
 MINIMUM:
 - Body text: minimum 14px (flag anything below, recommend 16px)
+
+BRAND (with a brand):
+- Use the families, weights, and roles from BRAND.md; restore the brand font where it was replaced
+- Fallback stack must match BRAND.md; flag any font loaded from an unapproved source
 
 Report: each fix applied and why.
 ```
@@ -266,7 +292,13 @@ IMAGES:
 - Decorative images have alt="" (empty alt)
 - Content images have descriptive alt text
 
-Report: empty states added, illustration flags, final icon check, image attribute fixes.
+LOGO AND BRAND IMAGERY (with a brand):
+- Logo is the provided file from brand/logos; replace any text, CSS, or redrawn logo with it
+- Correct logo version for each background; clear space and minimum size kept at 375px
+- Logo alt text is the brand name; favicon comes from the symbol version
+- Illustrations and photos follow the imagery style in BRAND.md
+
+Report: empty states added, illustration flags, final icon check, image attribute fixes, logo fixes.
 ```
 
 ---

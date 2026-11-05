@@ -120,6 +120,13 @@ fix the spacing and color in this component
 run a full fix pass on App.tsx
 ```
 
+**Apply a brand kit (identity manual, tokens JSON, logos, applications):**
+```
+here is our brand manual, read it before designing anything
+apply this brand to the landing page
+is this dashboard on brand?
+```
+
 **Ant Design audit:**
 ```
 review this React admin panel against Ant Design standards
@@ -138,7 +145,7 @@ how should I store and serve user-uploaded videos at scale?
 
 | Skill | File | Use for |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | General UI review, slop detection, 8-dimension scorecard, Create/Fix/Polish modes |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | General UI review, slop detection, 8-dimension scorecard, Brand/Create/Fix/Polish modes, brand kit intake |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6: tokens, components, 4px grid, motion, elevation |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | Scalable architecture: 5-step framework, DB selection, caching, queues, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | Loads all three; Claude picks the right one based on context |
@@ -147,7 +154,7 @@ how should I store and serve user-uploaded videos at scale?
 
 ## Plugin (Claude Code slash commands)
 
-The `plugin/` folder gives Claude Code four slash commands and a status bar hint.
+The `plugin/` folder gives Claude Code five slash commands and a status bar hint.
 
 | Command | What it does |
 |---|---|
@@ -155,6 +162,7 @@ The `plugin/` folder gives Claude Code four slash commands and a status bar hint
 | `/direction` | Derives product direction before writing any UI code |
 | `/fix` | 10 sequential passes: Spacing → Color → Icons → Copy → Typography → Layout → Details → A11y → Visuals → Motion |
 | `/polish` | Walks every state at 10% speed: hover, focus, active, loading, empty, error |
+| `/brand` | Reads a brand kit (identity manual, tokens JSON, logos, applications) into a confirmed `BRAND.md` |
 
 After editing any `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue`, or `.svelte` file, the status bar shows `/dq-review · /fix · /polish`.
 
@@ -198,6 +206,30 @@ It catches these patterns, scores what's there, and fixes in the right order. It
 ---
 
 ## Modes
+
+### Brand Mode
+
+Input: a brand kit. Put it in a `brand/` folder or attach the files in the chat:
+
+```
+brand/
+  miv.pdf          brand identity manual (PDF or page images)
+  tokens.json      design tokens or brand JSON, any shape
+  logos/           SVG preferred, PNG accepted
+  applications/    photos or screenshots of the brand applied
+```
+
+The skill reads the manual page by page, normalizes the JSON to W3C Design Tokens, inventories the
+logos, and studies the applications. It writes a `BRAND.md` (logo rules, colors with official
+values, fonts, voice, brand exceptions, protected tokens) and asks you to confirm it.
+
+After that, every mode works inside the brand:
+- **Review** adds a Brand Fidelity agent and a ninth score
+- **Create** takes palette and type from the brand
+- **Fix** never changes a brand color, font, or the logo
+- A pattern the manual documents, like an official gradient, stops counting as slop where the manual allows it
+
+The logo is always the provided file: never rebuilt as text or CSS, never recolored or distorted.
 
 ### Review Mode
 

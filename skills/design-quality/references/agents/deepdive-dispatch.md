@@ -18,6 +18,7 @@ Dispatch as a fork agent (inherits conversation context including the UI input).
 | Taste (feels flat/cold) | `interfaces-that-feel` | "Run a full emotional design critique on the interface in this conversation. Focus on felt-state translation and emotional timing principles." |
 | Density | `critique-information-density` | Same as Clarity (density) above. |
 | Emotional arc issues | `peak-end-rule` | "Apply the Peak-End Rule framework to this interface's flow. Identify the peak and end moments, evaluate their design quality, and recommend improvements." |
+| Brand fidelity (only with `BRAND.md`) | none | Do not dispatch. Re-read `BRAND.md`, list the Brand Fidelity findings by severity, and offer Fix Mode passes 2, 4, 5, and 9 with the brand guard. |
 
 ## Multiple low-scoring dimensions
 

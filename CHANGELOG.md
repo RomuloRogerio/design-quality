@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.1.0
+
+### Brand kits
+
+The skill can now receive a brand: the identity manual (MIV / brand guidelines), a tokens JSON,
+logo files, and photos or screenshots of brand applications.
+
+- **Brand Mode** — reads the kit into a confirmed `BRAND.md` profile and a normalized
+  `brand/tokens.normalized.json` (W3C DTCG). Records the manual page for every rule, flags
+  conflicts between the manual and the JSON, and asks before using the profile. Full instructions
+  in `references/brand-intake.md`.
+- **Source of truth order** — user's words, then the manual, then `BRAND.md`, then
+  `PROJECT_DESIGN.md`, then the skill's defaults. Accessibility minimums are never waived silently.
+- **Brand exceptions** — a pattern the manual documents (an official gradient, several brand
+  colors) is no longer reported as slop when used where the manual allows it.
+- **Brand Fidelity agent** — a fourth parallel review agent (`references/agents/review-brand.md`)
+  that checks logo, color, typography, graphic elements, voice, and applications. Adds a
+  conditional ninth score, Brand fidelity, when a `BRAND.md` exists.
+- **Brand guard in Fix Mode** — no pass may change a brand color, brand font, or the logo, or
+  remove a documented brand exception.
+- **Brand Misuse** section in the slop catalog (logo rebuilt as text or CSS, recolored logo,
+  wrong logo version, off-brand colors, brand font replaced by Inter).
+- **Create Mode** reads `BRAND.md`: palette and type come from the brand, and the direction is
+  derived from the manual's personality words.
+- **Plugin** — new `/brand` command; version 0.2.0.
+
+### Fixes
+
+- Skill `name` in the frontmatter is now `design-quality`, matching the folder and the docs (was
+  `design-quality-v2`).
+
+---
+
 ## v2.0.0
 
 ### New in v2

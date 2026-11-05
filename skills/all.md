@@ -14,8 +14,9 @@ For evaluating and fixing AI-generated interfaces. Use when:
 - Building a new UI from scratch (Create Mode sets direction first)
 - Running 10 sequential fix passes (Fix Mode)
 - Walking every state at 10% speed (Polish Mode)
+- Reading a brand kit (MIV / brand manual, tokens JSON, logos, applications) and checking brand fidelity (Brand Mode)
 
-Modes: **Review · Create · Fix · Polish**
+Modes: **Brand · Review · Create · Fix · Polish**
 
 ---
 
@@ -57,7 +58,7 @@ Claude will read all three and apply the relevant skill depending on what you're
 - Planning a backend? → system-design activates
 - Both? → All three apply
 
-**Claude Code plugin** — for slash commands (`/dq-review`, `/direction`, `/fix`, `/polish`) without manually loading a skill, install the plugin:
+**Claude Code plugin** — for slash commands (`/dq-review`, `/direction`, `/fix`, `/polish`, `/brand`) without manually loading a skill, install the plugin:
 ```bash
 claude --plugin-dir /path/to/design-quality/plugin
 ```
