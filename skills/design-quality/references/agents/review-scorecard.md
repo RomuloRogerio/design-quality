@@ -18,6 +18,9 @@ Craft:          X/10   [one-line note]
 Responsiveness: X/10   [one-line note — if can't verify, write "unverifiable from source"]
 Overall:        X/10   [weighted average, round to nearest 0.5]
 
+Do not score Brand fidelity here. When a BRAND.md exists, the Brand Fidelity agent scores it and
+the main agent adds it to the Overall during synthesis.
+
 ### Top 3 issues driving the lowest scores
 1. [dimension: specific issue]
 2. [dimension: specific issue]

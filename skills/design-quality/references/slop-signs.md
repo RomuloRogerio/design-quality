@@ -3,6 +3,10 @@
 A comprehensive catalog of AI-generated UI tells. Each sign is a finding to log during audit.
 Assign severity: P0 (breaks usability), P1 (looks AI-generated), P2 (weakens craft), P3 (polish).
 
+**Brand exceptions.** When a `BRAND.md` exists, a sign listed under its "Brand exceptions" section
+is not slop if it is used in a context the manual allows (for example, an official gradient on a
+hero). Used anywhere else, it is still slop. See `brand-intake.md`.
+
 ---
 
 ## Color & Effects
@@ -112,6 +116,25 @@ Assign severity: P0 (breaks usability), P1 (looks AI-generated), P2 (weakens cra
 | No Signature detail — nothing that only this product would have | P1 |
 | No World reference — neutrals and accent have no tint toward the product's domain | P2 |
 | Generic stock illustration or unDraw-style character that could be any product | P2 |
+
+---
+
+## Brand Misuse
+
+Check only when a `BRAND.md` exists. The Brand Fidelity agent owns these checks.
+
+| Sign | Typical severity |
+|---|---|
+| Logo rebuilt with text, CSS, an icon font, or a redrawn SVG instead of the provided file | P0 |
+| Logo recolored, stretched, rotated, cropped, or given shadow, glow, or outline | P0 |
+| Brand color used as body text below 4.5:1 contrast | P0 |
+| Wrong logo version for the background (positive logo on a dark surface) | P1 |
+| Off-brand color on the primary action, header, or hero | P1 |
+| Brand font silently replaced by Inter or a system font | P1 |
+| Official brand gradient used outside the contexts the manual allows | P1 |
+| Logo inside its clear space or below minimum size | P2 |
+| Color proportion inverted (a support color dominating the screen) | P2 |
+| Copy tone contradicts the brand voice | P2 |
 
 ---
 

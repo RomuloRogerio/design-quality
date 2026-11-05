@@ -1,26 +1,25 @@
 ---
-name: design-quality-v2
+name: design-quality
 description: >-
-  Full-cycle design quality skill for AI-generated interfaces — evaluate, critique, and fix.
-  Uses parallel subagents for Review and Fix modes. Detects AI slop (purple gradients, gradient
-  text, glow effects, emoji icons, card-grid filler, Inter-everything typography, generic layouts)
-  and guides creation with a product direction framework and investment gates. Use WHENEVER:
-  reviewing or auditing a UI, asking if something looks AI-generated, looks like a template,
-  feels generic, or has no character; creating a new page, dashboard, app screen, or landing page;
-  redesigning, unslopping, or polishing an existing screen; improving any frontend interface.
-  Even if the user does not say "design quality" — if they're building or evaluating any UI,
-  use this skill. Produces: slop audit, scored critique (8 dimensions), P0–P3 fix list, creative
-  direction, and code corrections. Works on React, Tailwind, HTML/CSS, Vue, Svelte, dashboards,
-  apps, landing pages, components. Triggers on: "review this design", "does this look AI?",
-  "critique this UI", "unslop", "make it less generic", "build this page well", "design this
-  screen", "polish this", "improve the UI", "redesign".
+  Full-cycle design quality skill for AI-generated interfaces: evaluate, critique, fix, and apply a
+  brand. Detects AI slop (purple gradients, gradient text, glows, emoji icons, card-grid filler,
+  Inter-everything typography, generic layouts) and guides creation with a product direction
+  framework. Reads brand kits (identity manual / MIV / brand guidelines PDF, tokens JSON, logo
+  files, brand applications) into a BRAND.md profile and checks brand fidelity. Use WHENEVER:
+  reviewing or auditing a UI; asking if it looks AI-generated, templated, or generic; creating a
+  page, dashboard, app screen, or landing page; redesigning, unslopping, or polishing a screen;
+  sharing a brand manual, logo, or brand tokens; applying or checking a brand on an interface.
+  Works on React, Tailwind, HTML/CSS, Vue, Svelte. Triggers on: "review this design", "does this
+  look AI?", "unslop", "make it less generic", "design this screen", "polish this", "redesign",
+  "here is our brand manual", "apply my brand", "use this logo", "is this on brand?".
 ---
 
 # Design Quality v2
 
 A full-cycle skill for creating and evaluating interface design. For existing interfaces, it audits
 and scores. For new ones, it sets a direction and ensures the craft is there. For broken ones, it
-applies fixes pass by pass.
+applies fixes pass by pass. When a brand kit exists, it reads the brand first and every mode works
+inside it.
 
 This version uses specialized subagents for Review Mode and Fix Mode — parallel where possible,
 deep-diving automatically when a dimension scores ≤ 5.
@@ -38,7 +37,12 @@ Before any analysis or creation, identify what was shared. This changes everythi
 | Project folder | Glob for main CSS/component files first; read before scoring |
 | URL / live page | Read the DOM; inspect styles via DevTools if browser available |
 | Artifact link | Read the artifact; treat as HTML source |
+| Brand kit (identity manual / MIV, tokens JSON, logo files, application images) | Run Brand Mode first, then the requested mode |
 | Text description only | Ask for at least one of the above before scoring; describe what's missing |
+
+Also check for a brand: a `BRAND.md` in the project root, or a brand kit (a `brand/` folder, a
+manual PDF, logo files, a tokens JSON). A kit without `BRAND.md` means Brand Mode runs before
+anything else.
 
 Also detect **context type** — this affects which heuristics apply:
 
@@ -59,9 +63,27 @@ Detect from the request — when in doubt, start with review:
 | "build", "create", "design this page" | **create** |
 | "fix", "improve", "unslop", "redesign" | **fix** (review → apply) |
 | "polish", "feels slightly off", "almost there" | **polish** |
+| "here is our brand manual", "apply my brand", "use this logo", a tokens JSON or MIV shared | **brand** (then the mode they asked for) |
 
-If a `PROJECT_DESIGN.md` file exists in the project root, read it first. It contains the approved
+If a `BRAND.md` file exists in the project root, read it first. It holds the confirmed brand
+profile: logo rules, colors, fonts, voice, exceptions, and protected tokens.
+
+If a `PROJECT_DESIGN.md` file exists in the project root, read it next. It contains the approved
 direction, palette, and Signature — don't override it without asking.
+
+### Source of truth
+
+When sources disagree, the higher one wins:
+
+1. The user's explicit words in this conversation
+2. The brand identity manual (MIV / brand guidelines), cited by page
+3. `BRAND.md` and `brand/tokens.normalized.json`
+4. `PROJECT_DESIGN.md`
+5. This skill's defaults and slop rules
+
+Accessibility minimums (contrast, focus, labels, touch targets) are never waived silently. When the
+brand conflicts with them, keep the brand value and change how it is used. See the Contrast section
+of `references/brand-intake.md`.
 
 ---
 
@@ -73,6 +95,7 @@ This produces deeper analysis in less time.
 ### When to use agents
 
 - **Review Mode** on any real UI input → always dispatch 3 parallel review agents
+- **Review Mode with a `BRAND.md`** → add a 4th parallel agent: Brand Fidelity
 - **Any dimension scoring ≤ 5** → auto-dispatch the matching deep-dive agent after the scorecard
 - **Fix Mode** → dispatch a dedicated fix agent per pass (passes 3 and 4 in parallel)
 - **Create Mode Gate 1** → optionally dispatch a direction research agent when product URL or category is known
@@ -89,14 +112,47 @@ is self-contained with the instructions and output format for that agent.
 
 ---
 
+## Brand Mode
+
+Turns a brand kit into a confirmed brand profile that every other mode obeys. Run it when a brand
+kit is shared and no `BRAND.md` exists, or when the kit changed.
+
+Expected kit:
+
+```
+brand/
+  miv.pdf          brand identity manual (PDF or page images)
+  tokens.json      design tokens or brand JSON, any shape
+  logos/           SVG preferred, PNG accepted
+  applications/    photos or screenshots of the brand applied
+```
+
+Files attached in the conversation count too. Full instructions: `references/brand-intake.md`.
+
+1. **Inventory** every brand file
+2. **Read the manual** in page ranges; record the page for every rule
+3. **Read the JSON** in any shape and normalize it to W3C DTCG tokens
+4. **Inventory the logos**: versions, colors, backgrounds, file health
+5. **Read the applications** for patterns, not pixels
+6. **Write** `BRAND.md` and `brand/tokens.normalized.json`, with conflicts and open questions listed
+7. Ask: *"Is this brand profile correct before I use it?"* Stop. Wait.
+
+Never edit, rename, or overwrite the user's brand files.
+
+**Logo rule for every mode:** use the provided logo file. Never rebuild it with text, CSS, or a
+redrawn SVG; never recolor, stretch, rotate, crop, or add effects.
+
+---
+
 ## Review Mode
 
 Audit, score, and prioritize. No code changes without asking first.
 
-### Step 0: Dispatch 3 Parallel Review Agents
+### Step 0: Dispatch the Parallel Review Agents
 
-Before doing any analysis yourself, dispatch all three agents in one message using the Agent tool.
-All three are forks — they inherit full conversation context including the UI input.
+Before doing any analysis yourself, dispatch all agents in one message using the Agent tool: three
+agents, or four when a `BRAND.md` exists. All are forks — they inherit full conversation context
+including the UI input.
 
 **Agent 1 — Slop Auditor**
 Prompt template: `references/agents/review-slop.md`
@@ -110,13 +166,18 @@ Task: score all 8 dimensions 1–10 with reasoning per score.
 Prompt template: `references/agents/review-emotion.md`
 Task: Felt State Check across all key states + Peak-End Rule mapping.
 
-Wait for all 3 to complete, then proceed to Step 1.
+**Agent 4 — Brand Fidelity** *(only when `BRAND.md` exists)*
+Prompt template: `references/agents/review-brand.md`
+Task: logo, color, typography, graphic elements, voice, and applications checked against `BRAND.md`.
+
+Wait for all agents to complete, then proceed to Step 1.
 
 ### Step 1: Synthesize
 
-Merge the three agents' outputs into the standard output format.
+Merge the agents' outputs into the standard output format.
 Deduplicate findings that appear in multiple agents. If agents disagree on a score, use the lower
-value and note the disagreement.
+value and note the disagreement. Remove from the Slop Audit any pattern that Agent 4 lists under
+"Brand exceptions used correctly".
 
 ```
 ## Slop Audit
@@ -134,10 +195,15 @@ Restraint:      X/10
 Density:        X/10
 Craft:          X/10
 Responsiveness: X/10
+Brand fidelity: X/10   [from Agent 4 — only when BRAND.md exists]
 Overall:        X/10
 
 ## Emotional Design
 [from Agent 3 — Felt State + Peak-End findings]
+
+## Brand Fidelity
+[from Agent 4 — only when BRAND.md exists: findings with MIV page, exceptions used correctly,
+open questions]
 
 ## Verdict
 Best part:
@@ -170,6 +236,7 @@ Announce before dispatching: "Hierarchy scored 4 — dispatching a focused visua
 | Taste ≤ 5 (feels flat) | `interfaces-that-feel` skill |
 | Density ≤ 5 | `critique-information-density` skill |
 | Emotional arc issues | `peak-end-rule` skill |
+| Brand fidelity ≤ 5 | No external skill: re-read `BRAND.md`, then offer Fix Mode passes 2, 4, 5, and 9 with the brand guard |
 
 ---
 
@@ -193,6 +260,10 @@ Prompt template: `references/agents/direction-research.md`
 
 If no URL or category is known, skip this step and ask the user directly.
 
+Check for a `BRAND.md` in the project root. If it exists, read it: logo, palette, typography, and
+voice are fixed by the brand, and the direction works inside them. If a brand kit exists without
+`BRAND.md`, run Brand Mode first.
+
 Check for an existing `PROJECT_DESIGN.md` in the project root. If it exists, read it — direction is
 already set; skip to Gate 3 (Build) and apply the recorded direction.
 
@@ -214,6 +285,13 @@ Derive five lines from the product — never from trends, portfolios, or what lo
 - **Moments**: 1–2 places on the screen where the design gets rich and specific.
   Everything else stays quiet so these read instantly.
 - **Signature**: One small detail only this product would have, repeated consistently.
+
+**With a `BRAND.md`:**
+- Character starts from the manual's personality words. If those words are on the banned list,
+  translate them into concrete terms ("modern" in the manual → what it means for this brand).
+- World can come from the brand's graphic elements and imagery.
+- Signature is built from an approved brand element or graphic, never from a new logo treatment.
+- Palette and typography are not proposed. They come from `BRAND.md`.
 
 Present 1–3 directions. For each, show three **Design Dials**:
 
@@ -241,6 +319,10 @@ Signature: [one detail]
 Variance: X/10
 Motion: X/10
 Density: X/10
+
+## Brand
+Source: BRAND.md (confirmed [date]) — or "none"
+With a brand, Palette and Typography below point to BRAND.md tokens instead of new values.
 
 ## Palette
 Canvas: [token + hex]
@@ -271,10 +353,14 @@ With direction confirmed, apply in this order (earlier passes affect later ones)
 - One accent, used rarely: primary action, selection, or the one number that matters.
 - Three text roles: primary, secondary, muted. Never ten slightly different grays.
 - **Banned**: hue gradients on surfaces, gradient text, colored glows, colored shadows, radial blobs, neon borders.
+  The only exception is a pattern listed under "Brand exceptions" in `BRAND.md`, used where the manual allows it.
 - Accent with text on it: ≥ 4.5:1 contrast.
 - Prefer OKLCH for new color tokens: `oklch(L% C H)`.
+- With a brand: brand colors fill the accent and brand roles exactly as written in `BRAND.md`. Never
+  shift a brand color to fix contrast; change how it is used.
 
 #### Typography
+- With a brand: use the brand families, weights, and fallback from `BRAND.md`.
 - Pair a distinctive display font with a clean body font. Maximize weight contrast.
 - `text-wrap: balance` on all headings (h1–h3). `text-wrap: pretty` on body and list text.
 - `-webkit-font-smoothing: antialiased` on `:root` or `html`.
@@ -298,7 +384,8 @@ If the design would look impressive in a portfolio screenshot but make the produ
 
 ### After Building
 
-Run Review Mode (with agents). Done when: no P0 findings, overall ≥ 7/10, product fit ≥ 7/10.
+Run Review Mode (with agents). Done when: no P0 findings, overall ≥ 7/10, product fit ≥ 7/10, and
+brand fidelity ≥ 7/10 when a `BRAND.md` exists.
 
 ---
 
@@ -312,6 +399,11 @@ Run Review Mode first to get the scorecard. Then dispatch fix agents in pass ord
 - Passes 5–10 → sequential
 
 See `references/agents/fix-passes.md` for each pass's agent prompt template.
+
+**Brand guard:** when a `BRAND.md` exists, pass its "Protected tokens" and "Brand exceptions"
+sections to every fix agent. No pass may change a brand color, a brand font family, a logo file, or
+how the logo is drawn, and no pass may remove a documented brand exception. Off-brand values are
+replaced with the nearest `BRAND.md` token, never with a new color.
 
 For each pass, announce what the agent is doing and report per pass: what changed and what still
 needs attention.
@@ -382,3 +474,6 @@ Before marking any UI done:
 - [ ] Dynamic numbers use `font-variant-numeric: tabular-nums`
 - [ ] Headings have `text-wrap: balance`
 - [ ] No `transition: all` anywhere
+- [ ] With a brand: the logo is the provided file, in the right version, with clear space and minimum size kept
+- [ ] With a brand: every color and font maps to `BRAND.md` or the neutral ramp
+- [ ] With a brand: no P0 or P1 finding from the Brand Fidelity agent

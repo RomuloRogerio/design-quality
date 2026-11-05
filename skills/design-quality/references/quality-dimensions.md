@@ -117,3 +117,25 @@ Does the design survive mobile and narrow layouts?
 | 5–6 | Desktop-first with a functional but rough mobile layout. Some overflow or cramping. |
 | 3–4 | Mobile layout is broken or extremely cramped. Touch targets too small. |
 | 1–2 | No responsive consideration. Unusable on mobile. |
+
+---
+
+## Brand Fidelity (1–10) — only when a `BRAND.md` exists
+
+Does the interface follow the brand's documented rules?
+
+This is separate from Product fit. Product fit asks whether the design suits the product's job.
+Brand fidelity asks whether it follows the brand manual. A screen can fit the product perfectly
+and still use the wrong logo version and three off-brand colors.
+
+Scored by the Brand Fidelity agent (`agents/review-brand.md`).
+
+| Score | Meaning |
+|---|---|
+| 9–10 | Every color, font, and graphic traces back to BRAND.md. Logo used perfectly. Voice is unmistakably the brand's. |
+| 7–8 | Faithful, with minor drift: one off-brand neutral, a small clear space violation. |
+| 5–6 | Several off-brand colors or fonts, or one P1 logo misuse. |
+| 3–4 | The brand is recognizable only by the logo. The color and type system is ignored. |
+| 1–2 | Logo misused at P0, or the design contradicts the brand. |
+
+Red flag: the logo rebuilt as text or CSS. That is a P0 even if every other score is high.

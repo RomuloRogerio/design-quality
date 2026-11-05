@@ -21,8 +21,34 @@ export const register: Register = on => {
       name: 'polish',
       description: 'Walk the interface at 10% speed — hover, focus, loading, empty states',
     })
+    await $.command.register({
+      name: 'brand',
+      description: 'Read a brand kit (MIV, tokens JSON, logos, applications) into BRAND.md (Brand Mode)',
+    })
 
     return next(e)
+  })
+
+  // /brand → triggers Brand Mode (brand kit intake into BRAND.md)
+  on('command.run', { command: 'brand' }, $ => {
+    $.ui.status(undefined)
+    return {
+      text: [
+        'Start Brand Mode using the design-quality skill (see references/brand-intake.md).',
+        'Look for a brand kit: a brand/ folder, a brand manual or MIV PDF, a tokens JSON,',
+        'logo files, and brand application images. Files attached in this conversation count too.',
+        '',
+        '1. Inventory every brand file.',
+        '2. Read the manual in page ranges and record the page for every rule.',
+        '3. Read the JSON in any shape and normalize it to W3C DTCG tokens.',
+        '4. Inventory the logos: versions, colors, backgrounds, file health.',
+        '5. Read the applications for patterns.',
+        '6. Write BRAND.md and brand/tokens.normalized.json with conflicts and open questions.',
+        '7. Ask whether the brand profile is correct, and wait.',
+        '',
+        'Never edit the source brand files. Never rebuild, recolor, or distort the logo.',
+      ].join('\n'),
+    }
   })
 
   // /dq-review → triggers Review Mode (slop audit + scorecard + verdict)
