@@ -120,6 +120,13 @@ corregir el espaciado y los colores en este componente
 ejecutar un pase completo de corrección en App.tsx
 ```
 
+**Aplicar un kit de marca (manual de identidad visual, tokens JSON, logotipos, aplicaciones):**
+```
+aquí está nuestro manual de marca, léelo antes de diseñar cualquier pantalla
+aplica esta marca a la landing page
+¿este dashboard es fiel a la marca?
+```
+
 **Auditoría Ant Design:**
 ```
 revisar este panel de administración React contra los estándares Ant Design
@@ -138,7 +145,7 @@ diseñar un acortador de URL que soporte 100M solicitudes/día
 
 | Skill | Archivo | Para qué sirve |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revisión general de UI, detección de genérico IA, scorecard 8 dimensiones, modos Create/Fix/Polish |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revisión general de UI, detección de genérico IA, scorecard 8 dimensiones, modos Brand/Create/Fix/Polish, lectura de kit de marca |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revisión Ant Design v6: tokens, componentes, grid 4px, motion, elevación |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | Arquitectura escalable: framework 5 pasos, selección de BD, caché, colas, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | Carga las tres a la vez; Claude elige la relevante automáticamente |
@@ -147,7 +154,7 @@ diseñar un acortador de URL que soporte 100M solicitudes/día
 
 ## Plugin (comandos slash de Claude Code)
 
-La carpeta `plugin/` agrega cuatro comandos slash y un hint en la barra de estado a cualquier sesión de Claude Code.
+La carpeta `plugin/` agrega cinco comandos slash y un hint en la barra de estado a cualquier sesión de Claude Code.
 
 | Comando | Qué hace |
 |---|---|
@@ -155,6 +162,7 @@ La carpeta `plugin/` agrega cuatro comandos slash y un hint en la barra de estad
 | `/direction` | Modo Create: deriva dirección (Carácter · Mundo · Momentos · Firma) antes de cualquier código de UI |
 | `/fix` | Modo Fix: 10 pases secuenciales: Espaciado → Color → Íconos → Copy → Tipografía → Layout → Detalles → A11y → Visuales → Movimiento |
 | `/polish` | Modo Polish: recorre cada estado al 10% de velocidad (hover · focus · active · loading · empty · error) |
+| `/brand` | Lee un kit de marca (manual de identidad visual, tokens JSON, logotipos, aplicaciones) y genera un `BRAND.md` confirmado |
 
 Después de editar cualquier archivo `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` o `.svelte`, la barra de estado muestra `/dq-review · /fix · /polish` como recordatorio.
 
@@ -201,6 +209,28 @@ Detecta estos patrones sistemáticamente, puntúa lo que hay y corrige en el ord
 ---
 
 ## Modos
+
+### Modo de Marca
+
+Entrada: un kit de marca. Colócalo en una carpeta `brand/` o adjunta los archivos en el chat:
+
+```
+brand/
+  miv.pdf          manual de identidad visual (PDF o imágenes de páginas)
+  tokens.json      tokens de diseño o JSON de marca, en cualquier formato
+  logos/           SVG preferido, PNG también aceptado
+  applications/    fotos o capturas de la marca aplicada
+```
+
+La skill lee el manual página por página, convierte el JSON al formato W3C Design Tokens, hace el inventario de logotipos y estudia las aplicaciones. Escribe un `BRAND.md` con reglas del logo, colores con valores oficiales, fuentes, tono de voz, excepciones de marca y tokens protegidos, y pide tu confirmación.
+
+A partir de ahí, todos los modos trabajan dentro de la marca:
+- **Review** añade un agente de fidelidad de marca y una novena puntuación
+- **Create** usa la paleta y la tipografía de la marca
+- **Fix** nunca cambia un color, fuente o logo de la marca
+- Un patrón que el manual documenta, como un gradiente oficial, deja de contar como genérico donde el manual lo permite
+
+El logo es siempre el archivo proporcionado: nunca reconstruido en texto o CSS, nunca recoloreado ni distorsionado.
 
 ### Modo de Revisión
 

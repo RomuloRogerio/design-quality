@@ -121,6 +121,13 @@ Abstände und Farben in dieser Komponente korrigieren
 einen vollständigen Korrektions-Durchlauf auf App.tsx ausführen
 ```
 
+**Ein Marken-Kit anwenden (Designhandbuch, Tokens JSON, Logos, Anwendungen):**
+```
+hier ist unser Markenhandbuch, lies es bevor du etwas gestaltest
+wende diese Marke auf die Landing Page an
+ist dieses Dashboard markenkonform?
+```
+
 **Ant Design Audit:**
 ```
 dieses React-Admin-Panel anhand der Ant Design-Standards überprüfen
@@ -139,7 +146,7 @@ wie soll ich von Nutzern hochgeladene Videos in großem Maßstab speichern und b
 
 | Skill | Datei | Wofür |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Allgemeine UI-Prüfung, KI-Klischee-Erkennung, 8-Dimensionen-Scorecard, Create/Fix/Polish-Modi |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Allgemeine UI-Prüfung, KI-Klischee-Erkennung, 8-Dimensionen-Scorecard, Brand/Create/Fix/Polish-Modi, Marken-Kit-Verarbeitung |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 Review: Tokens, Komponenten, 4px-Raster, Motion, Elevation |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | Skalierbare Architektur: 5-Schritte-Framework, DB-Auswahl, Caching, Queues, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | Alle drei auf einmal laden; Claude wählt automatisch die passende |
@@ -148,7 +155,7 @@ wie soll ich von Nutzern hochgeladene Videos in großem Maßstab speichern und b
 
 ## Plugin (Claude Code Slash-Befehle)
 
-Der `plugin/`-Ordner fügt jeder Claude Code-Sitzung vier Slash-Befehle und einen Statusleisten-Hinweis hinzu.
+Der `plugin/`-Ordner fügt jeder Claude Code-Sitzung fünf Slash-Befehle und einen Statusleisten-Hinweis hinzu.
 
 | Befehl | Was er tut |
 |---|---|
@@ -156,6 +163,7 @@ Der `plugin/`-Ordner fügt jeder Claude Code-Sitzung vier Slash-Befehle und eine
 | `/direction` | Create-Modus: leitet Richtung ab (Charakter · Welt · Momente · Signatur) vor jedem UI-Code |
 | `/fix` | Fix-Modus: 10 sequenzielle Passes: Abstände → Farbe → Icons → Copy → Typografie → Layout → Details → A11y → Visuals → Motion |
 | `/polish` | Polish-Modus: geht jeden Zustand mit 10 % Geschwindigkeit durch (hover · focus · active · loading · empty · error) |
+| `/brand` | Liest ein Marken-Kit (Designhandbuch, Tokens JSON, Logos, Anwendungen) und erzeugt ein bestätigtes `BRAND.md` |
 
 Nach dem Bearbeiten einer `.tsx`-, `.jsx`-, `.css`-, `.scss`-, `.html`-, `.vue`- oder `.svelte`-Datei zeigt die Statusleiste `/dq-review · /fix · /polish` als Erinnerung.
 
@@ -202,6 +210,28 @@ Sie erkennt diese Muster systematisch, bewertet was vorhanden ist und korrigiert
 ---
 
 ## Modi
+
+### Markenmodus
+
+Eingabe: ein Marken-Kit. Lege es in einen `brand/`-Ordner oder hänge die Dateien im Chat an:
+
+```
+brand/
+  miv.pdf          Marken-Designhandbuch (PDF oder Seitenbilder)
+  tokens.json      Design-Tokens oder Marken-JSON, in beliebigem Format
+  logos/           SVG bevorzugt, PNG akzeptiert
+  applications/    Fotos oder Screenshots der angewendeten Marke
+```
+
+Die Skill liest das Handbuch Seite für Seite, konvertiert das JSON in das W3C Design Tokens-Format, inventarisiert die Logos und untersucht die Anwendungen. Sie schreibt ein `BRAND.md` mit Logo-Regeln, Farben mit offiziellen Werten, Schriften, Tonalität, Markenausnahmen und geschützten Tokens, und bittet um Bestätigung.
+
+Danach arbeiten alle Modi im Rahmen der Marke:
+- **Review** fügt einen Markentreue-Agent und eine neunte Bewertung hinzu
+- **Create** verwendet Palette und Typografie der Marke
+- **Fix** ändert nie eine Markenfarbe, -schrift oder das Logo
+- Ein im Handbuch dokumentiertes Muster, wie ein offizieller Gradient, gilt nicht als KI-Klischee, wo das Handbuch es erlaubt
+
+Das Logo ist immer die bereitgestellte Datei: nie in Text oder CSS rekonstruiert, nie umgefärbt oder verzerrt.
 
 ### Überprüfungsmodus
 

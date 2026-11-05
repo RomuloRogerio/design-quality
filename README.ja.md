@@ -121,6 +121,13 @@ AI臭を消して
 App.tsxに完全な修正パスを実行して
 ```
 
+**ブランドキットを適用する（MIV・ブランドブック、トークンJSON、ロゴ、適用例）：**
+```
+ブランドマニュアルを渡すのでデザイン前に読んで
+このランディングページにブランドを適用して
+このダッシュボードはブランドガイドラインに沿っている？
+```
+
 **Ant Designの監査：**
 ```
 Ant Designの標準に照らしてこのReact管理パネルを見直して
@@ -139,7 +146,7 @@ Ant Designの標準に照らしてこのReact管理パネルを見直して
 
 | スキル | ファイル | 用途 |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 汎用 UI レビュー、AI スロップ検出、8次元スコアカード、Create/Fix/Polish モード |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 汎用 UI レビュー、AI スロップ検出、8次元スコアカード、Brand/Create/Fix/Polish モード、ブランドキット読み込み |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 レビュー: トークン、コンポーネント、4px グリッド、モーション、エレベーション |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | スケーラブルなアーキテクチャ: 5ステップフレームワーク、DB選定、キャッシュ、キュー、CAP |
 | **all** | [`skills/all.md`](skills/all.md) | 3つすべてを一度に読み込む；Claude が自動的に適切なものを選択 |
@@ -148,7 +155,7 @@ Ant Designの標準に照らしてこのReact管理パネルを見直して
 
 ## プラグイン（Claude Code スラッシュコマンド）
 
-`plugin/` フォルダは、任意の Claude Code セッションに4つのスラッシュコマンドとステータスバーヒントを追加します。
+`plugin/` フォルダは、任意の Claude Code セッションに5つのスラッシュコマンドとステータスバーヒントを追加します。
 
 | コマンド | 機能 |
 |---|---|
@@ -156,6 +163,7 @@ Ant Designの標準に照らしてこのReact管理パネルを見直して
 | `/direction` | Create モード: UI コードを書く前に方向を導出（キャラクター · 世界 · モーメント · シグネチャー） |
 | `/fix` | Fix モード: 10の順次パス：間隔 → カラー → アイコン → コピー → タイポグラフィ → レイアウト → 詳細 → A11y → ビジュアル → モーション |
 | `/polish` | Polish モード: 10% 速度で各状態を走査（hover · focus · active · loading · empty · error） |
+| `/brand` | ブランドキット（MIV・ブランドブック、トークンJSON、ロゴ、適用例）を読み込み、確認済み `BRAND.md` を生成 |
 
 `.tsx`、`.jsx`、`.css`、`.scss`、`.html`、`.vue`、または `.svelte` ファイルを編集すると、ステータスバーに `/dq-review · /fix · /polish` が表示されます。
 
@@ -202,6 +210,28 @@ LLMが制約なしにUIを生成すると、毎回同じインターフェース
 ---
 
 ## モード
+
+### ブランドモード
+
+入力：ブランドキット。`brand/` フォルダに配置するか、チャットにファイルを添付：
+
+```
+brand/
+  miv.pdf          ブランドアイデンティティマニュアル（PDFまたはページ画像）
+  tokens.json      デザイントークンまたはブランドJSON、任意の形式
+  logos/           SVG推奨、PNG可
+  applications/    ブランドを適用した写真やスクリーンショット
+```
+
+スキルはマニュアルをページごとに読み込み、JSONをW3Cデザイントークン形式に変換し、ロゴをリストアップし、適用例を分析します。ロゴルール・公式カラー値・フォント・トーン・ブランド例外・保護トークンを含む `BRAND.md` を作成し、確認を求めます。
+
+確認後、すべてのモードがブランド内で動作します：
+- **Review** はブランド忠実度エージェントと9番目のスコアを追加
+- **Create** はブランドのパレットとタイポグラフィを使用
+- **Fix** はブランドのカラー・フォント・ロゴを変更しない
+- マニュアルが認めるパターン（公式グラデーションなど）は、許可された文脈ではスロップとみなされない
+
+ロゴは常に提供されたファイルを使用：テキストやCSSで再構築せず、色変更や変形もしない。
 
 ### レビューモード
 

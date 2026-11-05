@@ -121,6 +121,13 @@ corriger l'espacement et les couleurs dans ce composant
 exécuter une passe de correction complète sur App.tsx
 ```
 
+**Appliquer un kit de marque (manuel d'identité visuelle, tokens JSON, logos, applications) :**
+```
+voici notre manuel de marque, lisez-le avant de créer quoi que ce soit
+appliquer cette marque à la landing page
+ce dashboard est-il conforme à la charte ?
+```
+
 **Audit Ant Design :**
 ```
 revoir ce panneau d'administration React selon les standards Ant Design
@@ -139,7 +146,7 @@ comment stocker et servir des vidéos uploadées par des utilisateurs à l'éche
 
 | Skill | Fichier | Pour quoi |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revue générale d'UI, détection de générique IA, scorecard 8 dimensions, modes Create/Fix/Polish |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | Revue générale d'UI, détection de générique IA, scorecard 8 dimensions, modes Brand/Create/Fix/Polish, lecture de kit de marque |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Revue Ant Design v6: tokens, composants, grille 4px, motion, élévation |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | Architecture scalable: framework 5 étapes, choix de BDD, cache, files de messages, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | Charge les trois à la fois ; Claude choisit la pertinente automatiquement |
@@ -148,7 +155,7 @@ comment stocker et servir des vidéos uploadées par des utilisateurs à l'éche
 
 ## Plugin (commandes slash Claude Code)
 
-Le dossier `plugin/` ajoute quatre commandes slash et un hint dans la barre de statut à toute session Claude Code.
+Le dossier `plugin/` ajoute cinq commandes slash et un hint dans la barre de statut à toute session Claude Code.
 
 | Commande | Ce qu'elle fait |
 |---|---|
@@ -156,6 +163,7 @@ Le dossier `plugin/` ajoute quatre commandes slash et un hint dans la barre de s
 | `/direction` | Mode Create: dérive la direction (Caractère · Monde · Moments · Signature) avant tout code UI |
 | `/fix` | Mode Fix: 10 passes séquentielles : Espacement → Couleur → Icônes → Copy → Typographie → Layout → Détails → A11y → Visuels → Motion |
 | `/polish` | Mode Polish: parcourt chaque état à 10 % de vitesse (hover · focus · active · loading · empty · error) |
+| `/brand` | Lit un kit de marque (manuel d'identité visuelle, tokens JSON, logos, applications) et génère un `BRAND.md` confirmé |
 
 Après l'édition de tout fichier `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` ou `.svelte`, la barre de statut affiche `/dq-review · /fix · /polish` en rappel.
 
@@ -202,6 +210,28 @@ Elle détecte ces patterns systématiquement, note ce qui est là et corrige dan
 ---
 
 ## Modes
+
+### Mode Marque
+
+Entrée : un kit de marque. Placez-le dans un dossier `brand/` ou joignez les fichiers dans le chat :
+
+```
+brand/
+  miv.pdf          manuel d'identité visuelle (PDF ou images de pages)
+  tokens.json      tokens de design ou JSON de marque, dans n'importe quel format
+  logos/           SVG de préférence, PNG accepté
+  applications/    photos ou captures de la marque appliquée
+```
+
+La skill lit le manuel page par page, convertit le JSON au format W3C Design Tokens, fait l'inventaire des logos et étudie les applications. Elle écrit un `BRAND.md` avec les règles du logo, les couleurs avec leurs valeurs officielles, les polices, le ton de voix, les exceptions de marque et les tokens protégés, puis demande votre confirmation.
+
+Ensuite, tous les modes travaillent dans le cadre de la marque :
+- **Review** ajoute un agent de fidélité à la marque et une neuvième note
+- **Create** utilise la palette et la typographie de la marque
+- **Fix** ne modifie jamais une couleur, police ou logo de la marque
+- Un pattern documenté dans le manuel, comme un dégradé officiel, cesse d'être considéré comme générique là où le manuel le permet
+
+Le logo est toujours le fichier fourni : jamais reconstruit en texte ou CSS, jamais recolorisé ni déformé.
 
 ### Mode Révision
 

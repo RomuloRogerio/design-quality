@@ -121,6 +121,13 @@ skills/all.md                     → 全部三个技能
 对 App.tsx 执行完整修复 Pass
 ```
 
+**应用品牌套件（品牌手册、Token JSON、Logo、应用案例）：**
+```
+帮我读一下这份品牌手册，然后再开始设计
+把这个品牌风格应用到落地页上
+这个仪表板是否符合品牌规范？
+```
+
 **Ant Design 审查：**
 ```
 对照 Ant Design 标准审查这个 React Admin 面板
@@ -139,7 +146,7 @@ skills/all.md                     → 全部三个技能
 
 | Skill | 文件 | 用途 |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 通用 UI 审查、AI 劣质检测、8 维度评分卡、Create/Fix/Polish 模式 |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 通用 UI 审查、AI 劣质检测、8 维度评分卡、品牌套件读取、Brand/Create/Fix/Polish 模式 |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 审查: Token、组件、4px 栅格、动效、层级 |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | 可扩展架构: 5 步框架、数据库选型、缓存、消息队列、CAP |
 | **all** | [`skills/all.md`](skills/all.md) | 一次加载全部三个；Claude 自动选择适用的 Skill |
@@ -148,7 +155,7 @@ skills/all.md                     → 全部三个技能
 
 ## 插件（Claude Code 斜杠命令）
 
-`plugin/` 文件夹为任意 Claude Code 会话添加四个斜杠命令和状态栏提示。
+`plugin/` 文件夹为任意 Claude Code 会话添加五个斜杠命令和状态栏提示。
 
 | 命令 | 功能 |
 |---|---|
@@ -156,6 +163,7 @@ skills/all.md                     → 全部三个技能
 | `/direction` | Create 模式: 在编写任何 UI 代码前推导方向（角色 · 世界 · 时刻 · 签名细节） |
 | `/fix` | Fix 模式: 10 个顺序修复 Pass：间距 → 颜色 → 图标 → 文案 → 字体 → 布局 → 细节 → 无障碍 → 视觉 → 动效 |
 | `/polish` | Polish 模式: 以 10% 速度遍历每个状态（hover · focus · active · loading · empty · error） |
+| `/brand` | 读取品牌套件（品牌手册、Token JSON、Logo、应用案例），生成经过确认的 `BRAND.md` |
 
 编辑任意 `.tsx`、`.jsx`、`.css`、`.scss`、`.html`、`.vue` 或 `.svelte` 文件后，状态栏显示 `/dq-review · /fix · /polish` 提醒。
 
@@ -202,6 +210,28 @@ claude --plugin-dir ~/design-quality/plugin
 ---
 
 ## 模式
+
+### 品牌模式
+
+输入：品牌套件。放入 `brand/` 文件夹或在聊天中附加文件：
+
+```
+brand/
+  miv.pdf          品牌视觉手册（PDF 或页面图片）
+  tokens.json      设计 Token 或品牌 JSON，任意格式均可
+  logos/           优先 SVG，PNG 亦可
+  applications/    品牌应用照片或截图
+```
+
+Skill 会逐页阅读手册，将 JSON 转换为 W3C 设计 Token 格式，整理 Logo 并分析应用案例，然后输出包含 Logo 规范、官方色值、字体、品牌语调、品牌例外和受保护 Token 的 `BRAND.md`，并请求确认。
+
+之后所有模式都在品牌规范内运行：
+- **Review** 新增品牌忠实度代理和第 9 个评分维度
+- **Create** 使用品牌色板和字体
+- **Fix** 不会修改品牌颜色、字体和 Logo
+- 手册中已记录的模式（如官方渐变）在适当场景下不视为劣质特征
+
+Logo 始终使用提供的文件：禁止用文字或 CSS 重建、变色或拉伸变形。
 
 ### 审阅模式
 

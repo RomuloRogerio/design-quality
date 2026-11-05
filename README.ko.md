@@ -121,6 +121,13 @@ AI 냄새 없애줘
 App.tsx에 전체 수정 패스 실행해줘
 ```
 
+**브랜드 키트 적용하기 (브랜드 아이덴티티 매뉴얼, 토큰 JSON, 로고, 적용 사례):**
+```
+브랜드 매뉴얼을 첨부할게, 디자인하기 전에 읽어줘
+이 브랜드를 랜딩 페이지에 적용해줘
+이 대시보드가 브랜드 가이드라인에 맞나요?
+```
+
 **Ant Design 감사:**
 ```
 Ant Design 표준에 맞게 이 React 관리 패널 검토해줘
@@ -139,7 +146,7 @@ Ant Design 표준에 맞게 이 React 관리 패널 검토해줘
 
 | 스킬 | 파일 | 용도 |
 |---|---|---|
-| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 일반 UI 리뷰, AI 슬롭 감지, 8차원 스코어카드, Create/Fix/Polish 모드 |
+| **design-quality** | [`skills/design-quality/SKILL.md`](skills/design-quality/SKILL.md) | 일반 UI 리뷰, AI 슬롭 감지, 8차원 스코어카드, Brand/Create/Fix/Polish 모드, 브랜드 키트 읽기 |
 | **ant-design** | [`skills/ant-design.md`](skills/ant-design.md) | Ant Design v6 리뷰: 토큰, 컴포넌트, 4px 그리드, 모션, 엘리베이션 |
 | **system-design** | [`skills/system-design.md`](skills/system-design.md) | 확장 가능한 아키텍처: 5단계 프레임워크, DB 선택, 캐싱, 큐, CAP |
 | **all** | [`skills/all.md`](skills/all.md) | 세 가지 모두 한 번에 로드; Claude가 자동으로 관련 스킬 선택 |
@@ -148,7 +155,7 @@ Ant Design 표준에 맞게 이 React 관리 패널 검토해줘
 
 ## 플러그인 (Claude Code 슬래시 명령어)
 
-`plugin/` 폴더는 모든 Claude Code 세션에 4개의 슬래시 명령어와 상태 표시줄 힌트를 추가합니다.
+`plugin/` 폴더는 모든 Claude Code 세션에 5개의 슬래시 명령어와 상태 표시줄 힌트를 추가합니다.
 
 | 명령어 | 기능 |
 |---|---|
@@ -156,6 +163,7 @@ Ant Design 표준에 맞게 이 React 관리 패널 검토해줘
 | `/direction` | Create 모드: UI 코드 작성 전 방향 도출 (캐릭터 · 세계 · 모먼트 · 시그니처) |
 | `/fix` | Fix 모드: 10개 순차 패스: 간격 → 색상 → 아이콘 → 카피 → 타이포그래피 → 레이아웃 → 디테일 → A11y → 비주얼 → 모션 |
 | `/polish` | Polish 모드: 10% 속도로 모든 상태 순회 (hover · focus · active · loading · empty · error) |
+| `/brand` | 브랜드 키트 (아이덴티티 매뉴얼, 토큰 JSON, 로고, 적용 사례)를 읽고 확인된 `BRAND.md` 생성 |
 
 `.tsx`, `.jsx`, `.css`, `.scss`, `.html`, `.vue` 또는 `.svelte` 파일 편집 후 상태 표시줄에 `/dq-review · /fix · /polish`가 표시됩니다.
 
@@ -202,6 +210,28 @@ LLM이 제약 없이 UI를 생성할 때, 매번 같은 인터페이스를 만�
 ---
 
 ## 모드
+
+### 브랜드 모드
+
+입력: 브랜드 키트. `brand/` 폴더에 넣거나 채팅에 파일 첨부:
+
+```
+brand/
+  miv.pdf          브랜드 아이덴티티 매뉴얼 (PDF 또는 페이지 이미지)
+  tokens.json      디자인 토큰 또는 브랜드 JSON, 어떤 형식이든 가능
+  logos/           SVG 선호, PNG 가능
+  applications/    브랜드 적용 사진 또는 스크린샷
+```
+
+스킬은 매뉴얼을 페이지별로 읽고, JSON을 W3C 디자인 토큰 형식으로 변환하며, 로고를 목록화하고 적용 사례를 분석합니다. 로고 규칙, 공식 색상 값, 폰트, 톤 오브 보이스, 브랜드 예외, 보호된 토큰이 담긴 `BRAND.md`를 작성하고 확인을 요청합니다.
+
+이후 모든 모드가 브랜드 안에서 동작합니다:
+- **Review** 는 브랜드 충실도 에이전트와 9번째 점수를 추가
+- **Create** 는 브랜드의 팔레트와 타이포그래피를 사용
+- **Fix** 는 브랜드 색상, 폰트, 로고를 절대 변경하지 않음
+- 매뉴얼에 문서화된 패턴(공식 그라디언트 등)은 허용된 맥락에서 슬롭으로 간주하지 않음
+
+로고는 항상 제공된 파일 사용: 텍스트나 CSS로 재구성하거나 색상 변경·왜곡 금지.
 
 ### 리뷰 모드
 
