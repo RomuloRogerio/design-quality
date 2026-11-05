@@ -254,6 +254,7 @@ Zurückhaltung:     X/10
 Dichte:            X/10
 Craft:             X/10
 Responsivität:     X/10
+Markentreue:       X/10   [nur mit BRAND.md]
 Gesamt:            X/10
 
 ## Urteil
@@ -323,6 +324,7 @@ Technik: das Interface in DevTools (Animations-Panel) auf 10% Geschwindigkeit ve
 | **Dichte** | Ist die Informationsmenge für die Aufgabe richtig? |
 | **Craft** | Abstände, Typografie, Ausrichtung, Kontrast, Komponentenzustände: poliert? |
 | **Responsivität** | Übersteht das Design Mobile und schmale Layouts? |
+| **Markentreue** _(nur mit BRAND.md)_ | Entspricht die UI der Markenidentität, den Tokens und den Nutzungsregeln? |
 
 ---
 

@@ -246,15 +246,16 @@ Sortie :
 [ceci conviendrait-il à n'importe quel produit de la catégorie ?]
 
 ## Grille d'Évaluation
-Adéquation produit:  X/10   [note en une ligne]
-Hiérarchie:          X/10
-Clarté:              X/10
-Goût:                X/10
-Retenue:             X/10
-Densité:             X/10
-Craft:               X/10
-Réactivité:          X/10
-Global:              X/10
+Adéquation produit:    X/10   [note en une ligne]
+Hiérarchie:            X/10
+Clarté:                X/10
+Goût:                  X/10
+Retenue:               X/10
+Densité:               X/10
+Craft:                 X/10
+Réactivité:            X/10
+Fidélité à la marque:  X/10   [uniquement avec BRAND.md]
+Global:                X/10
 
 ## Verdict
 Meilleure partie :
@@ -323,6 +324,7 @@ Technique : ralentir l'interface à 10% de vitesse dans DevTools (panneau Animat
 | **Densité** | La quantité d'information est-elle adaptée à la tâche ? |
 | **Craft** | Espacement, typographie, alignement, contraste, états des composants: soignés ? |
 | **Réactivité** | Le design résiste-t-il sur mobile et dans les layouts étroits ? |
+| **Fidélité à la marque** _(uniquement avec BRAND.md)_ | L'interface correspond-elle à l'identité visuelle, aux tokens et aux règles d'usage de la marque ? |
 
 ---
 

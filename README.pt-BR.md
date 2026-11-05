@@ -248,15 +248,16 @@ Saída:
 [esta UI se encaixaria em qualquer produto da categoria?]
 
 ## Scorecard
-Product fit:    X/10   [nota de uma linha]
-Hierarchy:      X/10
-Clarity:        X/10
-Taste:          X/10
-Restraint:      X/10
-Density:        X/10
-Craft:          X/10
-Responsiveness: X/10
-Overall:        X/10
+Adequação ao produto:  X/10   [nota de uma linha]
+Hierarquia:            X/10
+Clareza:               X/10
+Estética:              X/10
+Contenção:             X/10
+Densidade:             X/10
+Craft:                 X/10
+Responsividade:        X/10
+Fidelidade de marca:   X/10   [somente com BRAND.md]
+Geral:                 X/10
 
 ## Veredicto
 Melhor parte:
@@ -317,14 +318,15 @@ Técnica: reduza para 10% de velocidade no DevTools (painel Animations). Percorr
 
 | Dimensão | A pergunta que faz |
 |---|---|
-| **Product fit** | A direção visual combina com o trabalho real do produto e sua audiência? |
-| **Hierarchy** | O usuário consegue ver o que importa primeiro, segundo, terceiro? |
-| **Clarity** | Labels, ações, dados e estados são fáceis de entender? |
-| **Taste** | Parece intencional sem parecer templado? |
-| **Restraint** | Sem decoração desnecessária, preenchimento ou estilo cosplay? |
-| **Density** | A quantidade de informação é certa para a tarefa? |
+| **Adequação ao produto** | A direção visual combina com o trabalho real do produto e sua audiência? |
+| **Hierarquia** | O usuário consegue ver o que importa primeiro, segundo, terceiro? |
+| **Clareza** | Labels, ações, dados e estados são fáceis de entender? |
+| **Estética** | Parece intencional sem parecer templado? |
+| **Contenção** | Sem decoração desnecessária, preenchimento ou estilo cosplay? |
+| **Densidade** | A quantidade de informação é certa para a tarefa? |
 | **Craft** | Espaçamento, tipo, alinhamento, contraste, estados de componentes: polidos? |
-| **Responsiveness** | O design sobrevive a layouts mobile e estreitos? |
+| **Responsividade** | O design sobrevive a layouts mobile e estreitos? |
+| **Fidelidade de marca** _(somente com BRAND.md)_ | A interface respeita a identidade visual, tokens e regras de uso da marca? |
 
 ---
 

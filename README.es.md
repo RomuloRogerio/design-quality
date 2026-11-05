@@ -245,15 +245,16 @@ Salida:
 [¿encajaría esto con cualquier producto de la categoría?]
 
 ## Tarjeta de Puntuación
-Ajuste de producto:  X/10   [nota de una línea]
-Jerarquía:          X/10
-Claridad:           X/10
-Gusto:              X/10
-Contención:         X/10
-Densidad:           X/10
-Craft:              X/10
-Responsividad:      X/10
-General:            X/10
+Ajuste de producto:   X/10   [nota de una línea]
+Jerarquía:            X/10
+Claridad:             X/10
+Gusto:                X/10
+Contención:           X/10
+Densidad:             X/10
+Craft:                X/10
+Responsividad:        X/10
+Fidelidad de marca:   X/10   [solo con BRAND.md]
+General:              X/10
 
 ## Veredicto
 Mejor parte:
@@ -322,6 +323,7 @@ Técnica: desacelerar la interfaz al 10% de velocidad en DevTools (panel de Anim
 | **Densidad** | ¿Es correcta la cantidad de información para la tarea? |
 | **Craft** | Espaciado, tipografía, alineación, contraste, estados de componentes: ¿pulidos? |
 | **Responsividad** | ¿El diseño sobrevive en mobile y layouts estrechos? |
+| **Fidelidad de marca** _(solo con BRAND.md)_ | ¿La UI respeta la identidad visual, los tokens y las reglas de uso de la marca? |
 
 ### Qué significa cada puntuación
 

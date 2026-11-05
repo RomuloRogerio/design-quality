@@ -252,6 +252,7 @@ Restraint:      X/10
 Density:        X/10
 Craft:          X/10
 Responsiveness: X/10
+Brand fidelity: X/10   [only when BRAND.md exists]
 Overall:        X/10
 
 ## Verdict
@@ -321,6 +322,7 @@ Technique: slow the interface to 10% speed in browser DevTools (Animations panel
 | **Density** | Is the amount of information right for the task? |
 | **Craft** | Spacing, type, alignment, contrast, component states: all polished? |
 | **Responsiveness** | Does the design survive mobile and narrow layouts? |
+| **Brand fidelity** _(only with BRAND.md)_ | Does the UI match the brand's visual identity, tokens, and usage rules? |
 
 ### What each score means
 
